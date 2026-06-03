@@ -1,0 +1,41 @@
+baseURL: "https://d3vilsec.com/"
+title: "d3vilsec"
+theme: "PaperMod"
+paginate: 10
+
+params:
+  author: d3vilsec
+  description: "Pentesting. Homelabbing. Self-hosting. Marine veteran in cybersecurity."
+  defaultTheme: dark
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+
+  homeInfoParams:
+    Title: "d3vilsec"
+    Content: "Marine veteran. Federal IT professional. Cybersecurity student. Building, breaking, and securing things from a TV stand."
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/d3vilsec"
+    - name: twitter
+      url: "https://twitter.com/_d3vilsec"
+    - name: youtube
+      url: "https://youtube.com/@d3vilsec"
+
+menu:
+  main:
+    - identifier: blog
+      name: Blog
+      url: /posts/
+      weight: 10
+    - identifier: projects
+      name: Projects
+      url: /projects/
+      weight: 20
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 30
