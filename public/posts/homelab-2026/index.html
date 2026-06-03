@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>My Homelab in 2026 — How It Started and What I&#39;m Running | d3vilsec</title>
+<meta name="keywords" content="homelab, proxmox, docker, self-hosting, networking">
+<meta name="description" content="How a dead router, a tax return, and too many YouTube videos turned into a full homelab stack.">
+<meta name="author" content="map[bio:Building, breaking, and securing things from a TV stand. headline:Marine veteran. Federal IT. Cybersecurity. links:[map[github:https://github.com/d3vilsec] map[twitter:https://twitter.com/_d3vilsec]] name:d3vilsec]">
+<link rel="canonical" href="http://localhost:1313/posts/homelab-2026/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/homelab-2026/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="d3vilsec (Alt + H)">d3vilsec</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/posts/">Posts</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      My Homelab in 2026 — How It Started and What I&#39;m Running
+    </h1>
+    <div class="post-description">
+      How a dead router, a tax return, and too many YouTube videos turned into a full homelab stack.
+    </div>
+    <div class="post-meta">
+
+<span title='2026-06-03 00:00:00 +0000 UTC'>June 3, 2026</span>&nbsp;·&nbsp;<span>11 min</span>&nbsp;·&nbsp;<span>map[bio:Building, breaking, and securing things from a TV stand. headline:Marine veteran. Federal IT. Cybersecurity. links:[map[github:https://github.com/d3vilsec] map[twitter:https://twitter.com/_d3vilsec]] name:d3vilsec]</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><p>Like a lot of people, it started with YouTube and TikTok. I kept seeing videos about homelabs, what people were running, what it could do, why they built one, and it slowly pulled me in.</p>
+<p>For me it came down to three things.</p>
+<p>First, security. I have a cybersecurity background, currently working toward a BS in cybersecurity, and my day job leans heavily on the sysadmin side with a security emphasis. But the work can get stagnant. Limited scope, slow technology adoption, not a lot of room to experiment. A homelab fixes that. It gives me a sandbox where I can actually try things without waiting for an approval process.</p>
+<p>Second, learning. I wanted hands-on experience with tools and technologies I wasn&rsquo;t getting exposure to at work. Reading about something and actually running it are very different things.</p>
+<p>Third, and honestly this one might be the most relatable, subscriptions. Everything is a subscription now. Cloud storage, media streaming, VPN, backup services. It adds up fast and you own nothing. I wanted to change that.</p>
+<p>There was also a fourth reason, and it came out of nowhere. My router/modem combo decided to die around the same time I was going down the homelab rabbit hole. I called customer service and was told my device was outdated and that I needed to either rent their router or buy a compatible one. The modem would be free as long as I stayed with them, but the router was a rental. That didn&rsquo;t sit right with me. If I was going to replace my networking gear anyway, I figured I might as well invest in something proper instead of paying monthly for equipment I&rsquo;d never own. That decision spiraled pretty quickly into everything else you&rsquo;re about to read.</p>
+<p>The only thing standing between me and getting started was money. I didn&rsquo;t want to spend a bunch upfront before I even knew if I&rsquo;d stick with it. Then tax season came through. I know I&rsquo;m overpaying, don&rsquo;t bug me about it. I like to think of my tax return as a nice surprise once a year. Some of that money went toward the homelab, and you&rsquo;ll see what I mean once I introduce you to the setup and what it cost to get here.</p>
+<hr>
+<h2 id="the-hardware-and-why-i-chose-each-piece">The Hardware and Why I Chose Each Piece<a hidden class="anchor" aria-hidden="true" href="#the-hardware-and-why-i-chose-each-piece">#</a></h2>
+<p>Once I decided I was going to replace my networking gear anyway, the question became what to replace it with. I was already familiar with TP-Link from my old router/modem combo, so I started looking into what else they made. That&rsquo;s when I found Omada.</p>
+<p>Omada is TP-Link&rsquo;s software-defined networking lineup, and once I saw what it offered I was sold. A built-in VPN server with client-to-site support, meaning I can access my home network securely from any device anywhere, centralized management of all network devices from one interface, and the ability to expand the setup as needed. The learning curve is steep if you&rsquo;re new to networking. I have decent experience but had never touched SDNs before, so that was part of the appeal too.</p>
+<p>The other thing that drove a lot of my decisions was the modem Spectrum provided. It has a 2.5 Gbps ethernet port, and once I saw that I wanted everything downstream to match. No point having a fast modem if your network gear is going to bottleneck it.</p>
+<p>Here&rsquo;s what I ended up with on the networking side:</p>
+<p><strong>TP-Link ER707-M2</strong> — the router. Two 2.5 Gbps WAN ports plus six additional WAN/LAN ports. Handles routing, firewall, and the VPN server.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>WAN Ports</td>
+					<td>2x 2.5 Gbps</td>
+			</tr>
+			<tr>
+					<td>LAN Ports</td>
+					<td>6x 1 Gbps WAN/LAN</td>
+			</tr>
+			<tr>
+					<td>VPN</td>
+					<td>WireGuard, OpenVPN, IPSec</td>
+			</tr>
+			<tr>
+					<td>Management</td>
+					<td>Omada SDN</td>
+			</tr>
+			<tr>
+					<td>Other</td>
+					<td>SPI Firewall, Load Balancing, Lightning Protection</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>SG2210XMP-M2</strong> — the switch. Eight 2.5 Gbps PoE+ ports and two SFP+ ports for future upgrades. The PoE+ is important, more on that in a second.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>PoE+ Ports</td>
+					<td>8x 2.5 Gbps</td>
+			</tr>
+			<tr>
+					<td>Uplink Ports</td>
+					<td>2x 10G SFP+</td>
+			</tr>
+			<tr>
+					<td>PoE Budget</td>
+					<td>240W</td>
+			</tr>
+			<tr>
+					<td>Management</td>
+					<td>Omada SDN</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>TP-Link EAP770</strong> — WiFi 7 access point with a 2.5 Gbps uplink, managed through Omada like everything else.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>WiFi Standard</td>
+					<td>WiFi 7 (802.11be)</td>
+			</tr>
+			<tr>
+					<td>Max Speed</td>
+					<td>BE11000 Tri-band</td>
+			</tr>
+			<tr>
+					<td>Uplink</td>
+					<td>2.5 Gbps</td>
+			</tr>
+			<tr>
+					<td>Power</td>
+					<td>PoE+</td>
+			</tr>
+			<tr>
+					<td>Management</td>
+					<td>Omada SDN</td>
+			</tr>
+	</tbody>
+</table>
+<p>I&rsquo;d also be doing this section a disservice if I didn&rsquo;t mention the device that started it all before the tax return came through. An old Acer Predator laptop, i7-7700HQ, 8 GB of RAM. Nothing special by today&rsquo;s standards but it was what I had. Before I bought a single piece of equipment, that laptop was my testing ground. I installed Pi-hole on it, tried out different operating systems, broke things, fixed things, and figured out what I actually wanted to build. It was messy and unorganized but that&rsquo;s kind of the point when you&rsquo;re learning.</p>
+<p>It&rsquo;s still in the mix today. Once I got the Mini PC up and running Proxmox, I installed Proxmox on the laptop too and joined it to the same cluster. It now serves as a failover node. Not the most powerful machine in the stack, but it doesn&rsquo;t need to be. If the Mini PC goes down for maintenance or something unexpected happens, the laptop is there to keep things running.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Model</td>
+					<td>Acer Predator Helios 300 G3-571</td>
+			</tr>
+			<tr>
+					<td>CPU</td>
+					<td>Intel Core i7-7700HQ @ 2.80GHz (8 threads)</td>
+			</tr>
+			<tr>
+					<td>RAM</td>
+					<td>8 GB</td>
+			</tr>
+			<tr>
+					<td>Role</td>
+					<td>Proxmox failover node</td>
+			</tr>
+	</tbody>
+</table>
+<p>For the server side, I wanted something small. I didn&rsquo;t want a full rack or a loud tower sitting somewhere. I went with a Mini PC that punches well above its weight, 48 GB of RAM, dual 2.5 Gbps NICs, enough cores to run a bunch of VMs simultaneously, and a CPU with a low enough power draw that leaving it on 24/7 doesn&rsquo;t hurt. It&rsquo;s running Proxmox as the hypervisor, which lets me spin up and tear down virtual machines without touching the host.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Model</td>
+					<td>GMKtec K15 AI</td>
+			</tr>
+			<tr>
+					<td>CPU</td>
+					<td>Intel Core Ultra 5 125U</td>
+			</tr>
+			<tr>
+					<td>RAM</td>
+					<td>48 GB DDR5</td>
+			</tr>
+			<tr>
+					<td>Storage</td>
+					<td>1 TB NVMe SSD</td>
+			</tr>
+			<tr>
+					<td>Networking</td>
+					<td>Dual 2.5 Gbps NICs</td>
+			</tr>
+			<tr>
+					<td>Other</td>
+					<td>OCuLink, USB4, HDMI 2.1</td>
+			</tr>
+			<tr>
+					<td>Role</td>
+					<td>Proxmox hypervisor / primary compute</td>
+			</tr>
+	</tbody>
+</table>
+<p>I also picked up two Raspberry Pi 5s, 16 GB RAM each. Raspis are great for containerization and I wanted to learn Docker Swarm. They&rsquo;re small, efficient, and more than capable of running a solid number of containers. Combined with the GeeekPi PoE+ NVMe hats I grabbed for each one, they&rsquo;re powered directly from the switch over ethernet. No separate power bricks, no extra cables, just one ethernet cable each. That&rsquo;s the PoE+ I mentioned.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Model</td>
+					<td>Raspberry Pi 5 x2</td>
+			</tr>
+			<tr>
+					<td>CPU</td>
+					<td>Broadcom BCM2712, 4 cores @ 2.4GHz</td>
+			</tr>
+			<tr>
+					<td>RAM</td>
+					<td>16 GB</td>
+			</tr>
+			<tr>
+					<td>Storage</td>
+					<td>SD card (NVMe upgrade planned)</td>
+			</tr>
+			<tr>
+					<td>Power</td>
+					<td>PoE+ via GeeekPi P33 hat</td>
+			</tr>
+			<tr>
+					<td>Role</td>
+					<td>Docker Swarm manager nodes</td>
+			</tr>
+	</tbody>
+</table>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Model</td>
+					<td>GeeekPi P33 PoE+ NVMe Hat</td>
+			</tr>
+			<tr>
+					<td>Power</td>
+					<td>PoE+ (802.3at)</td>
+			</tr>
+			<tr>
+					<td>Storage</td>
+					<td>M.2 NVMe slot (2230/2242/2260/2280)</td>
+			</tr>
+			<tr>
+					<td>Cooling</td>
+					<td>Official Pi 5 active cooler mount</td>
+			</tr>
+	</tbody>
+</table>
+<p>For storage, I went with the UGREEN NASync DH4300 Plus. It was on discount, which was honestly the deciding factor. It supports up to 128 TB, has a 2.5 Gbps ethernet port, and runs its own OS with Docker support. I didn&rsquo;t have the budget to buy proper NAS drives right away, so I&rsquo;m currently running whatever spare hard drives I had laying around the house. It works, but it&rsquo;s janky and I know it. Four 16 TB drives are on the list when the budget allows.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Spec</th>
+					<th>Detail</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Model</td>
+					<td>UGREEN NASync DH4300 Plus</td>
+			</tr>
+			<tr>
+					<td>Bays</td>
+					<td>4</td>
+			</tr>
+			<tr>
+					<td>Max Capacity</td>
+					<td>128 TB</td>
+			</tr>
+			<tr>
+					<td>RAM</td>
+					<td>8 GB LPDDR4X</td>
+			</tr>
+			<tr>
+					<td>Networking</td>
+					<td>2.5 Gbps ethernet</td>
+			</tr>
+			<tr>
+					<td>OS</td>
+					<td>UGOS Pro</td>
+			</tr>
+			<tr>
+					<td>Current Drives</td>
+					<td>4x 16 TB</td>
+			</tr>
+	</tbody>
+</table>
+<p>Honestly, if I&rsquo;m being transparent, most of my decision making came back to one thing. The modem had a 2.5 Gbps port and I wanted everything to match. Future-proofing by making it uniform throughout. Everything else kind of fell into place around that.</p>
+<hr>
+<h2 id="the-physical-setup-honest-edition">The Physical Setup (Honest Edition)<a hidden class="anchor" aria-hidden="true" href="#the-physical-setup-honest-edition">#</a></h2>
+<p>If you were expecting a clean rack setup with velcro cable ties and perfect airflow, I&rsquo;m sorry to disappoint. Everything lives in my TV stand.</p>
+<p>It&rsquo;s cluttered. I&rsquo;ll be the first to admit it. I made an attempt at cable management and got about halfway there. The cables behind the TV stand are somewhat under control, but the top shelf is a different story. It is what it is for now.</p>
+<p>The bigger concern heading into summer is heat. Everything is packed into an enclosed TV stand with limited airflow and I genuinely don&rsquo;t know how the equipment is going to handle the warmer months. That&rsquo;s something I need to figure out before it becomes a problem.</p>
+<p>There&rsquo;s also the matter of power. Right now everything is plugged into a single outlet. No UPS, no surge protection worth mentioning. One bad power fluctuation and I could be looking at fried equipment or corrupted NAS drives. A UPS is high on the list of things to address. It&rsquo;s not a matter of if, it&rsquo;s a matter of when.</p>
+<p>Basically, the physical setup works but it&rsquo;s held together with good intentions and a little bit of luck. There&rsquo;s room for improvement and I know it.</p>
+<hr>
+<h2 id="whats-actually-running-on-it">What&rsquo;s Actually Running on It<a hidden class="anchor" aria-hidden="true" href="#whats-actually-running-on-it">#</a></h2>
+<p>This is where things get interesting. The homelab isn&rsquo;t just sitting there looking pretty, it&rsquo;s actually doing things.</p>
+<p>On the virtualization side, Proxmox is running several VMs on the Mini PC. The first is an RHEL IDM server, which handles identity management for the lab. Think centralized user accounts and authentication, the same kind of setup you&rsquo;d find in an enterprise environment. A redundant IDM server is in the works so there&rsquo;s a failover if the first one goes down.</p>
+<p>There are two VMs running Pi-hole with Unbound. Pi-hole handles network-wide ad blocking and Unbound sits behind it as a recursive DNS resolver, meaning DNS queries don&rsquo;t get forwarded to a third party like Google or Cloudflare. They resolve directly from authoritative nameservers. Two instances means if one goes down for maintenance, the other keeps the network running without skipping a beat. It&rsquo;s been working great.</p>
+<p>One VM is dedicated to hosting the Omada SDN controller application. You can buy a physical Omada controller, but why spend the money when you can just spin up a VM and install the software? Same functionality, no extra hardware.</p>
+<p>There&rsquo;s also a Grafana VM for monitoring. Still a work in progress, but the goal is a unified dashboard pulling metrics from everything in the lab. A VM running OpenVAS Community Edition handles vulnerability scanning, which ties back to the security side of why I built this in the first place. It scans the network for known vulnerabilities and misconfigurations so I know what needs attention.</p>
+<p>Finally there&rsquo;s an Ubuntu VM that&rsquo;s part of a Docker Swarm cluster along with the two Raspberry Pi 5s. The Swarm is running a few things worth mentioning. STIG Manager for system hardening and security compliance, the arr stack for media self hosting (Jellyfin, Sonarr, Radarr, and Prowlarr if those mean anything to you), and Portainer as a management UI for the containers.</p>
+<p>One more thing. There&rsquo;s a VM running a Ghost and Nginx Proxy Manager Docker stack that&rsquo;s hosting this very website. So if you&rsquo;re reading this, you&rsquo;re being served content straight from my TV stand. Make of that what you will.</p>
+<hr>
+<h2 id="where-its-going">Where It&rsquo;s Going<a hidden class="anchor" aria-hidden="true" href="#where-its-going">#</a></h2>
+<p>The dream is a proper enterprise grade server rack. Clean, organized, everything mounted and labeled. That&rsquo;s not happening anytime soon though. I rent, so a full rack setup isn&rsquo;t really an option right now. Maybe one day.</p>
+<p>In the more immediate future, the priority is a UPS. Everything is still plugged into a single outlet and it&rsquo;s been that way for about three months now. The 4x16 TB drives just arrived and I&rsquo;ve already migrated the NAS. Still have zero power protection during the whole process. Not my brightest moment, but it worked out. A UPS is still happening though. The drives are in, the data is there, and one bad power event could ruin all of it. It&rsquo;s next on the list.</p>
+<p>On the hardware side, I want to build out a proper 4 node Raspberry Pi cluster using one of those DeskPi rack cases. Get a small switch that fits inside it, mount the Pis properly, and finally replace the SD cards with NVMe SSDs so the OS isn&rsquo;t running on hardware that could fail without warning. I&rsquo;d also like to get the Mini PC and NAS mounted in there and maybe pick up a second Mini PC so everything is uniform.</p>
+<p>Longer term, I want to build a dedicated server for running a local LLM at home. Paired with OpenClaw, a free and open source autonomous AI agent that runs on top of LLMs and uses messaging platforms as its main interface, the idea is to have a self hosted AI setup that doesn&rsquo;t rely on any cloud services. Is it a need? Absolutely not. But it sounds like a fun project and that&rsquo;s reason enough.</p>
+<p>The homelab is a living thing. It grows, it changes, and it occasionally breaks at the worst possible time. That&rsquo;s kind of the point. More updates to come.</p>
+<hr>
+<p><em>— d3vilsec</em></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/homelab/">Homelab</a></li>
+      <li><a href="http://localhost:1313/tags/proxmox/">Proxmox</a></li>
+      <li><a href="http://localhost:1313/tags/docker/">Docker</a></li>
+      <li><a href="http://localhost:1313/tags/self-hosting/">Self-Hosting</a></li>
+      <li><a href="http://localhost:1313/tags/networking/">Networking</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">d3vilsec</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

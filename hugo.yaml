@@ -5,7 +5,7 @@ paginate: 10
 
 params:
   author: d3vilsec
-  description: "Pentesting. Homelabbing. Self-hosting. Marine veteran in cybersecurity."
+  description: "Marine veteran. Federal IT. Cybersecurity."
   defaultTheme: dark
   ShowReadingTime: true
   ShowShareButtons: false
