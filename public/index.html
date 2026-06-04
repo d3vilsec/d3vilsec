@@ -77,6 +77,11 @@
                 </a>
             </li>
             <li>
+                <a href="http://localhost:1313/cheatsheets/" title="Cheatsheets">
+                    <span>Cheatsheets</span>
+                </a>
+            </li>
+            <li>
                 <a href="http://localhost:1313/about/" title="About">
                     <span>About</span>
                 </a>
@@ -131,20 +136,166 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">My Homelab in 2026 — How It Started and What I&#39;m Running
+    <h2 class="entry-hint-parent">amass
     </h2>
   </header>
   <div class="entry-content">
-    <p>Like a lot of people, it started with YouTube and TikTok. I kept seeing videos about homelabs, what people were running, what it could do, why they built one, and it slowly pulled me in.
-For me it came down to three things.
-First, security. I have a cybersecurity background, currently working toward a BS in cybersecurity, and my day job leans heavily on the sysadmin side with a security emphasis. But the work can get stagnant. Limited scope, slow technology adoption, not a lot of room to experiment. A homelab fixes that. It gives me a sandbox where I can actually try things without waiting for an approval process.
+    <p>amass Cheatsheet Type: Actively maintained subdomain discovery — extensive data sources &amp; tool integrations
+Installation sudo apt install amass # or go install -v github.com/owasp-amass/amass/v4/...@master # or snap install amass Subcommands Subcommand Description enum Subdomain enumeration (main command) intel Collect intel about an organisation viz Visualise enumeration results track Track differences between enumerations db Interact with the graph database enum — Subdomain Enumeration # Basic passive enumeration amass enum -passive -d example.com # Active enumeration (DNS resolution &#43; brute force) amass enum -active -d example.com # Active with brute force amass enum -brute -d example.com # Brute force with wordlist amass enum -brute -w wordlist.txt -d example.com # Multiple domains amass enum -d example.com -d example.org # Domains from file amass enum -df domains.txt # Limit data sources amass enum -passive -d example.com -src # Output to file amass enum -d example.com -o output.txt # Output to JSON amass enum -d example.com -json output.json # Show data sources in results amass enum -d example.com -src # Verbose amass enum -v -d example.com # Set timeout (minutes) amass enum -d example.com -timeout 30 # Use specific resolvers amass enum -d example.com -r 8.8.8.8,1.1.1.1 # Use resolver list amass enum -d example.com -rf resolvers.txt # Exclude data sources amass enum -d example.com -exclude CrtSearch # Only specific data sources amass enum -d example.com -include Wayback,CrtSearch Common Flags (enum) Flag Description -d &lt;domain&gt; Target domain -df &lt;file&gt; File with list of domains -passive Passive only (no DNS resolution) -active Active DNS (zone transfer, cert grabbing) -brute Enable brute force -w &lt;wordlist&gt; Wordlist for brute force -o &lt;file&gt; Output results to file -json &lt;file&gt; Output as JSON -src Show data source for each result -ip Show IP addresses -r &lt;resolvers&gt; Comma-separated resolver IPs -rf &lt;file&gt; File of resolver IPs -timeout &lt;n&gt; Timeout in minutes -v Verbose -config &lt;file&gt; Config file path -dir &lt;path&gt; Directory for output/database intel — Org Recon # Find domains by organisation name amass intel -org &#34;Target Corp&#34; # Reverse whois amass intel -whois -d example.com # ASN lookup amass intel -asn 12345 # Find domains from IP/CIDR amass intel -ip 192.168.1.0/24 # Find ASN from domain amass intel -d example.com -whois Configuration File Config file at ~/.config/amass/config.ini (or specify with -config):
 ...</p>
   </div>
   <footer class="entry-footer">
 
-<span title='2026-06-03 00:00:00 +0000 UTC'>June 3, 2026</span>&nbsp;·&nbsp;<span>11 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
-  <a class="entry-link" aria-label="post link to My Homelab in 2026 — How It Started and What I&#39;m Running" href="http://localhost:1313/posts/homelab-2026/"></a>
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to amass" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/"></a>
 </article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">assetfinder
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>assetfinder Cheatsheet Type: Simple, lightweight subdomain finder using multiple passive data sources — ideal for quick recon
+Installation go install github.com/tomnomnom/assetfinder@latest # Binary ends up in ~/go/bin/assetfinder # Or download pre-built binary wget https://github.com/tomnomnom/assetfinder/releases/latest/download/assetfinder-linux-amd64.tgz tar xf assetfinder-linux-amd64.tgz mv assetfinder /usr/local/bin/ Basic Usage assetfinder &lt;domain&gt; assetfinder example.com Flags Flag Description --subs-only Show only subdomains (filter out related domains / TLD variants) Common Commands # All results (subdomains &#43; related domains) assetfinder example.com # Subdomains only (most common usage) assetfinder --subs-only example.com # Save to file assetfinder --subs-only example.com &gt; subdomains.txt # Multiple domains from stdin cat domains.txt | xargs -I{} assetfinder --subs-only {} # Pipe into other tools assetfinder --subs-only example.com | httprobe # Check live hosts assetfinder --subs-only example.com | sort -u # Deduplicate Data Sources Used crt.sh (Certificate transparency logs) certspotter (SSL cert monitoring) hackertarget (Passive DNS) threatcrowd (Threat intelligence) wayback (Wayback Machine / archive.org) dnsdumpster (DNS recon service) facebook CT (Facebook certificate transparency) virustotal (Passive DNS) findsubdomains.com Pipeline Examples # Find subdomains → probe for live web servers → save assetfinder --subs-only example.com | httprobe | tee live_hosts.txt # Find subdomains → resolve to IPs assetfinder --subs-only example.com | \ xargs -I{} dig &#43;short {} | grep -v &#34;^$&#34; | sort -u # Find subdomains → run nmap on live ones assetfinder --subs-only example.com | \ httprobe | sed &#39;s/https\?:\/\///&#39; | \ xargs -I{} nmap -p 80,443 {} # Combine with other tools for coverage (assetfinder --subs-only example.com; \ subfinder -d example.com -silent; \ amass enum -passive -d example.com) | sort -u &gt; all_subs.txt Notes Passive only — does not brute force DNS or make queries to the target Fast and lightweight — great first pass before heavier tools No API keys needed for most sources (some may be rate-limited) Output may contain duplicates — always pipe through sort -u </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to assetfinder" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">builtwith
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>BuiltWith Cheatsheet Purpose: Passive technology profiling of a domain — current stack plus historical changes, hosting, analytics, ad networks, ecommerce, CDN, certificates, and more. Useful for OSINT recon without touching the target.
+Format: Web service (free tier &#43; paid API). No local install required for basic lookups.
+Access Points Surface URL Profile lookup (single domain) https://builtwith.com/ Free quick lookup https://builtwith.com/? Trends / market share https://trends.builtwith.com/ Relationships (same owner / IDs) https://builtwith.com/relationships/ Redirect graph https://builtwith.com/redirect/ API docs (paid) https://api.builtwith.com/ Browser extension (Chrome/Firefox) search “BuiltWith Technology Profiler” in store Quick CLI Lookups (no API key required) # Open profile in default browser xdg-open &#34;https://builtwith.com/target.tld&#34; # Scrape the public profile page (limited; HTML changes) curl -s -A &#34;Mozilla/5.0&#34; &#34;https://builtwith.com/target.tld&#34; -o builtwith.html # Extract technology names (rough) curl -s -A &#34;Mozilla/5.0&#34; &#34;https://builtwith.com/target.tld&#34; \ | grep -oE &#39;href=&#34;/[a-z0-9-]&#43;&#34;[^&gt;]*&gt;[^&lt;]&#43;&#39; | sort -u For reliable structured data, use the paid API below.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to builtwith" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">curl
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>curl Cheatsheet (Web Fingerprinting) Purpose: Manual HTTP(S) requests for header inspection, banner grabbing, fingerprinting and quick endpoint testing.
+Core Flags Flag Description -I HEAD request (headers only) -i Include response headers in output -v Verbose (request &#43; response, TLS info) -vv / --trace-ascii - Full wire trace -s Silent (no progress meter) -S Show errors even with -s -L Follow redirects -k / --insecure Ignore TLS cert errors -o &lt;file&gt; Write body to file -O Save with remote filename -A &lt;ua&gt; Set User-Agent -e &lt;ref&gt; Set Referer -H &#34;&lt;hdr&gt;: &lt;val&gt;&#34; Custom header (repeatable) -X &lt;METHOD&gt; HTTP method (GET, POST, PUT, DELETE, etc.) -d &lt;data&gt; POST body (application/x-www-form-urlencoded) --data-raw POST body without @/&amp; interpretation --data-binary POST body as-is (preserve newlines) -F &lt;field&gt;=&lt;val&gt; Multipart form upload -b &lt;cookie&gt; / -c &lt;file&gt; Send cookie / save cookies -u user:pass HTTP Basic auth -x &lt;proxy&gt; Use proxy (e.g. http://127.0.0.1:8080) --resolve host:port:ip Force DNS resolution (Host-header testing) --max-time &lt;s&gt; Hard timeout --connect-timeout &lt;s&gt; Connect timeout -w &#34;&lt;format&gt;&#34; Write-out format (timings, codes) Banner Grabbing / Header Inspection curl -I https://target.tld # HEAD: server, framework, cookies curl -sI https://target.tld | grep -iE &#39;server|x-powered-by|x-aspnet|via|set-cookie&#39; curl -sIL https://target.tld # Follow redirects, show every hop curl -v https://target.tld 2&gt;&amp;1 | grep -iE &#39;^&lt; &#39; # All response headers Verbose / TLS Inspection curl -v https://target.tld # Cert chain, ALPN, ciphers curl -vk https://target.tld # Ignore cert errors curl --trace-ascii trace.log https://target.tld # Full request/response dump curl -v --tls-max 1.2 https://target.tld # Pin max TLS version Method / Verb Tampering curl -X OPTIONS -i https://target.tld/ # Allowed methods curl -X PUT -d &#34;test&#34; -i https://target.tld/file.txt curl -X DELETE -i https://target.tld/resource/1 curl -X TRACE -i https://target.tld/ # Cross-Site Tracing check Virtual Host / Host Header Testing curl -s -H &#34;Host: dev.target.tld&#34; http://&lt;ip&gt;/ -o dev.html curl -sI --resolve target.tld:443:&lt;ip&gt; https://target.tld/ curl -s -H &#34;Host: admin.internal&#34; http://&lt;ip&gt;/ # Find vhosts on shared IP Cookies &amp; Sessions curl -c cookies.txt -b cookies.txt https://target.tld/login curl -b &#34;session=abcd1234&#34; https://target.tld/dashboard curl -c - https://target.tld/ # Print Set-Cookie to stdout Authentication curl -u admin:password https://target.tld/admin # Basic curl -H &#34;Authorization: Bearer &lt;jwt&gt;&#34; https://api.target.tld/ curl --ntlm -u &#39;DOMAIN\user:pass&#39; https://target.tld/ curl --digest -u user:pass https://target.tld/ POST / API Testing # Form data curl -X POST -d &#34;user=admin&amp;pass=admin&#34; https://target.tld/login # Raw JSON curl -X POST -H &#34;Content-Type: application/json&#34; \ -d &#39;{&#34;user&#34;:&#34;admin&#34;,&#34;pass&#34;:&#34;admin&#34;}&#39; \ https://target.tld/api/login # File from disk curl -X POST -H &#34;Content-Type: application/json&#34; \ --data-binary @payload.json https://target.tld/api # Multipart upload curl -F &#34;file=@shell.php&#34; -F &#34;submit=upload&#34; https://target.tld/upload.php Proxy (Burp / ZAP) curl -x http://127.0.0.1:8080 -k https://target.tld/ export https_proxy=http://127.0.0.1:8080 # Per-shell proxy Useful Write-Out Format curl -s -o /dev/null -w \ &#34;code:%{http_code} size:%{size_download} time:%{time_total}s redir:%{redirect_url} &#34; \ https://target.tld/ Fingerprinting Recipes # Quick stack identification curl -sIL https://target.tld | grep -iE &#39;server|x-powered-by|x-generator|x-drupal|x-aspnet&#39; # Pull robots.txt &#43; sitemap curl -s https://target.tld/robots.txt curl -s https://target.tld/sitemap.xml | head # Search response body for tech tells curl -s https://target.tld/ | grep -iE &#39;wp-content|drupal|joomla|laravel|generator=&#39; # Check common admin / framework paths for p in admin login wp-admin administrator phpmyadmin server-status; do printf &#34;%-20s &#34; &#34;$p&#34; curl -sk -o /dev/null -w &#34;%{http_code} &#34; &#34;https://target.tld/$p&#34; done Tips HEAD (-I) can lie or be blocked — fall back to -sI -X GET and inspect headers from a real GET. Combine -v with -o /dev/null to inspect headers without dumping a big body. --resolve beats editing /etc/hosts for one-off vhost checks. -k is for testing only; never disable cert checks in production tooling. </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to curl" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">DNS
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>DNS Enumeration Cheatsheet Default Port: 53 (TCP/UDP)
+Key DNS Record Types Record Description A IPv4 address AAAA IPv6 address MX Mail server NS Name server TXT Text records (SPF, DMARC, verification) CNAME Canonical name / alias SOA Start of authority PTR Reverse lookup SRV Service location Basic Lookups # host host &lt;domain&gt; host -t A &lt;domain&gt; host -t MX &lt;domain&gt; host -t NS &lt;domain&gt; host -t TXT &lt;domain&gt; host -t CNAME &lt;domain&gt; # dig dig &lt;domain&gt; dig &lt;domain&gt; ANY dig &lt;domain&gt; A dig &lt;domain&gt; MX dig &lt;domain&gt; NS dig &lt;domain&gt; TXT dig @&lt;nameserver&gt; &lt;domain&gt; ANY &#43;noall &#43;answer # nslookup nslookup &lt;domain&gt; nslookup -type=MX &lt;domain&gt; nslookup -type=NS &lt;domain&gt; Zone Transfer dig axfr @&lt;nameserver&gt; &lt;domain&gt; host -l &lt;domain&gt; &lt;nameserver&gt; fierce --domain &lt;domain&gt; Subdomain Enumeration # dnsenum dnsenum --dnsserver &lt;ns&gt; --enum -p 0 -s 0 -o output.txt -f wordlist.txt &lt;domain&gt; dnsenum --enum inlanefreight.htb -f /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -r # dnsrecon dnsrecon -d &lt;domain&gt; -t std # Standard enumeration dnsrecon -d &lt;domain&gt; -t axfr # Zone transfer attempt dnsrecon -d &lt;domain&gt; -t brt -D wordlist.txt # Brute force subdomains # gobuster DNS mode gobuster dns -d &lt;domain&gt; -w wordlist.txt -r &lt;nameserver&gt; # Sublist3r sublist3r -d &lt;domain&gt; # Amass amass enum -d &lt;domain&gt; amass enum -passive -d &lt;domain&gt; Nmap DNS Scripts nmap -p 53 --script dns-brute &lt;domain&gt; nmap -p 53 --script dns-zone-transfer \ --script-args dns-zone-transfer.domain=&lt;domain&gt; &lt;nameserver&gt; nmap -p 53 --script dns-nsid &lt;nameserver&gt; nmap -p 53 --script dns-recursion &lt;nameserver&gt; nmap -p 53 --script dns-cache-snoop &lt;nameserver&gt; Reverse DNS Lookup dig -x &lt;ip&gt; host &lt;ip&gt; dnsrecon -r &lt;cidr&gt; -t rvl # Example dig -x 192.168.1.1 host 192.168.1.1 Wordlists (SecLists) /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt /usr/share/seclists/Discovery/DNS/dns-Jhaddix.txt </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to DNS" href="http://localhost:1313/cheatsheets/pentesting/footprinting/dns/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">dnsenum
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>dnsenum Cheatsheet Type: Comprehensive DNS enumeration — dictionary &amp; brute-force subdomain discovery
+Installation sudo apt install dnsenum # or git clone https://github.com/fwaeytens/dnsenum.git Basic Usage dnsenum &lt;domain&gt; dnsenum example.com Common Flags Flag Description --dnsserver &lt;ns&gt; Use a specific DNS server -f &lt;wordlist&gt; Wordlist for subdomain brute force -r Enable recursive brute force on found subdomains -p &lt;pages&gt; Number of Google scraping pages (default: 5) -s &lt;results&gt; Maximum results from Google scraping -o &lt;file&gt; Output to XML file --enum Shortcut: enables brute force, threads, Google scraping --threads &lt;n&gt; Number of threads for brute forcing --noreverse Skip reverse lookup on found IP ranges --nocolor Disable colored output -v Verbose output --timeout &lt;s&gt; DNS query timeout in seconds Common Commands # Full enumeration with brute force dnsenum --dnsserver &lt;ns&gt; --enum -p 0 -s 0 -f wordlist.txt &lt;domain&gt; # Brute force with threads, no Google scraping dnsenum -f wordlist.txt --threads 20 --noreverse &lt;domain&gt; # Output to XML dnsenum -f wordlist.txt -o output.xml &lt;domain&gt; # Recursive brute force (enumerate found subdomains too) dnsenum -f wordlist.txt -r &lt;domain&gt; # Suppress Google scraping (clean/offline) dnsenum -p 0 -s 0 -f wordlist.txt &lt;domain&gt; # Use specific nameserver dnsenum --dnsserver 8.8.8.8 -f wordlist.txt &lt;domain&gt; What dnsenum Does Automatically 1. Queries A, NS, MX records 2. Attempts zone transfer (AXFR) on each nameserver 3. Google scraping for subdomains (unless -p 0 -s 0) 4. Reverse lookups on found IP ranges 5. Brute forces subdomains from wordlist (if -f provided) Recommended Wordlists /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt /usr/share/wordlists/dnsmap.txt Example Full Run dnsenum --dnsserver 8.8.8.8 \ --enum \ -p 0 -s 0 \ --threads 20 \ -f /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \ -o results.xml \ example.com </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to dnsenum" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">dnsrecon
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>dnsrecon Cheatsheet Type: Versatile DNS reconnaissance — multiple techniques, customisable output formats
+Installation sudo apt install dnsrecon # or git clone https://github.com/darkoperator/dnsrecon.git pip3 install -r requirements.txt Basic Usage dnsrecon -d &lt;domain&gt; dnsrecon -d example.com Scan Types (-t) Type Description std Standard — A, AAAA, NS, SOA, MX, TXT records axfr Zone transfer attempt on all nameservers brt Brute force subdomains from wordlist rvl Reverse lookup on IP range goo Google scraping for subdomains snoop Cache snooping on nameservers tld Check all TLD variations of domain zonewalk DNSSEC zone walking (NSEC enumeration) srv SRV record enumeration bing Bing scraping for subdomains crt Certificate transparency logs Common Flags Flag Description -d &lt;domain&gt; Target domain -t &lt;type&gt; Scan type (see table above) -D &lt;wordlist&gt; Wordlist for brute force (brt) -n &lt;nameserver&gt; Use specific nameserver -r &lt;cidr&gt; IP range for reverse lookups -c &lt;file&gt; Save output to CSV -j &lt;file&gt; Save output to JSON -x &lt;file&gt; Save output to XML --db &lt;file&gt; Save output to SQLite DB -f Filter wildcard results -a Perform AXFR on all nameservers --iw Continue brute force even if wildcard detected -v Verbose output --lifetime &lt;s&gt; Query lifetime in seconds --tcp Use TCP for queries -t std,brt Combine multiple scan types Common Commands # Standard enumeration (all record types) dnsrecon -d example.com -t std # Zone transfer attempt dnsrecon -d example.com -t axfr # Brute force subdomains dnsrecon -d example.com -t brt -D wordlist.txt # Reverse lookup on a range dnsrecon -r 192.168.1.0/24 -t rvl # Cache snooping dnsrecon -t snoop -n &lt;nameserver&gt; -D wordlist.txt # DNSSEC zone walking dnsrecon -d example.com -t zonewalk # Certificate transparency dnsrecon -d example.com -t crt # Multiple scan types at once dnsrecon -d example.com -t std,axfr,brt -D wordlist.txt # Use specific nameserver dnsrecon -d example.com -n 8.8.8.8 -t std # Output to JSON dnsrecon -d example.com -t std -j output.json # Output to CSV dnsrecon -d example.com -t brt -D wordlist.txt -c output.csv # Filter wildcards during brute force dnsrecon -d example.com -t brt -D wordlist.txt -f # Force brute force through wildcard dnsrecon -d example.com -t brt -D wordlist.txt --iw Recommended Wordlists /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt Example Full Run dnsrecon -d example.com \ -t std,axfr,brt \ -D /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \ -n 8.8.8.8 \ -f \ -j dnsrecon_results.json </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to dnsrecon" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">feroxbuster
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>feroxbuster Cheatsheet Type: Fast Rust-based web fuzzer — recursive directory brute forcing, wildcard detection, rich filtering
+Installation sudo apt install feroxbuster # or curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash # or cargo install feroxbuster Basic Usage feroxbuster -u http://&lt;ip&gt; feroxbuster -u http://&lt;ip&gt; -w wordlist.txt Common Flags Flag Description -u &lt;url&gt; Target URL -w &lt;wordlist&gt; Wordlist (default: built-in if not specified) -t &lt;n&gt; Threads (default: 50) -x &lt;ext&gt; File extensions to append -d &lt;n&gt; Recursion depth (default: 4, 0 = unlimited) -r Follow redirects -k Disable TLS certificate verification -n Disable recursion -C &lt;codes&gt; Filter out status codes -s &lt;codes&gt; Only show these status codes -S &lt;size&gt; Filter by response size (bytes) -W &lt;words&gt; Filter by word count in response -L &lt;lines&gt; Filter by line count in response -X &lt;regex&gt; Filter by response body regex -H &lt;header&gt; Add custom header (repeatable) -b &lt;cookie&gt; Add cookie -m &lt;methods&gt; HTTP methods (default: GET) -o &lt;file&gt; Output to file -q Quiet — no banner or progress --json Output as JSON -v Verbose -T &lt;seconds&gt; Request timeout --rate-limit &lt;n&gt; Max requests per second -p &lt;proxy&gt; Use proxy (http/socks5) -U &lt;user&gt; -P &lt;pass&gt; HTTP Basic auth -a &lt;agent&gt; User-Agent string --dont-filter Disable wildcard filtering --auto-tune Automatically slow down on errors --collect-extensions Collect and scan discovered extensions --collect-words Build wordlist from responses --resume-from &lt;file&gt; Resume from a saved state file Common Commands # Basic scan with extensions feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -x php,html,txt # No recursion (flat scan) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -n # Limit recursion depth feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -d 2 # Filter out 404s and 403s feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -C 404,403 # Only show 200 and 301 feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -s 200,301 # Filter responses by size (remove default page noise) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -S 1234 # Filter by word count feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -W 25 # HTTPS with TLS skip feroxbuster -u https://&lt;ip&gt; -w wordlist.txt -k # Custom headers (e.g. API auth) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt \ -H &#34;Authorization: Bearer &lt;token&gt;&#34; \ -H &#34;X-Custom: value&#34; # Use proxy (Burp Suite) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt \ -p http://127.0.0.1:8080 -k # POST requests feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -m POST # Multiple HTTP methods feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -m GET,POST,PUT # Output to file (also saves state for resume) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt -o results.txt # JSON output feroxbuster -u http://&lt;ip&gt; -w wordlist.txt --json -o results.json # Resume interrupted scan feroxbuster --resume-from ferox-&lt;ip&gt;.state # Rate limit (be polite / evade detection) feroxbuster -u http://&lt;ip&gt; -w wordlist.txt --rate-limit 100 # Collect extensions seen in responses and scan them too feroxbuster -u http://&lt;ip&gt; -w wordlist.txt --collect-extensions # Build a wordlist from page content, then use it feroxbuster -u http://&lt;ip&gt; -w wordlist.txt --collect-words Virtual Host Discovery # feroxbuster doesn&#39;t natively fuzz Host headers # Use with -H to manually set a specific host header, # or use ffuf/gobuster for vhost fuzzing feroxbuster -u http://&lt;ip&gt; -w wordlist.txt \ -H &#34;Host: staging.example.com&#34; Interactive Pause Menu While feroxbuster is running, press ENTER to open the interactive menu:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to feroxbuster" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">ffuf
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ffuf Cheatsheet Type: Fast web fuzzer — directory busting, virtual host discovery, parameter fuzzing, Host header fuzzing
+Installation sudo apt install ffuf # or go install github.com/ffuf/ffuf/v2@latest Core Concept FUZZ is the keyword replaced by each wordlist entry. It can go anywhere in the request — URL path, headers, parameters, body.
+ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt Multiple keywords are supported by naming them with -w wordlist:KEYWORD:
+ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist1.txt -w params.txt:PARAM Common Flags Flag Description -u &lt;url&gt; Target URL (include FUZZ) -w &lt;wordlist&gt; Wordlist (use wordlist:KEYWORD for named) -H &lt;header&gt; Add/fuzz header (repeatable) -X &lt;method&gt; HTTP method (default: GET) -d &lt;data&gt; POST data body -b &lt;cookie&gt; Cookie string -r Follow redirects -k Skip TLS verification -t &lt;n&gt; Threads (default: 40) -p &lt;delay&gt; Delay between requests (e.g. 0.1, 0.5-1.5) -rate &lt;n&gt; Max requests per second -timeout &lt;n&gt; Request timeout in seconds -mc &lt;codes&gt; Match status codes (default: 200-299,301,302,307,401,403,405,500) -ms &lt;size&gt; Match response size -mw &lt;words&gt; Match word count -ml &lt;lines&gt; Match line count -mr &lt;regex&gt; Match regex in response body -fc &lt;codes&gt; Filter status codes -fs &lt;size&gt; Filter response size -fw &lt;words&gt; Filter word count -fl &lt;lines&gt; Filter line count -fr &lt;regex&gt; Filter regex in response body -ac Auto-calibrate filters (detects and removes false positives) -o &lt;file&gt; Output file -of &lt;fmt&gt; Output format: json, ejson, html, md, csv, all -v Verbose (show redirects, full URL) -s Silent — only results -c Colorize output -recursion Enable recursive fuzzing -recursion-depth &lt;n&gt; Recursion depth -e &lt;exts&gt; File extensions (e.g. php,html,txt) -ic Ignore wordlist comments -input-cmd &lt;cmd&gt; Use command output as input instead of wordlist Directory &amp; File Fuzzing # Basic directory scan ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt # With file extensions ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -e .php,.html,.txt,.bak # Filter 404s ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -fc 404 # Match only 200 ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -mc 200 # Auto-calibrate (removes false positives automatically) ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -ac # Recursive scanning ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -recursion -recursion-depth 3 -e .php # Filter by response size (remove noise) ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -fs 4242 Virtual Host Discovery (Host Header Fuzzing) # Basic vhost fuzzing ffuf -u http://&lt;ip&gt; -H &#34;Host: FUZZ.example.com&#34; -w wordlist.txt # Filter default response size ffuf -u http://&lt;ip&gt; -H &#34;Host: FUZZ.example.com&#34; \ -w wordlist.txt \ -fs &lt;default_size&gt; # Auto-calibrate to remove default response ffuf -u http://&lt;ip&gt; -H &#34;Host: FUZZ.example.com&#34; \ -w wordlist.txt \ -ac # HTTPS ffuf -u https://&lt;ip&gt; -H &#34;Host: FUZZ.example.com&#34; \ -w wordlist.txt \ -k -fs &lt;default_size&gt; Parameter Fuzzing # GET parameter discovery ffuf -u &#34;http://&lt;ip&gt;/page?FUZZ=value&#34; -w wordlist.txt -fc 404 # GET parameter value fuzzing ffuf -u &#34;http://&lt;ip&gt;/page?id=FUZZ&#34; -w numbers.txt # POST parameter fuzzing ffuf -u http://&lt;ip&gt;/login \ -X POST \ -d &#34;username=admin&amp;password=FUZZ&#34; \ -w wordlist.txt \ -fc 401 # POST body with JSON ffuf -u http://&lt;ip&gt;/api/login \ -X POST \ -H &#34;Content-Type: application/json&#34; \ -d &#39;{&#34;username&#34;:&#34;admin&#34;,&#34;password&#34;:&#34;FUZZ&#34;}&#39; \ -w wordlist.txt Multiple Wordlists (Clusterbomb / Pitchfork) # Two keywords — try all combinations (clusterbomb) ffuf -u http://&lt;ip&gt;/FUZZ/W2 \ -w wordlist.txt:FUZZ \ -w extensions.txt:W2 # Username &#43; password combinations ffuf -u http://&lt;ip&gt;/login \ -X POST \ -d &#34;user=USER&amp;pass=PASS&#34; \ -w users.txt:USER \ -w passwords.txt:PASS \ -fc 401 Fuzzing with Proxy (Burp Suite) ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt \ -x http://127.0.0.1:8080 -k Output # Save to file (markdown) ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -o results.md -of md # Save as JSON ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -o results.json -of json # Save all formats ffuf -u http://&lt;ip&gt;/FUZZ -w wordlist.txt -o results -of all Recommended Wordlists # Directories /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt /usr/share/seclists/Discovery/Web-Content/common.txt # Virtual hosts / subdomains /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt # Parameters /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt # Passwords /usr/share/seclists/Passwords/xato-net-10-million-passwords-10000.txt Example Full Runs # Directory &#43; extension scan ffuf -u http://example.com/FUZZ \ -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt \ -e .php,.html,.txt,.bak \ -ac -c -v \ -t 50 \ -o ffuf_dir.json -of json # Virtual host discovery ffuf -u http://example.com \ -H &#34;Host: FUZZ.example.com&#34; \ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \ -ac -c \ -t 50 \ -o ffuf_vhost.json -of json </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>4 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to ffuf" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">fierce
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>fierce Cheatsheet Type: User-friendly recursive subdomain discovery with wildcard detection
+Installation sudo apt install fierce # or pip3 install fierce # or git clone https://github.com/mschwager/fierce.git Basic Usage fierce --domain &lt;domain&gt; fierce --domain example.com Common Flags Flag Description --domain &lt;domain&gt; Target domain --wordlist &lt;file&gt; Custom wordlist for brute forcing --dns-servers &lt;ns&gt; Use specific DNS servers (space-separated) --delay &lt;seconds&gt; Delay between requests --subdomains &lt;list&gt; Manually specify subdomains to check --wide Scan entire Class C of discovered hosts --traverse &lt;n&gt; Scan IPs n away from discovered hosts --search &lt;domains&gt; Filter results by domain pattern --range &lt;cidr&gt; Scan an IP range for PTR records --connect Attempt HTTP/HTTPS connections to found hosts --output &lt;file&gt; Save results to JSON file Common Commands # Basic scan (uses built-in wordlist) fierce --domain example.com # Custom wordlist fierce --domain example.com \ --wordlist /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt # Use specific DNS server fierce --domain example.com --dns-servers 8.8.8.8 # Wide scan (scan Class C of discovered IPs) fierce --domain example.com --wide # Add delay to evade detection fierce --domain example.com --delay 3 # Traverse IPs near discovered hosts fierce --domain example.com --traverse 5 # Check HTTP/HTTPS on found hosts fierce --domain example.com --connect # Save to JSON fierce --domain example.com --output results.json # Scan IP range for reverse DNS fierce --range 192.168.1.0/24 Key Features - Wildcard detection (avoids false positives from wildcard DNS) - Recursive: checks subdomains of subdomains - Identifies adjacent IPs in same IP space - Clean, readable output format - Built-in default wordlist Wildcard Detection Fierce automatically detects wildcard DNS entries. If a domain resolves all queries (e.g., *.example.com → same IP), fierce identifies this and handles it gracefully instead of reporting false positives.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to fierce" href="http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="http://localhost:1313/page/2/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">
