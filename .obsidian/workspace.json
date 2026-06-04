@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/homelab-2026.md",
+                "file": "content/about.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "homelab-2026"
+              "title": "about"
             }
           }
         ]
@@ -185,8 +185,8 @@
   },
   "active": "a3f8d675a68ddd37",
   "lastOpenFiles": [
-    "content/about.md",
     "content/posts/homelab-2026.md",
+    "content/about.md",
     "content/posts"
   ]
 }

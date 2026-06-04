@@ -1,8 +1,6 @@
 ---
 title: "About"
-layout: "about"
 url: "/about/"
-summary: "about"
 ---
 
 Marine veteran. IT professional. 8+ years of experience and most of it earned the hard way — in a fast-paced environment where you either adapt or fall behind. I got my start in the Corps as a Data Systems Administrator and haven't stopped learning since.
