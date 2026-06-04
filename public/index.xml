@@ -3283,9 +3283,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>ReconSpider</title>
-      <link>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/reconspider/</link>
+      <link>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/reconspider/</guid>
+      <guid>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</guid>
       <description>&lt;h1 id=&#34;reconspider-cheatsheet&#34;&gt;ReconSpider Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Custom Scrapy-based web crawler that maps a target site and harvests links, emails, subdomains, external hosts, images, files, and metadata into a single JSON report&lt;/p&gt;
 &lt;hr&gt;
@@ -3375,9 +3375,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>Scrapy</title>
-      <link>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/scrapy/</link>
+      <link>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/scrapy/</guid>
+      <guid>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</guid>
       <description>&lt;h1 id=&#34;scrapy-cheatsheet&#34;&gt;Scrapy Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Fast, high-level web crawling and scraping framework for Python — used to build custom spiders that extract links, emails, subdomains, and other data from target sites&lt;/p&gt;
 &lt;hr&gt;

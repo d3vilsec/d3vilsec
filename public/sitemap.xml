@@ -94,11 +94,11 @@
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/rdp/</loc>
   </url><url>
-    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/reconspider/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/rsync/</loc>
   </url><url>
-    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/scrapy/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/smb/</loc>
   </url><url>
@@ -111,6 +111,8 @@
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</loc>
+  </url><url>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</loc>
   </url><url>
