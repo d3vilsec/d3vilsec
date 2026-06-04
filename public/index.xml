@@ -2655,9 +2655,9 @@ admin : admin
     </item>
     <item>
       <title>Nmap</title>
-      <link>https://d3vilsec.com/cheatsheets/pentesting/command-cheat-sheet/nmap/</link>
+      <link>https://d3vilsec.com/cheatsheets/pentesting/footprinting/nmap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/cheatsheets/pentesting/command-cheat-sheet/nmap/</guid>
+      <guid>https://d3vilsec.com/cheatsheets/pentesting/footprinting/nmap/</guid>
       <description>&lt;h1 id=&#34;nmap-cheatsheet&#34;&gt;Nmap Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; N/A (scanner tool)&lt;/p&gt;
 &lt;hr&gt;
