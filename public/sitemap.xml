@@ -3,115 +3,119 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://d3vilsec.com/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/docker/</loc>
+    <loc>https://d3vilsec.com/tags/docker/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/homelab/</loc>
+    <loc>https://d3vilsec.com/tags/homelab/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/homelab-2026/</loc>
+    <loc>https://d3vilsec.com/posts/homelab-2026/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/networking/</loc>
+    <loc>https://d3vilsec.com/tags/networking/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://d3vilsec.com/posts/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/proxmox/</loc>
+    <loc>https://d3vilsec.com/tags/proxmox/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/self-hosting/</loc>
+    <loc>https://d3vilsec.com/tags/self-hosting/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://d3vilsec.com/tags/</loc>
     <lastmod>2026-06-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://d3vilsec.com/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://d3vilsec.com/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/command-cheat-sheet/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/command-cheat-sheet/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/dns/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/dns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ftp/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/ftp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/imap-pop3/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/imap-pop3/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ipmi/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/ipmi/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/mssql/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/mssql/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/mysql/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/mysql/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/command-cheat-sheet/nmap/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/command-cheat-sheet/nmap/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/oracle-tns/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/oracle-tns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/r-services/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/r-services/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/rdp/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/rdp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/rsync/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/reconspider/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/smb/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/rsync/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/smtp/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/scrapy/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/snmp/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/smb/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ssh/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/smtp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/snmp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/ssh/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/winrm/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/wmi/</loc>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</loc>
+  </url><url>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/winrm/</loc>
+  </url><url>
+    <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/wmi/</loc>
   </url>
 </urlset>
