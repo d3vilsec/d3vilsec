@@ -4,6 +4,12 @@ theme: "PaperMod"
 pagination:
   pagerSize: 25
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
 params:
   author: d3vilsec
   description: "Marine veteran. Federal IT. Cybersecurity."
@@ -44,3 +50,7 @@ menu:
       name: Cheatsheets
       url: /cheatsheets/
       weight: 25
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 40
