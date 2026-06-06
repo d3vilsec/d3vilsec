@@ -40,7 +40,7 @@ menu:
       weight: 10
     - identifier: projects
       name: Projects
-      url: /projects/
+      url: https://d3vilsec.com/blog/tag/projects/
       weight: 20
     - identifier: about
       name: About
