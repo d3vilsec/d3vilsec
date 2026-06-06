@@ -1,0 +1,87 @@
+/* d3vilsec retro-purple — matches the Ghost "arcade cabinet" theme */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --accent:     #bd00ff;
+  --accent-dim: #8b00cc;
+  --accent-2:   #ff00aa; /* magenta */
+  --accent-3:   #00ffff; /* cyan */
+}
+
+/* Map PaperMod's dark palette onto the retro look (site defaults to dark) */
+:root[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  --theme:          #0a0a0f;            /* page background      */
+  --entry:          #0f0f1a;            /* cards / entries      */
+  --primary:        #e8ede9;            /* headings / strong    */
+  --secondary:      #8a9a8e;            /* muted text           */
+  --tertiary:       #15152a;            /* subtle fills         */
+  --content:        #c7cdc9;            /* body copy            */
+  --code-block-bg:  #0f0f1a;
+  --code-bg:        #15152a;
+  --border:         rgba(189,0,255,0.20);
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: #0a0a0f;
+}
+
+/* Pixel font for identity + section headers; kept to larger headings for legibility */
+.logo a,
+.first-entry .entry-header h1,
+.post-title,
+.page-header h1,
+article h1, article h2 {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+.logo a { font-size: 1.1rem; }
+article h2 { font-size: 1.05rem; margin-top: 2.2em; }
+
+/* Smaller headings + code stay in a readable mono */
+article h3, article h4, article h5, article h6 {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--accent-3);
+}
+code, pre, kbd, .post-content tt { font-family: 'IBM Plex Mono', monospace; }
+
+/* Accent: links, nav, buttons, copy buttons */
+.post-content a,
+.post-content a:visited,
+.first-entry .entry-header h1 a:hover,
+footer a { color: var(--accent); }
+.post-content a:hover { color: #d24dff; text-decoration-color: var(--accent); }
+
+#menu a:hover,
+#menu .active { color: var(--accent); border-color: var(--accent); }
+
+.post-tags a {
+  border-color: var(--border);
+  color: var(--accent-3);
+}
+.post-tags a:hover { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
+
+button.copyCode,
+.copyCode { border-color: var(--border); color: var(--accent); background: #0f0f1a; }
+button.copyCode:hover { background: var(--accent); color: #0a0a0f; }
+
+/* Code blocks: purple-glow frame */
+.post-content pre {
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(189,0,255,0.06), 0 4px 24px rgba(189,0,255,0.06);
+}
+.post-content code:not(pre code) { color: var(--accent-2); background: #15152a; }
+
+/* Blockquotes + rules */
+.post-content blockquote { border-inline-start-color: var(--accent-2); }
+hr { background: var(--border); }
+
+/* Inline selection + scrollbar */
+::selection { background: var(--accent); color: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: var(--accent-dim); }
+
+/* Home/profile + nav hover glow on the title */
+.logo a:hover { text-shadow: 0 0 10px rgba(189,0,255,0.6); }
