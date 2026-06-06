@@ -1,87 +1,276 @@
-/* d3vilsec retro-purple — matches the Ghost "arcade cabinet" theme */
+/* d3vilsec retro-purple "arcade cabinet" — ported to match the canonical Ghost
+   theme (d3vilsec-theme/assets/css/screen.css). Keep tokens & element styling in
+   sync with that file; it is the source of truth for the brand. */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
 
+/* ---- Brand tokens (mirror of Ghost screen.css :root) ---- */
 :root {
-  --accent:     #bd00ff;
-  --accent-dim: #8b00cc;
-  --accent-2:   #ff00aa; /* magenta */
-  --accent-3:   #00ffff; /* cyan */
+  --bg:           #0a0a0f;
+  --bg-card:      #0f0f1a;
+  --bg-card2:     #13131f;
+  --accent:       #bd00ff;
+  --accent-dim:   #8b00cc;
+  --accent-glow:  rgba(189,0,255,0.08);
+  --yellow:       #ffd700;
+  --cyan:         #00ffff;
+  --magenta:      #ff00aa;
+  --orange:       #ff6600;
+  --text:         #e8ede9;
+  --text-muted:   #8a9a8e;
+  --text-dim:     #4a5a4e;
+  --border:       rgba(189,0,255,0.2);
+  --border-dim:   rgba(255,255,255,0.08);
+  --pixel:        'Press Start 2P', monospace;
+  --mono:         'IBM Plex Mono', monospace;
+  --sans:         'IBM Plex Sans', sans-serif;
 }
 
-/* Map PaperMod's dark palette onto the retro look (site defaults to dark) */
+/* ---- Map PaperMod's dark palette onto the retro tokens (site is dark) ---- */
 :root[data-theme="dark"],
 :root:not([data-theme="light"]) {
-  --theme:          #0a0a0f;            /* page background      */
-  --entry:          #0f0f1a;            /* cards / entries      */
-  --primary:        #e8ede9;            /* headings / strong    */
-  --secondary:      #8a9a8e;            /* muted text           */
-  --tertiary:       #15152a;            /* subtle fills         */
-  --content:        #c7cdc9;            /* body copy            */
-  --code-block-bg:  #0f0f1a;
-  --code-bg:        #15152a;
-  --border:         rgba(189,0,255,0.20);
+  --theme:          var(--bg);
+  --entry:          var(--bg-card);
+  --primary:        var(--text);
+  --secondary:      var(--text-muted);
+  --tertiary:       var(--bg-card2);
+  --content:        var(--text-muted);   /* body copy matches Ghost .gh-content */
+  --code-block-bg:  #050508;
+  --code-bg:        var(--bg-card);
+  --border:         rgba(189,0,255,0.2);
   color-scheme: dark;
 }
 
+html { background: var(--bg); color: var(--text); image-rendering: pixelated; }
+
 body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  background: #0a0a0f;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Pixel font for identity + section headers; kept to larger headings for legibility */
-.logo a,
-.first-entry .entry-header h1,
-.post-title,
-.page-header h1,
-article h1, article h2 {
-  font-family: 'Press Start 2P', monospace;
-  letter-spacing: 0.5px;
-  line-height: 1.5;
+/* keep real content above the decorative background grid */
+.main, header.header, footer.footer, .nav { position: relative; z-index: 1; }
+
+/* scanline overlay (Ghost body::after) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+  pointer-events: none;
+  z-index: 9999;
 }
-.logo a { font-size: 1.1rem; }
-article h2 { font-size: 1.05rem; margin-top: 2.2em; }
 
-/* Smaller headings + code stay in a readable mono */
-article h3, article h4, article h5, article h6 {
-  font-family: 'IBM Plex Mono', monospace;
-  color: var(--accent-3);
+/* pixel grid background (Ghost body::before) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(189,0,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(189,0,255,0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  z-index: 0;
 }
-code, pre, kbd, .post-content tt { font-family: 'IBM Plex Mono', monospace; }
 
-/* Accent: links, nav, buttons, copy buttons */
-.post-content a,
-.post-content a:visited,
-.first-entry .entry-header h1 a:hover,
-footer a { color: var(--accent); }
-.post-content a:hover { color: #d24dff; text-decoration-color: var(--accent); }
+/* ---- Identity + nav (Ghost .logo-text / .site-nav) ---- */
+.logo a {
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0 var(--accent-dim);
+}
+.logo a:hover { text-shadow: 0 0 10px rgba(189,0,255,0.6); }
 
-#menu a:hover,
+#menu a,
+#menu li a {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+#menu a:hover { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
 #menu .active { color: var(--accent); border-color: var(--accent); }
 
-.post-tags a {
-  border-color: var(--border);
-  color: var(--accent-3);
+/* ---- Page / post titles (Ghost pixel headings) ---- */
+.first-entry .entry-header h1,
+.post-title,
+.page-header h1 {
+  font-family: var(--pixel);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+  letter-spacing: 0.5px;
+  text-shadow: 3px 3px 0 rgba(189,0,255,0.2);
 }
-.post-tags a:hover { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
+.first-entry .entry-header h1 { font-size: clamp(1rem, 3vw, 1.4rem); }
+.post-title { font-size: 1.25rem; }
 
-button.copyCode,
-.copyCode { border-color: var(--border); color: var(--accent); background: #0f0f1a; }
-button.copyCode:hover { background: var(--accent); color: #0a0a0f; }
+/* ---- Article body (Ghost .gh-content) ---- */
+.post-content {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
 
-/* Code blocks: purple-glow frame */
-.post-content pre {
+/* H2 → bordered pixel box with hard offset shadow (Ghost .gh-content h2) */
+.post-content h2 {
+  font-family: var(--pixel);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--accent);
+  margin: 2.5rem 0 1.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  box-shadow: 3px 3px 0 var(--accent-dim);
+  line-height: 1.8;
+  text-shadow: 1px 1px 0 var(--accent-dim);
+}
+.post-content h3 {
+  font-family: var(--pixel);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--yellow);
+  margin: 2rem 0 0.75rem;
+  line-height: 2;
+}
+.post-content h4 {
+  font-family: var(--pixel);
+  font-size: 0.6rem;
+  color: var(--cyan);
+  margin: 1.5rem 0 0.5rem;
+  line-height: 2;
+}
+.post-content h5, .post-content h6 {
+  font-family: var(--mono);
+  color: var(--cyan);
+}
+
+.post-content p { margin-bottom: 1.25rem; }
+.post-content strong { color: var(--text); font-weight: 500; }
+
+/* Links (Ghost .gh-content a): accent + dim underline, hover yellow glow */
+.post-content a,
+.post-content a:visited {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent-dim);
+  transition: all 0.1s;
+}
+.post-content a:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+  text-shadow: 0 0 8px var(--yellow);
+}
+footer a, .footer a { color: var(--accent); }
+
+/* Lists with ▶ markers */
+.post-content ul li::marker { color: var(--accent); content: '▶  '; font-size: 0.6em; }
+.post-content ol li::marker { color: var(--accent); font-family: var(--pixel); font-size: 0.7em; }
+
+/* Blockquote: magenta border, pink wash, offset shadow */
+.post-content blockquote {
+  border-inline-start: 4px solid var(--magenta);
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-muted);
+  background: rgba(255,0,170,0.05);
+  box-shadow: 3px 3px 0 rgba(255,0,170,0.2);
+}
+
+/* Inline code + code blocks (Ghost .gh-content code / pre) */
+code, pre, kbd, .post-content tt { font-family: var(--mono); }
+.post-content code:not(pre code) {
+  font-size: 0.85em;
+  background: var(--bg-card);
+  color: var(--accent);
+  padding: 0.15rem 0.4rem;
   border: 1px solid var(--border);
-  box-shadow: 0 0 0 1px rgba(189,0,255,0.06), 0 4px 24px rgba(189,0,255,0.06);
 }
-.post-content code:not(pre code) { color: var(--accent-2); background: #15152a; }
+.post-content pre {
+  background: #050508;
+  border: 2px solid var(--accent-dim);
+  box-shadow: 4px 4px 0 rgba(189,0,255,0.15);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+.post-content pre::before {
+  content: '> RUN';
+  color: var(--accent-dim);
+  font-family: var(--pixel);
+  font-size: 7px;
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+}
+.post-content pre code { padding-top: 1.25rem; }
 
-/* Blockquotes + rules */
-.post-content blockquote { border-inline-start-color: var(--accent-2); }
-hr { background: var(--border); }
+/* Copy button to match (Ghost has none; keep but theme it) */
+button.copyCode, .copyCode {
+  border: 1px solid var(--border);
+  color: var(--accent);
+  background: var(--bg-card);
+}
+button.copyCode:hover { background: var(--accent); color: var(--bg); }
 
-/* Inline selection + scrollbar */
-::selection { background: var(--accent); color: #0a0a0f; }
+/* Tables (Ghost .gh-content table) */
+.post-content table {
+  border: 2px solid var(--accent-dim);
+  box-shadow: 4px 4px 0 rgba(189,0,255,0.1);
+}
+.post-content th {
+  font-family: var(--pixel);
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  color: var(--bg);
+  background: var(--accent);
+  border-bottom: 2px solid var(--accent-dim);
+}
+.post-content td { color: var(--text-muted); border-bottom: 1px solid var(--border-dim); }
+.post-content tr:hover td { background: var(--accent-glow); }
+
+/* Images: framed with offset shadow */
+.post-content img {
+  border: 2px solid var(--accent-dim);
+  box-shadow: 4px 4px 0 rgba(189,0,255,0.1);
+}
+
+/* Rules: dashed (Ghost .gh-content hr) */
+hr, .post-content hr {
+  border: none;
+  border-top: 2px dashed var(--border-dim);
+  background: none;
+  margin: 2.5rem 0;
+}
+
+/* Tags (pixel chip) */
+.post-tags a {
+  font-family: var(--mono);
+  border-color: var(--border);
+  color: var(--cyan);
+}
+.post-tags a:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+/* Selection + scrollbar */
+::selection { background: var(--accent); color: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent-dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* Home/profile + nav hover glow on the title */
-.logo a:hover { text-shadow: 0 0 10px rgba(189,0,255,0.6); }
+/* Footer (Ghost .site-footer) */
+.footer {
+  font-family: var(--pixel);
+  font-size: 7px;
+  color: var(--text-dim);
+  line-height: 2;
+}
+.footer a:hover { color: var(--accent); text-shadow: 0 0 6px var(--accent); }
