@@ -3,33 +3,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://d3vilsec.com/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/docker/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/homelab/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/posts/homelab-2026/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/networking/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/posts/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/proxmox/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/self-hosting/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://d3vilsec.com/tags/</loc>
-    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://d3vilsec.com/about/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</loc>
@@ -43,6 +16,8 @@
     <loc>https://d3vilsec.com/cheatsheets/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</loc>
+  </url><url>
+    <loc>https://d3vilsec.com/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/dns/</loc>
   </url><url>
@@ -113,6 +88,8 @@
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/snmp/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/footprinting/ssh/</loc>
+  </url><url>
+    <loc>https://d3vilsec.com/tags/</loc>
   </url><url>
     <loc>https://d3vilsec.com/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
   </url><url>
