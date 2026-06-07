@@ -51,7 +51,7 @@ body {
 }
 
 /* keep real content above the decorative background grid */
-.main, header.header, footer.footer, .nav { position: relative; z-index: 1; }
+.main, footer.footer { position: relative; z-index: 1; }
 
 /* scanline overlay (Ghost body::after) */
 body::after {
@@ -78,20 +78,57 @@ body::before {
   z-index: 0;
 }
 
-/* ---- Identity + nav (Ghost .logo-text / .site-nav) ---- */
+/* ---- Header bar (Ghost .site-header): sticky, accent border, blur ---- */
+header.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.6rem 0;
+  background: rgba(10,10,15,0.96);
+  backdrop-filter: blur(4px);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: 0 3px 0 var(--accent-dim);
+}
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* ---- Identity: logo-mark block + logo-text (Ghost .site-logo) ---- */
 .logo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
   font-family: var(--pixel);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--accent);
   letter-spacing: 0.05em;
   text-shadow: 2px 2px 0 var(--accent-dim);
 }
+.logo a::before {
+  content: 'd3';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 11px;
+  box-shadow: 3px 3px 0 var(--accent-dim);
+  text-shadow: none;
+  image-rendering: pixelated;
+}
 .logo a:hover { text-shadow: 0 0 10px rgba(189,0,255,0.6); }
 
+/* ---- Nav links (Ghost .site-nav) ---- */
+#menu { gap: 1.4rem; }
 #menu a,
 #menu li a {
   font-family: var(--pixel);
-  font-size: 8px;
+  font-size: 9px;
   color: var(--text-muted);
   letter-spacing: 0.05em;
   line-height: 1.6;
