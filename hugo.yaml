@@ -21,8 +21,8 @@ params:
   ShowCodeCopyButtons: true
 
   homeInfoParams:
-    Title: "d3vilsec"
-    Content: "Marine veteran. Federal IT professional. Cybersecurity student. Building, breaking, and securing things from a TV stand."
+    Title: "Building, breaking, and securing — out loud."
+    Content: "Field notes from a Marine veteran and federal IT pro learning offensive and defensive security in the homelab. Proxmox, Docker Swarm, FreeIPA, Ansible, and whatever I'm tearing apart this week — documented as I go."
 
   socialIcons:
     - name: github
@@ -40,7 +40,7 @@ menu:
       weight: 10
     - identifier: projects
       name: Projects
-      url: https://d3vilsec.com/blog/tag/projects/
+      url: /projects/
       weight: 20
     - identifier: about
       name: About

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>d3vilsec</title>
-    <link>http://localhost:1313/</link>
+    <link>http://localhost:1314/</link>
     <description>Recent content on d3vilsec</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1314/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>http://localhost:1314/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>http://localhost:1314/about/</guid>
       <description>&lt;p&gt;Marine veteran. IT professional. 8+ years of experience and most of it earned the hard way — in a fast-paced environment where you either adapt or fall behind. I got my start in the Corps as a Data Systems Administrator and haven&amp;rsquo;t stopped learning since.&lt;/p&gt;
 &lt;p&gt;These days I work as a sysadmin with my sights set on cybersecurity. Currently working toward a B.S. in Cybersecurity and Information Assurance while building out a homelab that&amp;rsquo;s taught me more than any classroom has.&lt;/p&gt;</description>
     </item>
     <item>
       <title>amass</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</guid>
       <description>&lt;h1 id=&#34;amass-cheatsheet&#34;&gt;amass Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Actively maintained subdomain discovery — extensive data sources &amp;amp; tool integrations&lt;/p&gt;
 &lt;hr&gt;
@@ -208,9 +208,9 @@
     </item>
     <item>
       <title>assetfinder</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</guid>
       <description>&lt;h1 id=&#34;assetfinder-cheatsheet&#34;&gt;assetfinder Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Simple, lightweight subdomain finder using multiple passive data sources — ideal for quick recon&lt;/p&gt;
 &lt;hr&gt;
@@ -299,9 +299,9 @@ findsubdomains.com
     </item>
     <item>
       <title>builtwith</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</guid>
       <description>&lt;h1 id=&#34;builtwith-cheatsheet&#34;&gt;BuiltWith Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Passive technology profiling of a domain — current stack plus historical changes, hosting, analytics, ad networks, ecommerce, CDN, certificates, and more. Useful for OSINT recon without touching the target.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Format:&lt;/strong&gt; Web service (free tier + paid API). No local install required for basic lookups.&lt;/p&gt;
@@ -360,9 +360,9 @@ findsubdomains.com
     </item>
     <item>
       <title>curl</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</guid>
       <description>&lt;h1 id=&#34;curl-cheatsheet-web-fingerprinting&#34;&gt;curl Cheatsheet (Web Fingerprinting)&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Manual HTTP(S) requests for header inspection, banner grabbing, fingerprinting and quick endpoint testing.&lt;/p&gt;
 &lt;hr&gt;
@@ -566,9 +566,9 @@ findsubdomains.com
     </item>
     <item>
       <title>DNS</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/dns/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/dns/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/dns/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/dns/</guid>
       <description>&lt;h1 id=&#34;dns-enumeration-cheatsheet&#34;&gt;DNS Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 53 (TCP/UDP)&lt;/p&gt;
 &lt;hr&gt;
@@ -693,9 +693,9 @@ findsubdomains.com
     </item>
     <item>
       <title>dnsenum</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</guid>
       <description>&lt;h1 id=&#34;dnsenum-cheatsheet&#34;&gt;dnsenum Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Comprehensive DNS enumeration — dictionary &amp;amp; brute-force subdomain discovery&lt;/p&gt;
 &lt;hr&gt;
@@ -812,9 +812,9 @@ findsubdomains.com
     </item>
     <item>
       <title>dnsrecon</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</guid>
       <description>&lt;h1 id=&#34;dnsrecon-cheatsheet&#34;&gt;dnsrecon Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Versatile DNS reconnaissance — multiple techniques, customisable output formats&lt;/p&gt;
 &lt;hr&gt;
@@ -1016,9 +1016,9 @@ findsubdomains.com
     </item>
     <item>
       <title>feroxbuster</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</guid>
       <description>&lt;h1 id=&#34;feroxbuster-cheatsheet&#34;&gt;feroxbuster Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Fast Rust-based web fuzzer — recursive directory brute forcing, wildcard detection, rich filtering&lt;/p&gt;
 &lt;hr&gt;
@@ -1239,9 +1239,9 @@ findsubdomains.com
     </item>
     <item>
       <title>ffuf</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</guid>
       <description>&lt;h1 id=&#34;ffuf-cheatsheet&#34;&gt;ffuf Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Fast web fuzzer — directory busting, virtual host discovery, parameter fuzzing, Host header fuzzing&lt;/p&gt;
 &lt;hr&gt;
@@ -1526,9 +1526,9 @@ findsubdomains.com
     </item>
     <item>
       <title>fierce</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</guid>
       <description>&lt;h1 id=&#34;fierce-cheatsheet&#34;&gt;fierce Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; User-friendly recursive subdomain discovery with wildcard detection&lt;/p&gt;
 &lt;hr&gt;
@@ -1640,9 +1640,9 @@ findsubdomains.com
     </item>
     <item>
       <title>FTP</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/ftp/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/ftp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/ftp/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/ftp/</guid>
       <description>&lt;h1 id=&#34;ftp-enumeration-cheatsheet&#34;&gt;FTP Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 21 (control), 20 (data - active mode)&lt;/p&gt;
 &lt;hr&gt;
@@ -1730,9 +1730,9 @@ QUIT                     # Disconnect
     </item>
     <item>
       <title>gobuster</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</guid>
       <description>&lt;h1 id=&#34;gobuster-cheatsheet&#34;&gt;gobuster Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Multi-purpose brute-forcing tool — directories, files, DNS subdomains, virtual hosts, S3 buckets&lt;/p&gt;
 &lt;hr&gt;
@@ -2039,9 +2039,9 @@ QUIT                     # Disconnect
     </item>
     <item>
       <title>IMAP POP3</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/imap-pop3/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/imap-pop3/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/imap-pop3/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/imap-pop3/</guid>
       <description>&lt;h1 id=&#34;imap--pop3-enumeration-cheatsheet&#34;&gt;IMAP / POP3 Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -2115,9 +2115,9 @@ a LOGOUT
     </item>
     <item>
       <title>IPMI</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/ipmi/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/ipmi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/ipmi/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/ipmi/</guid>
       <description>&lt;h1 id=&#34;ipmi-enumeration-cheatsheet&#34;&gt;IPMI Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 623 (UDP)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;What is IPMI?&lt;/strong&gt; Intelligent Platform Management Interface — out-of-band management for servers (iDRAC, iLO, BMC). Can give full remote control even if OS is down.&lt;/p&gt;
@@ -2244,9 +2244,9 @@ a LOGOUT
     </item>
     <item>
       <title>MSSQL</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/mssql/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/mssql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/mssql/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/mssql/</guid>
       <description>&lt;h1 id=&#34;mssql-enumeration-cheatsheet&#34;&gt;MSSQL Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 1433 (TCP), 1434 (UDP — SQL Server Browser)&lt;/p&gt;
 &lt;hr&gt;
@@ -2339,9 +2339,9 @@ a LOGOUT
     </item>
     <item>
       <title>MySQL</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/mysql/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/mysql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/mysql/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/mysql/</guid>
       <description>&lt;h1 id=&#34;mysql-enumeration-cheatsheet&#34;&gt;MySQL Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 3306 (TCP)&lt;/p&gt;
 &lt;hr&gt;
@@ -2427,9 +2427,9 @@ admin : admin
     </item>
     <item>
       <title>netcraft</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</guid>
       <description>&lt;h1 id=&#34;netcraft-cheatsheet&#34;&gt;Netcraft Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Passive reconnaissance — hosting history, OS / web server history, SSL certificate history, site report, and subdomain discovery for a target domain. Uses Netcraft&amp;rsquo;s long-running internet survey, so no traffic touches the target.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Format:&lt;/strong&gt; Web service. Free site-report lookups; subdomain search; commercial APIs for bulk.&lt;/p&gt;
@@ -2529,9 +2529,9 @@ admin : admin
     </item>
     <item>
       <title>nikto</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</guid>
       <description>&lt;h1 id=&#34;nikto-cheatsheet&#34;&gt;Nikto Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Web server scanner — checks for dangerous files, outdated server software, misconfigurations, and known vulnerabilities.&lt;/p&gt;
 &lt;hr&gt;
@@ -2647,9 +2647,9 @@ admin : admin
     </item>
     <item>
       <title>Nmap</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/nmap/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/nmap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/nmap/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/nmap/</guid>
       <description>&lt;h1 id=&#34;nmap-cheatsheet&#34;&gt;Nmap Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; N/A (scanner tool)&lt;/p&gt;
 &lt;hr&gt;
@@ -2826,9 +2826,9 @@ admin : admin
     </item>
     <item>
       <title>Oracle TNS</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/oracle-tns/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/oracle-tns/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/oracle-tns/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/oracle-tns/</guid>
       <description>&lt;h1 id=&#34;oracle-tns-enumeration-cheatsheet&#34;&gt;Oracle TNS Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 1521 (TCP)&lt;/p&gt;
 &lt;hr&gt;
@@ -2955,9 +2955,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>puredns</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</guid>
       <description>&lt;h1 id=&#34;puredns-cheatsheet&#34;&gt;puredns Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Powerful DNS brute-forcing and resolution tool — filters wildcard results effectively at scale&lt;/p&gt;
 &lt;hr&gt;
@@ -3095,9 +3095,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>R Services</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/r-services/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/r-services/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/r-services/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/r-services/</guid>
       <description>&lt;h1 id=&#34;r-services-enumeration-cheatsheet&#34;&gt;R-Services Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -3158,9 +3158,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>RDP</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/rdp/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/rdp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/rdp/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/rdp/</guid>
       <description>&lt;h1 id=&#34;rdp-enumeration-cheatsheet&#34;&gt;RDP Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 3389 (TCP)&lt;/p&gt;
 &lt;hr&gt;
@@ -3275,9 +3275,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>ReconSpider</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</guid>
       <description>&lt;h1 id=&#34;reconspider-cheatsheet&#34;&gt;ReconSpider Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Custom Scrapy-based web crawler that maps a target site and harvests links, emails, subdomains, external hosts, images, files, and metadata into a single JSON report&lt;/p&gt;
 &lt;hr&gt;
@@ -3294,9 +3294,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>Redis</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/redis/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/redis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/redis/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/redis/</guid>
       <description>&lt;h1 id=&#34;redis-enumeration-cheatsheet&#34;&gt;Redis Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 6379 (TCP) — often unauthenticated and bound to all interfaces&lt;/p&gt;
 &lt;hr&gt;
@@ -3399,9 +3399,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>Rsync</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/rsync/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/rsync/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/rsync/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/rsync/</guid>
       <description>&lt;h1 id=&#34;rsync-enumeration-cheatsheet&#34;&gt;Rsync Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 873 (TCP)&lt;/p&gt;
 &lt;hr&gt;
@@ -3472,9 +3472,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>Scrapy</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</guid>
       <description>&lt;h1 id=&#34;scrapy-cheatsheet&#34;&gt;Scrapy Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Fast, high-level web crawling and scraping framework for Python — used to build custom spiders that extract links, emails, subdomains, and other data from target sites&lt;/p&gt;
 &lt;hr&gt;
@@ -3730,9 +3730,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>Search Operators</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</guid>
       <description>&lt;h1 id=&#34;search-operators-google-dorking-cheatsheet&#34;&gt;Search Operators (Google Dorking) Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Type:&lt;/strong&gt; Passive reconnaissance using advanced search-engine operators to surface exposed files, directories, credentials, subdomains, and metadata without touching the target&lt;/p&gt;
 &lt;hr&gt;
@@ -3879,9 +3879,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>SMB</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/smb/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/smb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/smb/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/smb/</guid>
       <description>&lt;h1 id=&#34;smb-enumeration-cheatsheet&#34;&gt;SMB Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 445 (TCP), 139 (TCP/NetBIOS), 137–138 (UDP)&lt;/p&gt;
 &lt;hr&gt;
@@ -4011,9 +4011,9 @@ OEMREP      ORACLR_CONNECTION_DATA
     </item>
     <item>
       <title>SMTP</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/smtp/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/smtp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/smtp/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/smtp/</guid>
       <description>&lt;h1 id=&#34;smtp-enumeration-cheatsheet&#34;&gt;SMTP Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 25 (SMTP), 587 (Submission/STARTTLS), 465 (SMTPS)&lt;/p&gt;
 &lt;hr&gt;
@@ -4109,9 +4109,9 @@ QUIT
     </item>
     <item>
       <title>SNMP</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/snmp/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/snmp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/snmp/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/snmp/</guid>
       <description>&lt;h1 id=&#34;snmp-enumeration-cheatsheet&#34;&gt;SNMP Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 161 (UDP — queries), 162 (UDP — traps)&lt;/p&gt;
 &lt;hr&gt;
@@ -4268,9 +4268,9 @@ monitor    0           internal
     </item>
     <item>
       <title>SSH</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/ssh/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/ssh/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/ssh/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/ssh/</guid>
       <description>&lt;h1 id=&#34;ssh-enumeration-cheatsheet&#34;&gt;SSH Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Port:&lt;/strong&gt; 22 (TCP)&lt;/p&gt;
 &lt;hr&gt;
@@ -4381,9 +4381,9 @@ Port 22                       — Non-standard port may indicate stealth
     </item>
     <item>
       <title>wafw00f</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</guid>
       <description>&lt;h1 id=&#34;wafw00f-cheatsheet&#34;&gt;wafw00f Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Identify and fingerprint Web Application Firewalls (WAFs) protecting a target web app.&lt;/p&gt;
 &lt;hr&gt;
@@ -4470,9 +4470,9 @@ Port 22                       — Non-standard port may indicate stealth
     </item>
     <item>
       <title>wappalyzer</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</guid>
       <description>&lt;h1 id=&#34;wappalyzer-cheatsheet&#34;&gt;Wappalyzer Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Identify web technologies — CMS, frameworks, JS libraries, analytics, ecommerce, CDNs — from response headers, HTML, cookies, scripts, and DOM.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Wappalyzer is primarily a &lt;strong&gt;browser extension&lt;/strong&gt; and &lt;strong&gt;web service&lt;/strong&gt;. The original CLI/NPM package was deprecated; community forks still exist.&lt;/p&gt;
@@ -4520,9 +4520,9 @@ Port 22                       — Non-standard port may indicate stealth
     </item>
     <item>
       <title>whatweb</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</guid>
       <description>&lt;h1 id=&#34;whatweb-cheatsheet&#34;&gt;WhatWeb Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; Identify web technologies — CMS, frameworks, web servers, JS libraries, analytics, version numbers — via signature plugins.&lt;/p&gt;
 &lt;hr&gt;
@@ -4685,9 +4685,9 @@ Port 22                       — Non-standard port may indicate stealth
     </item>
     <item>
       <title>WinRM</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/winrm/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/winrm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/winrm/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/winrm/</guid>
       <description>&lt;h1 id=&#34;winrm-enumeration-cheatsheet&#34;&gt;WinRM Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 5985 (HTTP / WS-Management), 5986 (HTTPS)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;What is WinRM?&lt;/strong&gt; Windows Remote Management — Microsoft&amp;rsquo;s implementation of WS-Management. Used for remote PowerShell, remote command execution, and administration.&lt;/p&gt;
@@ -4785,9 +4785,9 @@ net localgroup &amp;#34;Remote Management Users&amp;#34;
     </item>
     <item>
       <title>WMI</title>
-      <link>http://localhost:1313/cheatsheets/pentesting/footprinting/wmi/</link>
+      <link>http://localhost:1314/cheatsheets/pentesting/footprinting/wmi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/cheatsheets/pentesting/footprinting/wmi/</guid>
+      <guid>http://localhost:1314/cheatsheets/pentesting/footprinting/wmi/</guid>
       <description>&lt;h1 id=&#34;wmi-enumeration-cheatsheet&#34;&gt;WMI Enumeration Cheatsheet&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Default Ports:&lt;/strong&gt; 135 (DCOM endpoint mapper), dynamic high ports (TCP 49152–65535)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;What is WMI?&lt;/strong&gt; Windows Management Instrumentation — a core Windows API for querying system state and executing code remotely. Uses DCOM over RPC.&lt;/p&gt;

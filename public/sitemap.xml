@@ -3,104 +3,108 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>http://localhost:1314/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/amass/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/assetfinder/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</loc>
+    <loc>http://localhost:1314/blog/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/builtwith/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/</loc>
+    <loc>http://localhost:1314/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</loc>
+    <loc>http://localhost:1314/cheatsheets/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/curl/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/dns/</loc>
+    <loc>http://localhost:1314/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/dns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsenum/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/dnsrecon/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/feroxbuster/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/ffuf/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/fierce/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ftp/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/ftp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/imap-pop3/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/gobuster/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/imap-pop3/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ipmi/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/mssql/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/ipmi/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/mysql/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/mssql/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/mysql/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/netcraft/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/nmap/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/nikto/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/oracle-tns/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/nmap/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/oracle-tns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/r-services/</loc>
+    <loc>http://localhost:1314/projects/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/rdp/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/dns-and-subdomains/puredns/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/r-services/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/redis/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/rdp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/rsync/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/reconspider/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/redis/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/rsync/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/search-engine/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/scrapy/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</loc>
+    <loc>http://localhost:1314/search/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/smb/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/search-engine/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/smtp/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/search-engine/search-operators/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/snmp/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/smb/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/ssh/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/smtp/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/snmp/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/ssh/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</loc>
+    <loc>http://localhost:1314/tags/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wafw00f/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/wappalyzer/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/winrm/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/web-crawling/</loc>
   </url><url>
-    <loc>http://localhost:1313/cheatsheets/pentesting/footprinting/wmi/</loc>
+    <loc>http://localhost:1314/cheatsheets/pentesting/information-gathering-web-edition/fingerprinting/whatweb/</loc>
+  </url><url>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/winrm/</loc>
+  </url><url>
+    <loc>http://localhost:1314/cheatsheets/pentesting/footprinting/wmi/</loc>
   </url>
 </urlset>
