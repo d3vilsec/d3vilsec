@@ -1,1 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Tags on d3vilsec</title><link>https://d3vilsec.com/tags/</link><description>Recent content in Tags on d3vilsec</description><generator>Hugo</generator><language>en</language><atom:link href="https://d3vilsec.com/tags/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on d3vilsec</title>
+    <link>https://d3vilsec.com/tags/</link>
+    <description>Recent content in Tags on d3vilsec</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://d3vilsec.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ftp</title>
+      <link>https://d3vilsec.com/tags/ftp/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/ftp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Htb</title>
+      <link>https://d3vilsec.com/tags/htb/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/htb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://d3vilsec.com/tags/linux/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux-Capabilities</title>
+      <link>https://d3vilsec.com/tags/linux-capabilities/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/linux-capabilities/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Privilege-Escalation</title>
+      <link>https://d3vilsec.com/tags/privilege-escalation/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/privilege-escalation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wireshark</title>
+      <link>https://d3vilsec.com/tags/wireshark/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/wireshark/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Writeup</title>
+      <link>https://d3vilsec.com/tags/writeup/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/writeup/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

