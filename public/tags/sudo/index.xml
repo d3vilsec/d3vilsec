@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Writeup on d3vilsec</title>
-    <link>https://d3vilsec.com/tags/writeup/</link>
-    <description>Recent content in Writeup on d3vilsec</description>
+    <title>Sudo on d3vilsec</title>
+    <link>https://d3vilsec.com/tags/sudo/</link>
+    <description>Recent content in Sudo on d3vilsec</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 08 Jun 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://d3vilsec.com/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://d3vilsec.com/tags/sudo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTB: Facts</title>
       <link>https://d3vilsec.com/blog/htb-facts/</link>
       <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
       <guid>https://d3vilsec.com/blog/htb-facts/</guid>
       <description>Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.</description>
-    </item>
-    <item>
-      <title>HTB: Cap</title>
-      <link>https://d3vilsec.com/blog/htb-cap/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/blog/htb-cap/</guid>
-      <description>Walkthrough of the Hack The Box machine Cap — an IDOR-style pcap leak gives up FTP creds, and a Linux capability on python3.8 hands over root.</description>
     </item>
   </channel>
 </rss>

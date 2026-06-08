@@ -6,27 +6,76 @@
     <description>Recent content in Tags on d3vilsec</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://d3vilsec.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Ftp</title>
-      <link>https://d3vilsec.com/tags/ftp/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/tags/ftp/</guid>
+      <title>Camaleon-Cms</title>
+      <link>https://d3vilsec.com/tags/camaleon-cms/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/camaleon-cms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Facter</title>
+      <link>https://d3vilsec.com/tags/facter/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/facter/</guid>
       <description></description>
     </item>
     <item>
       <title>Htb</title>
       <link>https://d3vilsec.com/tags/htb/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
       <guid>https://d3vilsec.com/tags/htb/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
       <link>https://d3vilsec.com/tags/linux/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
       <guid>https://d3vilsec.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Minio</title>
+      <link>https://d3vilsec.com/tags/minio/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/minio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Privilege-Escalation</title>
+      <link>https://d3vilsec.com/tags/privilege-escalation/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/privilege-escalation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>S3</title>
+      <link>https://d3vilsec.com/tags/s3/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/s3/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sudo</title>
+      <link>https://d3vilsec.com/tags/sudo/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/sudo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Writeup</title>
+      <link>https://d3vilsec.com/tags/writeup/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/writeup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ftp</title>
+      <link>https://d3vilsec.com/tags/ftp/</link>
+      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/tags/ftp/</guid>
       <description></description>
     </item>
     <item>
@@ -37,24 +86,10 @@
       <description></description>
     </item>
     <item>
-      <title>Privilege-Escalation</title>
-      <link>https://d3vilsec.com/tags/privilege-escalation/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/tags/privilege-escalation/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Wireshark</title>
       <link>https://d3vilsec.com/tags/wireshark/</link>
       <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
       <guid>https://d3vilsec.com/tags/wireshark/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Writeup</title>
-      <link>https://d3vilsec.com/tags/writeup/</link>
-      <pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>https://d3vilsec.com/tags/writeup/</guid>
       <description></description>
     </item>
   </channel>

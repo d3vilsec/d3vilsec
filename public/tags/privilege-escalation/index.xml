@@ -6,8 +6,15 @@
     <description>Recent content in Privilege-Escalation on d3vilsec</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://d3vilsec.com/tags/privilege-escalation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB: Facts</title>
+      <link>https://d3vilsec.com/blog/htb-facts/</link>
+      <pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://d3vilsec.com/blog/htb-facts/</guid>
+      <description>Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.</description>
+    </item>
     <item>
       <title>HTB: Cap</title>
       <link>https://d3vilsec.com/blog/htb-cap/</link>

